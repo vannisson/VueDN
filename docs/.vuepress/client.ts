@@ -1,8 +1,27 @@
 import { defineClientConfig } from "@vuepress/client";
 import Layout from "./layouts/Layout.vue";
 
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import "@mdi/font/css/materialdesignicons.css";
+import { aliases, mdi } from "vuetify/iconsets/mdi";
+
+// ⬇️ IMPORTANTE na 3.2:
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
+
 export default defineClientConfig({
-  layouts: {
-    Layout,
+  enhance({ app }) {
+    const vuetify = createVuetify({
+      components, // ⬅️ registra todos os componentes
+      directives, // ⬅️ registra diretivas (v-ripple, etc.)
+      icons: {
+        defaultSet: "mdi",
+        aliases,
+        sets: { mdi },
+      },
+    });
+    app.use(vuetify);
   },
+  layouts: { Layout },
 });
