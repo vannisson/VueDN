@@ -3,6 +3,7 @@ import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
 import { searchPlugin } from "@vuepress/plugin-search";
 import { getDirname, path } from "@vuepress/utils";
 import { glob } from "glob";
+import { viteBundler } from "@vuepress/bundler-vite";
 
 let songFiles = glob
   .sync("docs/songs/**/*.md")
@@ -60,4 +61,14 @@ export default defineUserConfig({
       // Default shortcut is key '/'
     }),
   ],
+  bundler: viteBundler({
+    viteOptions: {
+      ssr: {
+        noExternal: ["vuetify"], // 👈 essencial p/ SSR
+      },
+      optimizeDeps: {
+        include: ["vuetify"], // ajuda no dev/build
+      },
+    },
+  }),
 });
