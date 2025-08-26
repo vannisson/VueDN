@@ -1,12 +1,11 @@
 <script setup>
-import ParentLayout from "@vuepress/theme-default/layouts/Layout.vue";
-import NavBar from "../components/NavBar.vue";
+  import ParentLayout from '@vuepress/theme-default/layouts/Layout.vue'
+  import NavBar from '../components/NavBar.vue'
 </script>
 
 <template>
   <v-app>
     <NavBar />
-
     <!-- Reserve espaço abaixo da app-bar -->
     <v-main class="pt-10 pt-md-12">
       <ParentLayout>

@@ -1,26 +1,13 @@
 <template>
   <v-footer color="#1e2a38" class="py-10" height="auto">
-    <v-container>
-      <v-row>
-        <!-- Coluna 1: Logo + Menu -->
-        <v-col
-          cols="12"
-          md="4"
-          class="d-flex flex-column align-start text-white"
-        >
-          <!-- Espaço para o logo -->
-          <div
-            class="mb-4"
-            style="
-              height: 40px;
-              width: 120px;
-              background: rgba(255, 255, 255, 0.1);
-            "
-          >
-            <!-- Coloque seu logo aqui -->
+    <v-container style="color: white">
+      <v-row style="display: flex; flex-direction: row; gap: 2rem; justify-content: center">
+        <v-col cols="3" class="logo-col">
+          <div style="margin-bottom: 2rem">
+            <v-img src="/imgs/footer/icon_lame_white.svg" max-width="4rem" />
           </div>
 
-          <div class="d-flex flex-column ga-2">
+          <div class="d-flex flex-column" style="gap: 1rem">
             <span>Início</span>
             <span>Quem somos</span>
             <span>Projetos</span>
@@ -29,32 +16,29 @@
         </v-col>
 
         <!-- Coluna 2: Contatos -->
-        <v-col cols="12" md="4" class="text-center text-md-start text-white">
-          <h4 class="mb-4">CONTATOS</h4>
-          <p>Email: exemplo@email.com</p>
-          <p>Telefone: (00) 00000-0000</p>
-          <p>Endereço: Rua Exemplo, 123<br />Cidade - UF, 00000000</p>
+        <v-col cols="3" style="display: flex; flex-direction: column; align-items: center">
+          <div style="margin-bottom: 2rem">
+            <h4>CONTATOS</h4>
+          </div>
+          <div class="d-flex flex-column" style="gap: 1rem">
+            <p>Email: exemplo@email.com</p>
+            <p>Telefone: (00) 00000-0000</p>
+            <p>Endereço: Rua Exemplo, 123<br />Cidade - UF, 00000000</p>
+          </div>
         </v-col>
 
         <!-- Coluna 3: Apoio -->
-        <v-col cols="12" md="4" class="text-center text-white">
-          <h4 class="mb-4">APOIO</h4>
-          <div class="d-flex justify-center ga-6">
-            <!-- Espaços reservados para logos -->
-            <div
-              style="
-                height: 60px;
-                width: 60px;
-                background: rgba(255, 255, 255, 0.1);
-              "
-            ></div>
-            <div
-              style="
-                height: 60px;
-                width: 100px;
-                background: rgba(255, 255, 255, 0.1);
-              "
-            ></div>
+        <v-col cols="3" style="display: flex; flex-direction: row; justify-content: center">
+          <div style="display: flex; flex-direction: column">
+            <div style="margin-bottom: 2rem">
+              <h4>APOIO</h4>
+            </div>
+            <div style="margin-bottom: 1rem">
+              <v-img src="/imgs/footer/icon_ufal.svg" max-width="4rem" />
+            </div>
+            <div>
+              <v-img src="/imgs/footer/icon_cnpq.svg" max-width="8rem" />
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -62,12 +46,6 @@
   </v-footer>
 </template>
 
-<script setup>
-// Nenhuma lógica necessária
-</script>
+<script setup></script>
 
-<style scoped>
-p {
-  margin: 0 0 8px 0;
-}
-</style>
+<style scoped></style>
