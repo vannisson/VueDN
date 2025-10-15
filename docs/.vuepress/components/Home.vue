@@ -350,6 +350,20 @@
     font-weight: 700;
     text-transform: none;
     box-shadow: 0 6px 16px rgba(246, 135, 0, 0.25);
+    display: inline-flex; /* garante alinhamento do ícone com o texto */
+    align-items: center;
+  }
+
+  /* alinhamento fino entre ícone e label */
+  .cta .v-btn__content {
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .cta .v-icon,
+  .cta .material-symbols-rounded {
+    font-size: 22px;
+    line-height: 1;
+    transform: translateY(1px);
   }
 
   .hero-image {
@@ -387,13 +401,39 @@
       margin-inline: auto;
     }
 
-    .cta {
-      margin-inline: auto;
-      display: block;
-    }
-
     .hero-image {
       margin-top: 2.5rem;
+    }
+  }
+
+  /* ===== MOBILE (<=600px) ===== */
+  @media (max-width: 600px) {
+    .cta {
+      width: 100%;
+      max-width: 340px; /* largura agradável pro mobile */
+      min-height: 52px; /* área de toque confortável */
+      height: auto;
+      padding-inline: clamp(16px, 6vw, 22px);
+      border-radius: 999px; /* pílula */
+      font-size: clamp(0.95rem, 3.7vw, 1.05rem); /* texto responsivo */
+      margin-inline: auto; /* centraliza */
+      box-shadow: 0 8px 20px rgba(246, 135, 0, 0.28); /* leve upgrade na sombra */
+      white-space: nowrap; /* evita quebra feia quando couber */
+    }
+    .cta .v-btn__content {
+      gap: 0.4rem;
+    }
+    .cta .v-icon,
+    .cta .material-symbols-rounded {
+      font-size: 20px;
+      transform: translateY(0.5px);
+    }
+  }
+
+  /* telas ultra estreitas: liberar quebra quando necessário */
+  @media (max-width: 360px) {
+    .cta {
+      white-space: normal;
     }
   }
 
