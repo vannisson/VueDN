@@ -8,7 +8,7 @@
     </v-img>
 
     <div class="news-content">
-      <h3 class="news-title">{{ title }}</h3>
+      <h3 class="news-title" :title="title">{{ title }}</h3>
       <p class="news-text">{{ description }}</p>
 
       <div class="news-footer">
@@ -53,16 +53,22 @@
     display: flex;
     flex-direction: column;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    --img-h: 220px;
   }
   .news-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
   }
 
+  /* --------------- IMAGEM: altura fixa e sem encolher --------------- */
   .news-image {
     position: relative;
+    height: var(--img-h);
+    flex: 0 0 var(--img-h);
   }
-
+  .news-image .v-image__image {
+    object-fit: cover;
+  }
   .news-chip {
     position: absolute;
     top: 12px;
@@ -87,12 +93,12 @@
     background-color: #6b7280;
   }
 
+  /* --------------- CONTEÚDO --------------- */
   .news-content {
     padding: 1rem 1.25rem 1.25rem;
-    flex: 1;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
 
   .news-title {
@@ -101,12 +107,31 @@
     line-height: 1.4;
     color: #0a0e1c;
     margin-bottom: 0.5rem;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+
+    min-height: calc(2 * 1em * 1.4);
   }
 
   .news-text {
     font-size: 0.92rem;
+    line-height: 1.6;
     color: #003b52;
     margin-bottom: 1rem;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+
+    min-height: calc(3 * 1em * 1.6);
   }
 
   .news-footer {
