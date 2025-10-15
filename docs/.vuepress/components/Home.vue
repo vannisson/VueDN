@@ -20,7 +20,7 @@
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
           </p>
 
-          <v-btn class="cta">Conheça nossos projetos</v-btn>
+          <v-btn class="cta" prepend-icon="mdi-compass-outline">Conheça nossos projetos</v-btn>
         </v-col>
 
         <!-- Imagem -->
@@ -131,7 +131,9 @@
                 muito distinta entre os países do globo? Essas e outras indagações são temáticas
                 discutidas pelo Laboratório do Manuscrito Escolar (LAME).
               </p>
-              <v-btn class="cta">Conheça nossos projetos</v-btn>
+              <v-btn class="cta" prepend-icon="mdi-compass-outline">
+                Conheça nossos projetos
+              </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -177,7 +179,7 @@
         <div class="strip-fade right" :class="{ show: !atEnd }"></div>
 
         <div class="strip-footer">
-          <v-btn class="cta">Veja mais notícias</v-btn>
+          <v-btn class="cta" prepend-icon="mdi-library-outline">Veja mais conteúdos</v-btn>
         </div>
       </section>
     </v-container>
