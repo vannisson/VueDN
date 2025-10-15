@@ -1,85 +1,68 @@
 <template>
   <div class="page-wrapper">
     <img src="/imgs/home/background_sphere.svg" alt="" class="background-decor" />
-    <v-container fluid class="general-container">
-      <!-- Primeira linha: título + vídeo -->
-      <v-row align="center" justify="center" class="intro-container">
-        <v-col cols="3">
-          <p
-            style="
-              font-weight: 700;
-              font-size: 4rem;
-              line-height: 1.1;
-              color: #0a0e1c;
-              margin-bottom: 1.5rem;
-            "
-          >
+
+    <!-- Alinhado ao header -->
+    <v-container fluid class="general-container site-container">
+      <!-- HERO: título + texto + imagem -->
+      <v-row class="hero" align="center">
+        <!-- Texto -->
+        <v-col cols="12" md="6" lg="5">
+          <h1 class="hero-title">
             Laboratório do<br />
             Manuscrito Escolar
-          </p>
-          <p
-            style="
-              font-weight: 100;
-              font-size: 1rem;
-              line-height: 1.7;
-              color: #003b52;
-              margin-bottom: 1.5rem;
-            "
-          >
+          </h1>
+
+          <p class="hero-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
           </p>
-          <v-btn
-            style="background-color: #f68700; height: 3rem; width: 20rem; border-radius: 30px"
-            class="text-white"
-          >
-            Conheça nossos projetos
-          </v-btn>
+
+          <v-btn class="cta">Conheça nossos projetos</v-btn>
         </v-col>
-        <v-col cols="4" class="d-flex justify-center">
+
+        <!-- Imagem -->
+        <v-col cols="12" md="6" lg="6" class="d-flex justify-center">
           <v-img
             src="/imgs/home/home_01.png"
-            max-width="40rem"
-            style="border-radius: 40px 40px 10px 40px; pointer-events: none"
+            class="hero-image"
+            alt="Crianças estudando"
+            width="100%"
+            max-width="640"
+            cover
           />
         </v-col>
       </v-row>
 
-      <!-- Segunda linha: cards -->
-      <v-row class="cards-row" align="center" justify="center" style="gap: 4rem">
-        <v-col cols="2" class="d-flex">
-          <v-card class="custom-card" elevation="4" style="border-radius: 10px 40px 40px 40px">
-            <v-container class="d-flex flex-column justify-space-between pa-0" style="height: 100%">
-              <div>
-                <v-img
-                  src="/imgs/home/icon_green.svg"
-                  max-width="80"
-                  class="mx-auto mb-6 mt-6"
-                  style="pointer-events: none"
-                />
-                <p class="card-title">Quem somos?</p>
+      <!-- CARDS -->
+      <v-row class="cards-row" align="stretch" justify="space-between">
+        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+          <v-card class="custom-card card-a" elevation="3">
+            <div class="card-inner">
+              <div class="card-content">
+                <v-img src="/imgs/home/icon_green.svg" width="72" class="card-icon" alt="" />
+                <p class="card-title">Pesquisadores</p>
                 <p class="card-description">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                   incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
                   nostrud.
                 </p>
               </div>
-              <v-btn variant="text" class="card-link">Saiba mais</v-btn>
-            </v-container>
+
+              <div class="card-actions">
+                <v-btn variant="text" class="card-link">Saiba mais</v-btn>
+              </div>
+            </div>
           </v-card>
         </v-col>
-        <v-col cols="2" class="d-flex">
-          <v-card class="custom-card" elevation="4" style="border-radius: 40px 40px 40px 40px">
-            <v-container class="d-flex flex-column justify-space-between pa-0" style="height: 100%">
-              <div>
-                <v-img
-                  src="/imgs/home/icon_orange.svg"
-                  max-width="80"
-                  class="mx-auto mb-6 mt-6"
-                  style="pointer-events: none"
-                />
+
+        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+          <v-card class="custom-card card-b" elevation="3">
+            <div class="card-inner">
+              <div class="card-content">
+                <v-img src="/imgs/home/icon_orange.svg" width="72" class="card-icon" alt="" />
                 <p class="card-title">O que é o LAME?</p>
                 <p class="card-description">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -87,103 +70,82 @@
                   nostrud.
                 </p>
               </div>
-              <v-btn variant="text" class="card-link">Saiba mais</v-btn>
-            </v-container>
+
+              <div class="card-actions">
+                <v-btn variant="text" class="card-link">Saiba mais</v-btn>
+              </div>
+            </div>
           </v-card>
         </v-col>
-        <v-col cols="2" class="d-flex">
-          <v-card class="custom-card" elevation="4" style="border-radius: 40px 10px 40px 40px">
-            <v-container class="d-flex flex-column justify-space-between pa-0" style="height: 100%">
-              <div>
-                <v-img
-                  src="/imgs/home/icon_blue.svg"
-                  max-width="80"
-                  class="mx-auto mb-6 mt-6"
-                  style="pointer-events: none"
-                />
-                <p class="card-title">O que pesquisamos?</p>
+
+        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+          <v-card class="custom-card card-c" elevation="3">
+            <div class="card-inner">
+              <div class="card-content">
+                <v-img src="/imgs/home/icon_blue.svg" width="72" class="card-icon" alt="" />
+                <p class="card-title">Nossos projetos</p>
                 <p class="card-description">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                   incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
                   nostrud.
                 </p>
               </div>
-              <v-btn variant="text" class="card-link">Saiba mais</v-btn>
-            </v-container>
+
+              <div class="card-actions">
+                <v-btn variant="text" class="card-link">Saiba mais</v-btn>
+              </div>
+            </div>
           </v-card>
         </v-col>
       </v-row>
 
-      <v-row class="mid-row" align="center" justify="center" style="background-color: white">
-        <v-col cols="4" class="d-flex justify-center">
-          <v-img
-            src="/imgs/home/home_02.png"
-            max-width="40rem"
-            style="border-radius: 40px 10px 40px 40px; pointer-events: none"
-          />
-        </v-col>
-        <v-col cols="3">
-          <p
-            style="
-              font-weight: 700;
-              font-size: 3rem;
-              line-height: 1.1;
-              color: #0a0e1c;
-              margin-bottom: 1.5rem;
-            "
-          >
-            Realizando estudos para...
-          </p>
-          <p
-            style="
-              font-weight: 100;
-              font-size: 1rem;
-              line-height: 1.7;
-              color: #003b52;
-              margin-bottom: 1.5rem;
-            "
-          >
-            Quais são as primeiras palavras escritas por uma criança? Quantas tentativas são
-            necessárias para que ela formule corretamente uma frase? A interação pedagógica é muito
-            distinta entre os países do globo? Essas e outras indagações são temáticas discutidas
-            pelo Laboratório do Manuscrito Escolar (LAME).
-          </p>
-          <v-btn
-            style="background-color: #f68700; height: 3rem; width: 20rem; border-radius: 30px"
-            class="text-white"
-          >
-            Conheça nossos projetos
-          </v-btn>
-        </v-col>
-      </v-row>
+      <!-- BLOCO MEIO -->
+      <div class="mid-bleed">
+        <v-container class="site-container">
+          <v-row class="mid-row" align="center">
+            <!-- tirei justify="center" (opcional) -->
+            <!-- Imagem -->
+            <v-col
+              cols="12"
+              md="6"
+              lg="6"
+              order="1"
+              order-md="1"
+              class="d-flex justify-center px-4"
+            >
+              <v-img
+                src="/imgs/home/home_02.png"
+                class="mid-image"
+                alt="Crianças estudando"
+                width="100%"
+                max-width="640"
+                cover
+              />
+            </v-col>
 
+            <!-- Texto -->
+            <v-col cols="12" md="6" lg="5" order="2" order-md="2" class="px-4">
+              <h2 class="section-title">Realizando estudos para...</h2>
+              <p class="section-text">
+                Quais são as primeiras palavras escritas por uma criança? Quantas tentativas são
+                necessárias para que ela formule corretamente uma frase? A interação pedagógica é
+                muito distinta entre os países do globo? Essas e outras indagações são temáticas
+                discutidas pelo Laboratório do Manuscrito Escolar (LAME).
+              </p>
+              <v-btn class="cta">Conheça nossos projetos</v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+
+      <!-- NOTÍCIAS (placeholder) -->
       <v-row class="content-row">
-        <v-row style="padding: 4rem 4rem; display: flex; flex-direction: row">
-          <p style="font-weight: 700; font-size: 3rem; line-height: 1.1; color: #0a0e1c">
-            Últimas notícias
-          </p>
-        </v-row>
-        <v-row style="padding: 4rem 4rem">
-          <!-- <v-card elevation="4" style="border-radius:40px">
-            <v-container class="d-flex flex-column justify-space-between pa-0" style="height: 100%">
-              <div>
-                <v-img
-                  src="/imgs/home/icon_green.svg"
-                  max-width="80"
-                  class="mx-auto mb-6 mt-6"
-                  style="pointer-events: none"
-                />
-                <p class="card-title">Quem somos?</p>
-                <p class="card-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                  nostrud.
-                </p>
-              </div>
-              <v-btn variant="text" class="card-link">Saiba mais</v-btn>
-            </v-container>
-          </v-card> -->
-        </v-row>
+        <v-col cols="12">
+          <h2 class="section-title" style="padding-inline: 1rem">Últimas notícias</h2>
+        </v-col>
+        <v-col cols="12">
+          <!-- Conteúdo futuro -->
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -192,79 +154,284 @@
 <script setup lang="ts"></script>
 
 <style scoped>
+  .site-container {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem) !important;
+  }
+
   .page-wrapper {
     position: relative;
     overflow: hidden;
-    background-color: #f6f6f6;
+    background: #f6f6f6;
   }
 
   .background-decor {
     position: absolute;
-    bottom: 50%;
+    bottom: 48%;
     left: 60%;
     width: 50%;
     pointer-events: none;
     user-select: none;
+    opacity: 0.9;
   }
 
-  .general-container {
-    position: relative;
-    z-index: 1;
+  /* ============================= HERO ============================= */
+  .hero {
+    gap: clamp(1.25rem, 3vw, 3rem);
+    padding: clamp(3rem, 6vw, 6rem) 0 clamp(4rem, 8vw, 8rem);
   }
 
-  .intro-container {
-    padding: 5rem 0rem 8rem;
+  .hero-title {
+    font-weight: 800;
+    font-size: clamp(2.625rem, 3.5vw + 1rem, 4rem);
+    line-height: 1.08;
+    color: #0a0e1c;
+    margin: 0 0 1.25rem;
   }
 
+  .hero-text {
+    max-width: 58ch;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #003b52;
+    margin: 0 0 1.5rem;
+  }
+
+  .cta {
+    background-color: #f68700 !important;
+    color: #fff !important;
+    height: 3rem;
+    padding-inline: 2rem;
+    border-radius: 30px;
+    font-weight: 700;
+    text-transform: none;
+    box-shadow: 0 6px 16px rgba(246, 135, 0, 0.25);
+  }
+
+  .hero-image {
+    border-radius: 40px 40px 10px 40px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+  }
+
+  .hero-image,
+  .mid-image {
+    border-radius: 40px 40px 10px 40px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+    transition: none !important; /* remove transições */
+    transform: none !important; /* impede animação de scale */
+    pointer-events: none; /* evita clique ou hover */
+    object-fit: cover; /* mantém o enquadramento correto */
+  }
+
+  @media (max-width: 600px) {
+    .hero-image,
+    .mid-image {
+      border-width: 4px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero {
+      text-align: center;
+      justify-content: center;
+    }
+
+    .hero-title,
+    .hero-text {
+      margin-inline: auto;
+    }
+
+    .cta {
+      margin-inline: auto;
+      display: block;
+    }
+
+    .hero-image {
+      margin-top: 2.5rem;
+    }
+  }
+
+  /* ===== Cards ===== */
   .cards-row {
-    padding: 2rem 0rem 8rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3.5rem, 7vw, 6rem);
   }
 
-  .mid-row {
-    padding: 4rem 0rem;
+  /* coluna centraliza o card; card fica mais estreito e alto */
+  .card-col {
+    display: flex;
+    justify-content: center;
   }
 
   .custom-card {
-    min-height: 26rem;
-    padding: 1rem;
-    text-align: center;
-    background-color: white;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 360px; /* mais estreito */
+    min-height: 400px; /* mais alto (ajuste fino aqui) */
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  .custom-card:hover {
+    transform: translateY(-2px);
   }
 
-  .custom-card:hover {
-    transform: translateY(-4px);
+  .card-a {
+    --hover-color: #56b057; /* verde */
+    border-radius: 12px 24px 24px 24px;
+  }
+  .card-b {
+    --hover-color: #f68700; /* laranja */
+    border-radius: 24px;
+  }
+  .card-c {
+    --hover-color: #0056d2; /* azul */
+    border-radius: 24px 12px 24px 24px;
+  }
+
+  .card-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-content {
+    flex: 1 1 auto;
+    padding: 20px 20px 0;
+    text-align: center;
+  }
+
+  /* rodapé nivelado (todos iguais) */
+  .card-actions {
+    padding: 0 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card-icon {
+    margin: 0.75rem auto 1rem;
+    pointer-events: none;
   }
 
   .card-title {
-    font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 1.1;
+    margin-top: 0.5rem;
+    font-weight: 800;
+    font-size: 1.35rem;
+    line-height: 1.2;
     color: #0a0e1c;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .card-description {
+    max-width: 36ch;
+    margin: 0 auto;
     font-weight: 400;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: #003b52;
   }
 
   .card-link {
-    font-weight: 650;
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: 1.05rem;
     color: #0a0e1c;
     text-transform: none;
-    position: relative;
+    padding: 0;
+    margin: 0;
+    border-radius: 8px;
+    transition: all 0.25s ease;
   }
-  /* 
-  .card-link::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 3px;
-    background-color: #0a0e1c;
-    margin-top: 4px;
-  } */
+
+  .card-link:hover {
+    background-color: var(--hover-color);
+    color: #fff;
+    transform: translateY(-2px);
+    padding: 0.25rem 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-link:active {
+    transform: scale(0.97);
+  }
+
+  @media (max-width: 960px) {
+    .custom-card {
+      max-width: 100%;
+      min-height: 440px;
+    }
+  }
+
+  /* ============================= BLOCO MEIO ============================= */
+  .mid-row {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .mid-image {
+    border-radius: 40px 10px 40px 40px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .section-title {
+    font-weight: 800;
+    font-size: clamp(2rem, 2.5vw + 1rem, 3rem);
+    line-height: 1.12;
+    color: #0a0e1c;
+    margin: 0 0 1rem;
+  }
+
+  .section-text {
+    max-width: 60ch;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #003b52;
+    margin: 0 0 1.5rem;
+  }
+
+  /* full-bleed wrapper */
+  .mid-bleed {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+
+    background: #fff;
+    padding-block: clamp(2rem, 6vw, 4rem);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ============================= OUTROS ============================= */
+  .content-row {
+    padding: 2rem 0 6rem;
+  }
+
+  /* Responsivo fino */
+  @media (max-width: 960px) {
+    .hero {
+      padding-top: 3.5rem;
+    }
+    .hero-image,
+    .mid-image {
+      max-width: 520px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title {
+      line-height: 1.05;
+    }
+    .hero-text,
+    .section-text {
+      max-width: 100%;
+    }
+  }
 </style>
