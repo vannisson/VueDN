@@ -103,7 +103,6 @@
       <div class="mid-bleed">
         <v-container class="site-container">
           <v-row class="mid-row" align="center">
-            <!-- tirei justify="center" (opcional) -->
             <!-- Imagem -->
             <v-col
               cols="12"
@@ -138,20 +137,161 @@
         </v-container>
       </div>
 
-      <!-- NOTÍCIAS (placeholder) -->
-      <v-row class="content-row">
-        <v-col cols="12">
-          <h2 class="section-title" style="padding-inline: 1rem">Últimas notícias</h2>
-        </v-col>
-        <v-col cols="12">
-          <!-- Conteúdo futuro -->
-        </v-col>
-      </v-row>
+      <!-- NOTÍCIAS -->
+      <section class="news-strip">
+        <div class="strip-header">
+          <h2 class="section-title">Últimos Conteúdos</h2>
+
+          <div class="strip-ctrls">
+            <v-btn
+              icon
+              class="ctrl-btn"
+              :disabled="atStart"
+              @click="scroll(-1)"
+              aria-label="Anterior"
+            >
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-btn icon class="ctrl-btn" :disabled="atEnd" @click="scroll(1)" aria-label="Próximo">
+              <v-icon>mdi-chevron-right</v-icon>
+            </v-btn>
+          </div>
+        </div>
+
+        <div class="float-nav">
+          <v-btn icon class="ctrl-btn" :disabled="!hasOverflow || atStart" @click="scroll(-1)">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-btn icon class="ctrl-btn" :disabled="!hasOverflow || atEnd" @click="scroll(1)">
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+        </div>
+
+        <div class="strip-viewport" ref="strip" @scroll="onScroll">
+          <div class="strip-track">
+            <NewsCard v-for="(item, i) in newsList" :key="i" v-bind="item" class="strip-card" />
+          </div>
+        </div>
+
+        <div class="strip-fade left" :class="{ show: !atStart }"></div>
+        <div class="strip-fade right" :class="{ show: !atEnd }"></div>
+
+        <div class="strip-footer">
+          <v-btn class="cta">Veja mais notícias</v-btn>
+        </div>
+      </section>
     </v-container>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import NewsCard from '../components/NewsCard.vue'
+
+  const newsList = [
+    {
+      image: '/imgs/home/home_03.png',
+      category: 'Notícia',
+      title: 'Pesquisa internacional do LAME integrará 4ª jornada do manuscrito escolar.',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+      date: '22/01/2024',
+      categoryColor: 'notice',
+    },
+    {
+      image: '/imgs/home/home_03.png',
+      category: 'Aula',
+      title: 'Aula LAME 2024',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      date: '22/01/2024',
+      categoryColor: 'audio',
+    },
+    {
+      image: '/imgs/home/home_03.png',
+      category: 'Aula',
+      title: 'Aula LAME 2025',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      date: '22/01/2025',
+      categoryColor: 'audio',
+    },
+    {
+      image: '/imgs/home/home_03.png',
+      category: 'Aula',
+      title: 'Aula LAME 2025',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      date: '22/01/2025',
+      categoryColor: 'audio',
+    },
+    {
+      image: '/imgs/home/home_03.png',
+      category: 'Aula',
+      title: 'Aula LAME 2025',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      date: '22/01/2025',
+      categoryColor: 'audio',
+    },
+    {
+      image: '/imgs/home/home_03.png',
+      category: 'Aula',
+      title: 'Aula LAME 2025',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      date: '22/01/2025',
+      categoryColor: 'audio',
+    },
+    {
+      image: '/imgs/home/home_03.png',
+      category: 'Aula',
+      title: 'Aula LAME 2025',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      date: '22/01/2025',
+      categoryColor: 'audio',
+    },
+  ]
+
+  import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+
+  const strip = ref<HTMLElement | null>(null)
+  const atStart = ref(true)
+  const atEnd = ref(false)
+  const hasOverflow = ref(false)
+
+  function updateState() {
+    const el = strip.value
+    if (!el) return
+    const eps = 2
+    hasOverflow.value = el.scrollWidth - el.clientWidth > eps
+    atStart.value = hasOverflow.value ? el.scrollLeft <= eps : true
+    atEnd.value = hasOverflow.value ? el.scrollLeft + el.clientWidth >= el.scrollWidth - eps : true
+  }
+
+  function onScroll() {
+    updateState()
+  }
+
+  function scroll(dir: -1 | 1) {
+    const el = strip.value
+    if (!el) return
+    const amount = Math.round(el.clientWidth * 0.85)
+    el.scrollBy({ left: dir * amount, behavior: 'smooth' })
+    // após a animação, recalcule
+    setTimeout(updateState, 400)
+  }
+
+  onMounted(async () => {
+    // espera layout e imagens
+    await nextTick()
+    requestAnimationFrame(updateState)
+    window.addEventListener('resize', updateState)
+  })
+  onBeforeUnmount(() => {
+    window.removeEventListener('resize', updateState)
+  })
+</script>
 
 <style scoped>
   .site-container {
@@ -260,7 +400,6 @@
     padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3.5rem, 7vw, 6rem);
   }
 
-  /* coluna centraliza o card; card fica mais estreito e alto */
   .card-col {
     display: flex;
     justify-content: center;
@@ -268,8 +407,8 @@
 
   .custom-card {
     width: 100%;
-    max-width: 360px; /* mais estreito */
-    min-height: 400px; /* mais alto (ajuste fino aqui) */
+    max-width: 360px;
+    min-height: 400px;
     background: #fff;
     border-radius: 24px;
     box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
@@ -281,15 +420,15 @@
   }
 
   .card-a {
-    --hover-color: #56b057; /* verde */
+    --hover-color: #56b057;
     border-radius: 12px 24px 24px 24px;
   }
   .card-b {
-    --hover-color: #f68700; /* laranja */
+    --hover-color: #f68700;
     border-radius: 24px;
   }
   .card-c {
-    --hover-color: #0056d2; /* azul */
+    --hover-color: #0056d2;
     border-radius: 24px 12px 24px 24px;
   }
 
@@ -305,7 +444,6 @@
     text-align: center;
   }
 
-  /* rodapé nivelado (todos iguais) */
   .card-actions {
     padding: 0 20px 20px;
     display: flex;
@@ -379,7 +517,7 @@
   }
 
   .section-title {
-    font-weight: 800;
+    font-weight: 700;
     font-size: clamp(2rem, 2.5vw + 1rem, 3rem);
     line-height: 1.12;
     color: #0a0e1c;
@@ -409,12 +547,138 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   }
 
+  /* ====== Carrossel horizontal de notícias ====== */
+  .news-strip {
+    position: relative;
+    margin: 4rem 0;
+  }
+
+  .strip-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .strip-ctrls .ctrl-btn {
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    margin-left: 0.25rem;
+  }
+
+  .strip-viewport {
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    padding-block: 0.25rem 1rem;
+    scrollbar-width: none;
+    margin: 2rem 0 3rem 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .strip-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .strip-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: clamp(280px, 32vw, 360px); /* largura de cada card */
+    gap: 16px;
+    padding-inline: 1rem;
+  }
+
+  /* card não deve encolher */
+  .strip-card {
+    width: 100%;
+  }
+
+  .strip-fade {
+    pointer-events: none;
+    position: absolute;
+    top: 64px;
+    bottom: 56px;
+    width: 48px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .strip-fade.show {
+    opacity: 1;
+  }
+
+  .strip-fade.left {
+    left: 0;
+    background: linear-gradient(to right, rgba(246, 246, 246, 1), rgba(246, 246, 246, 0));
+  }
+  .strip-fade.right {
+    right: 0;
+    background: linear-gradient(to left, rgba(246, 246, 246, 1), rgba(246, 246, 246, 0));
+  }
+
+  .strip-footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .float-nav {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .strip-header .strip-ctrls {
+      display: none;
+    }
+
+    .float-nav {
+      position: absolute;
+      top: 4.5rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: 0.25rem;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .float-nav .ctrl-btn {
+      pointer-events: auto;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+      background: #fff;
+    }
+
+    .strip-track {
+      grid-auto-columns: clamp(260px, 88vw, 340px);
+      gap: 10px;
+    }
+
+    .strip-fade {
+      width: 32px;
+      top: 4.25rem;
+      bottom: 64px;
+    }
+  }
+
+  @media (min-width: 601px) and (max-width: 960px) {
+    .strip-track {
+      grid-auto-columns: clamp(300px, 45vw, 360px);
+      gap: 14px;
+    }
+    .strip-fade {
+      width: 44px;
+    }
+  }
+
   /* ============================= OUTROS ============================= */
   .content-row {
     padding: 2rem 0 6rem;
   }
 
-  /* Responsivo fino */
   @media (max-width: 960px) {
     .hero {
       padding-top: 3.5rem;
