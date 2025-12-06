@@ -18,7 +18,7 @@
               v-model="searchQuery"
               type="text"
               class="search-input"
-              placeholder="Pesquisar por título, autores ou fonte"
+              placeholder="Pesquisar por título, autores, ano ou conferência"
             />
           </div>
         </div>
