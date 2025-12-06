@@ -95,9 +95,13 @@
   const scrolled = ref(false)
   const mobileMenu = ref(false)
 
-  function isActive(item: { to: string }) {
-    return route.path === item.to || route.path.startsWith(item.to)
+  function isActive(item) {
+    if (item.to === '/') {
+      return route.path === '/'
+    }
+    return route.path.startsWith(item.to)
   }
+
   function onScroll() {
     scrolled.value = window.scrollY > 10
   }
@@ -134,20 +138,20 @@
   }
 
   .logo-header {
-    max-height: 96px;
+    max-height: 130px;
     width: auto;
   }
+
   @media (max-width: 960px) {
     .logo-header {
-      max-height: 72px;
+      max-height: 100px;
     }
   }
   @media (max-width: 600px) {
     .logo-header {
-      max-height: 60px;
+      max-height: 80px;
     }
   }
-
   .logo-mobile {
     height: 60px;
     width: auto;
