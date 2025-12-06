@@ -21,10 +21,15 @@
             <h1 class="hero-title">Nossa História</h1>
 
             <p class="hero-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+              O Laboratório do Manuscrito Escolar (LAME), criado em 2010 pelo professor Dr. Eduardo
+              Calil (Ufal), dedica-se ao estudo da escrita em processo, diretamente no contexto da
+              sala de aula. Calil desenvolveu o Sistema Ramos como base para as coletas e registros
+              de dados. Esse sistema registra simultaneamente as ações do escrevente — como rasuras
+              — e suas verbalizações durante situações de produção textual. Além de desenvolver
+              pesquisas sobre a gênese da produção textual escrita, o LAME tem um importante acervo
+              de manuscritos e registros escolares coletados desde 1989, possibilitando a realização
+              de pesquisas que se dedicam a compreender a gênese e a escrita do manuscrito escolar
+              há mais de três décadas.
             </p>
           </div>
         </v-col>
@@ -37,10 +42,10 @@
         <div class="card card-center">
           <h2 class="section-title center">O que fazemos?</h2>
           <p class="section-text center">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+            Investigamos práticas de escrita desenvolvidas no ambiente escolar, valorizando o
+            processo de produção textual e o manuscrito escolar como testemunho da formação
+            intelectual, social e cultural estudantil. No LAME, cada linha escrita por uma criança
+            ou jovem é vista como expressão viva de conhecimento em construção.
           </p>
         </div>
       </v-container>
@@ -49,20 +54,7 @@
     <!-- ============ ONDE ESTAMOS ============ -->
     <section class="section section-where">
       <v-row class="hero-row" align="center" justify="space-between">
-        <!-- Card de texto (esquerda) -->
-        <v-col cols="12" md="6" class="hero-text-col">
-          <div class="hero-card">
-            <h1 class="hero-title">Onde estamos?</h1>
-
-            <p class="hero-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-            </p>
-          </div>
-        </v-col>
-        <!-- Imagem (direita) -->
+        <!-- Imagem (esquerda ) -->
 
         <v-col cols="12" md="6" class="hero-image-col">
           <v-img
@@ -73,6 +65,18 @@
             alt="Equipe reunida"
             cover
           />
+        </v-col>
+        <!-- Card de texto (direita) -->
+
+        <v-col cols="12" md="6" class="hero-text-col">
+          <div class="hero-card">
+            <h1 class="hero-title">Onde estamos?</h1>
+
+            <p class="hero-text">
+              Universidade Federal de Alagoas Faculdade de Letras (FALE) Centro de Pesquisa em
+              Educação e Linguagem (CEPEL)
+            </p>
+          </div>
         </v-col>
       </v-row>
     </section>
@@ -205,6 +209,10 @@
     text-align: justify;
   }
 
+  .section .hero-text {
+    font-size: 1.1rem;
+  }
+
   /* ========== SEÇÕES GENÉRICAS ========== */
 
   .section {
@@ -240,13 +248,9 @@
   .section-text {
     color: #003b52;
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 1.3rem;
     line-height: 1.8;
     margin: 0 0 0.75rem;
-  }
-
-  .section-where .hero-text-col {
-    border-radius: 0 48px 48px 0;
   }
 
   .center {
