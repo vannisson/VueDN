@@ -16,7 +16,7 @@
           <p class="hero-text">
             O Laboratório do Manuscrito Escolar (LAME) é um espaço de pesquisa, formação e reflexão
             vinculado ao Centro de Pesquisa em Educação e Linguagem (CEPEL), Universidade Federal de
-            Alagoas (Ufal). Atuando de forma interdisciplinar junto ao Programa de Pós-Graduação em
+            Alagoas. Atuando de forma interdisciplinar junto ao Programa de Pós-Graduação em
             Educação (PPGE) e ao Programa de Pós-Graduação em Linguística e Literatura (PPGLL), o
             LAME se dedica ao estudo do manuscrito escolar como objeto pedagógico, histórico e
             linguístico.
@@ -43,29 +43,6 @@
       <!-- CARDS -->
       <v-row class="cards-row" align="stretch" justify="space-between">
         <!-- CONTEÚDOS (AZUL) -->
-        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-          <v-card class="custom-card card-conteudos" elevation="3">
-            <div class="card-inner">
-              <div class="card-content">
-                <div class="card-icon-wrapper icon-blue">
-                  <v-icon size="32" color="white">mdi-library-outline</v-icon>
-                </div>
-
-                <p class="card-title">Conteúdos</p>
-                <p class="card-description">
-                  Materiais, vídeos e notícias produzidos pelo LAME para apoiar pesquisas, formações
-                  e práticas em sala de aula.
-                </p>
-              </div>
-
-              <div class="card-actions">
-                <v-btn variant="text" class="card-link blue" to="/conteudos/"> Saiba mais </v-btn>
-              </div>
-
-              <div class="card-bottom-bar bar-blue" />
-            </div>
-          </v-card>
-        </v-col>
 
         <!-- PROJETOS (LARANJA) -->
         <v-col cols="12" sm="6" md="4" class="card-col d-flex">
@@ -118,6 +95,30 @@
             </div>
           </v-card>
         </v-col>
+
+        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+          <v-card class="custom-card card-conteudos" elevation="3">
+            <div class="card-inner">
+              <div class="card-content">
+                <div class="card-icon-wrapper icon-blue">
+                  <v-icon size="32" color="white">mdi-library-outline</v-icon>
+                </div>
+
+                <p class="card-title">Vídeos e Notícias</p>
+                <p class="card-description">
+                  Vídeos e notícias produzidos pelo LAME para apoiar pesquisas, formações e práticas
+                  em sala de aula.
+                </p>
+              </div>
+
+              <div class="card-actions">
+                <v-btn variant="text" class="card-link blue" to="/conteudos/"> Saiba mais </v-btn>
+              </div>
+
+              <div class="card-bottom-bar bar-blue" />
+            </div>
+          </v-card>
+        </v-col>
       </v-row>
 
       <!-- BLOCO MEIO -->
@@ -147,10 +148,12 @@
             <v-col cols="12" md="6" lg="5" order="2" order-md="2" class="px-4">
               <h2 class="section-title">Realizando estudos para...</h2>
               <p class="section-text">
-                Quais são as primeiras palavras escritas por uma criança? Quantas tentativas são
-                necessárias para que ela formule corretamente uma frase? A interação pedagógica é
-                muito distinta entre os países do globo? Essas e outras indagações são temáticas
-                discutidas pelo Laboratório do Manuscrito Escolar (LAME).
+                Os integrantes do LAME realizam pesquisas para aprofundar conhecimento sobre a
+                gênese e a construção do manuscrito escolar, de modo a colaborar com formação
+                docente e aprendizagem discente. As pesquisas são realizadas a partir da análise
+                multimodal do manuscrito escolar e das falas docentes em situações de produção
+                textual. No LAME, também são analisados documentos didático-curriculares, como
+                livros didáticos.
               </p>
               <v-btn
                 class="cta"
@@ -167,7 +170,7 @@
       <!-- NOTÍCIAS -->
       <section class="news-strip">
         <div class="strip-header">
-          <h2 class="section-title">Últimos Conteúdos</h2>
+          <h2 class="section-title">Últimos Vídeos e Notícias</h2>
 
           <div class="strip-ctrls">
             <v-btn

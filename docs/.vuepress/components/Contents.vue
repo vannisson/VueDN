@@ -194,7 +194,6 @@
       })
     )
 
-    // opcional: ordenar por título ou outra coisa
     loaded.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
     contents.value = loaded
   })

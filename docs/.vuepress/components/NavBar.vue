@@ -92,9 +92,9 @@
     { label: 'Início', to: '/' },
     { label: 'Quem somos', to: '/about/' },
     { label: 'Pesquisadores', to: '/pesquisadores/' },
-    { label: 'Conteúdos', to: '/conteudos/' },
     { label: 'Projetos', to: '/projetos/' },
     { label: 'Publicações', to: '/publicacoes/' },
+    { label: 'Vídeos e Notícias', to: '/conteudos/' },
   ]
 
   const scrolled = ref(false)
