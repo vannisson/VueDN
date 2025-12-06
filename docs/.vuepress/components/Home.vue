@@ -14,10 +14,12 @@
           </h1>
 
           <p class="hero-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+            O Laboratório do Manuscrito Escolar (LAME) é um espaço de pesquisa, formação e reflexão
+            vinculado ao Centro de Pesquisa em Educação e Linguagem (CEPEL), Universidade Federal de
+            Alagoas (Ufal). Atuando de forma interdisciplinar junto ao Programa de Pós-Graduação em
+            Educação (PPGE) e ao Programa de Pós-Graduação em Linguística e Literatura (PPGLL), o
+            LAME se dedica ao estudo do manuscrito escolar como objeto pedagógico, histórico e
+            linguístico.
           </p>
 
           <v-btn class="cta" prepend-icon="mdi-compass-outline">Conheça nossos projetos</v-btn>
@@ -65,9 +67,9 @@
                 <v-img src="/imgs/home/icon_orange.svg" width="72" class="card-icon" alt="" />
                 <p class="card-title">O que é o LAME?</p>
                 <p class="card-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                  nostrud.
+                  Espaço de pesquisa, formação e reflexão vinculado à Universidade Federal de
+                  Alagoas, dedicado ao estudo da escrita escolar como expressão pedagógica,
+                  histórica e linguística. No LAME, cada manuscrito revela saberes em construção.
                 </p>
               </div>
 
