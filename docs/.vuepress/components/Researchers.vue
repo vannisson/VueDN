@@ -91,9 +91,9 @@
     </section>
 
     <!-- ============ PORTUGUESES ============ -->
-    <section class="section section-list alt">
+    <section class="section section-list">
       <v-container class="site-container">
-        <h2 class="section-title center">Pesquisadores portugueses</h2>
+        <p class="section-title center">Pesquisadores portugueses</p>
 
         <div class="researcher-list">
           <article v-for="r in ptResearchers" :key="r.name" class="researcher-card">
@@ -169,9 +169,9 @@
     </section>
 
     <!-- ============ FRANCESAS ============ -->
-    <section class="section section-list">
+    <section class="section section-list alt">
       <v-container class="site-container">
-        <h2 class="section-title center">Pesquisadoras francesas</h2>
+        <p class="section-title center">Pesquisadoras francesas</p>
 
         <div class="researcher-list">
           <article v-for="r in frResearchers" :key="r.name" class="researcher-card">
@@ -248,7 +248,7 @@
     <!-- ============ PESQUISADORES BRASILEIROS ============ -->
     <section class="section section-list">
       <v-container class="site-container">
-        <h2 class="section-title center">Pesquisadores (Brasil)</h2>
+        <p class="section-title center">Pesquisadores (Brasil)</p>
 
         <div class="researcher-list">
           <article v-for="r in sortedBrResearchers" :key="r.name" class="researcher-card">
@@ -671,7 +671,7 @@
     font-size: clamp(1.9rem, 2.3vw + 0.8rem, 2.4rem);
     line-height: 1.2;
     color: #0a0e1c;
-    margin: 0 0 0.5rem;
+    margin: 0 0 2rem;
   }
 
   .section-sub {
