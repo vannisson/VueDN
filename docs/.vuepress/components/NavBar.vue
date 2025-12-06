@@ -2,8 +2,8 @@
   <v-app-bar
     flat
     height="120"
-    :color="scrolled ? 'white' : 'transparent'"
-    :elevation="scrolled ? 2 : 0"
+    :color="forceSolid || scrolled ? 'white' : 'transparent'"
+    :elevation="forceSolid || scrolled ? 2 : 0"
     class="header-app-bar"
   >
     <v-container fluid class="site-container py-0">
@@ -15,7 +15,12 @@
         </v-col>
 
         <v-col cols="12" md="7" lg="7" class="d-none d-md-flex justify-center">
-          <nav class="nav-links" role="navigation" aria-label="Menu principal">
+          <nav
+            class="nav-links"
+            role="navigation"
+            aria-label="Menu principal"
+            :style="{ '--active-bar-color': activeBarColor }"
+          >
             <RouterLink
               v-for="item in items"
               :key="item.to"
@@ -79,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted, onBeforeUnmount } from 'vue'
+  import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
   import { useRoute } from 'vue-router'
 
   const route = useRoute()
@@ -88,14 +93,31 @@
     { label: 'Quem somos', to: '/about/' },
     { label: 'Pesquisadores', to: '/pesquisadores/' },
     { label: 'Projetos', to: '/projetos/' },
+    { label: 'Conteúdos', to: '/conteudos/' },
     { label: 'Publicações', to: '/publicacoes/' },
-    { label: 'Vídeos', to: '/videos/' },
   ]
 
   const scrolled = ref(false)
   const mobileMenu = ref(false)
 
-  function isActive(item) {
+  // força navbar sólida em páginas de detalhe
+  const forceSolid = computed(() => {
+    const p = route.path
+    const isProjectDetail = p.startsWith('/projetos/') && p !== '/projetos/'
+    const isContentDetail = p.startsWith('/conteudos/') && p !== '/conteudos/'
+    const isPublicationDetail = p.startsWith('/publicacoes/') && p !== '/publicacoes/'
+    return isProjectDetail || isContentDetail || isPublicationDetail
+  })
+
+  // cor da barrinha embaixo do link ativo
+  const activeBarColor = computed(() => {
+    const p = route.path
+    if (p.startsWith('/conteudos/')) return '#2563eb' // azul
+    if (p.startsWith('/publicacoes/')) return '#6EC62E' // verde
+    return '#f68700' // padrão (laranja)
+  })
+
+  function isActive(item: { to: string }) {
     if (item.to === '/') {
       return route.path === '/'
     }
@@ -152,6 +174,7 @@
       max-height: 80px;
     }
   }
+
   .logo-mobile {
     height: 60px;
     width: auto;
@@ -162,7 +185,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* valor padrão da cor da barra (caso o JS não rode por algum motivo) */
+    --active-bar-color: #f68700;
   }
+
   .nav-link {
     position: relative;
     margin: 0 1.1rem;
@@ -174,10 +200,12 @@
     opacity: 0.85;
     transition: opacity 0.2s ease, transform 0.2s ease;
   }
+
   .nav-link:hover {
     opacity: 1;
     transform: translateY(-2px);
   }
+
   .nav-link.active::after {
     content: '';
     position: absolute;
@@ -185,13 +213,14 @@
     right: 20%;
     bottom: -6px;
     height: 3px;
-    background: #f68700;
+    background: var(--active-bar-color, #f68700); /* usa a variável */
     border-radius: 3px;
   }
 
   .mobile-dialog {
     overflow: hidden;
   }
+
   .mobile-card {
     width: 100vw;
     height: 100vh;
@@ -222,6 +251,7 @@
     place-items: center;
     padding: 1.25rem;
   }
+
   .mobile-links {
     width: min(520px, 92vw);
     display: flex;
@@ -229,6 +259,7 @@
     gap: 0.75rem;
     text-align: center;
   }
+
   .mobile-link {
     display: block;
     padding: 1rem 1.25rem;
@@ -240,6 +271,7 @@
     background: #f7fafc;
     border: 1px solid rgba(0, 0, 0, 0.06);
   }
+
   .mobile-link:active {
     transform: scale(0.98);
   }

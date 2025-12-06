@@ -1,4 +1,4 @@
-<!-- docs/.vuepress/layouts/DetailProject.vue -->
+<!-- docs/.vuepress/layouts/DetailContent.vue -->
 <script setup lang="ts">
   // @ts-nocheck
 
@@ -34,14 +34,43 @@
 
   const cover = computed<string | null>(() => frontmatter.value.cover ?? null)
 
+  // ========== TIPO / BADGE (Material, Vídeo, Notícia) ==========
+  const rawBadge = computed(() => frontmatter.value.badge || frontmatter.value.tipo)
+
+  function normalizeBadge(value?: string) {
+    return (value || '')
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .toLowerCase()
+  }
+
+  function getBadgeLabel(badge?: string) {
+    const norm = normalizeBadge(badge)
+    if (norm === 'material') return 'Material'
+    if (norm === 'video') return 'Vídeo'
+    if (norm === 'noticia') return 'Notícia'
+    return 'Conteúdo'
+  }
+
+  function getBadgeIcon(badge?: string) {
+    const norm = normalizeBadge(badge)
+    if (norm === 'material') return 'mdi-book-open-variant'
+    if (norm === 'video') return 'mdi-play-circle'
+    if (norm === 'noticia') return 'mdi-newspaper-variant-outline'
+    return 'mdi-file-document-outline'
+  }
+
+  const badgeLabel = computed(() => getBadgeLabel(rawBadge.value))
+  const badgeIcon = computed(() => getBadgeIcon(rawBadge.value))
+
   /**
-   * OUTROS PROJETOS
-   * Carrega outros arquivos de /projetos/ (ou type: 'projeto'),
-   * excluindo a página atual, ordenados por data/ano.
+   * OUTROS CONTEÚDOS
+   * Carrega outros arquivos de /conteudos/ (ou type: 'conteudo'),
+   * excluindo a página atual, ordenados por data.
    */
-  const relatedProjects = ref<{ path: string; title: string; image: string; category?: string }[]>(
-    []
-  )
+  const relatedContents = ref<
+    { path: string; title: string; image: string; badge?: string; sortKey: number }[]
+  >([])
 
   onMounted(async () => {
     const loaded: any[] = []
@@ -63,13 +92,12 @@
         if (!p || typeof p !== 'object') return
         const fm: any = p.frontmatter ?? {}
 
-        // só páginas de projeto, excluindo a atual
-        const isProjectPath = path.startsWith('/projetos/')
-        const isProjectType = fm.type === 'projeto'
-        if (!(isProjectPath || isProjectType)) return
+        // só páginas de conteúdo, excluindo a atual
+        const isContentPath = path.startsWith('/conteudos/')
+        const isContentType = fm.type === 'conteudo'
+        if (!(isContentPath || isContentType)) return
         if (p.path === currentPath) return
 
-        // data só pra ordenar (não vamos mostrar aqui)
         const rawDate = fm.date ?? p.git?.createdTime
         let sortKey = 0
         if (rawDate) {
@@ -79,15 +107,16 @@
 
         loaded.push({
           path: p.path,
-          title: fm.title || p.title || 'Projeto',
-          image: fm.cover || '/imgs/projects/default.png',
+          title: fm.title || p.title || 'Conteúdo',
+          image: fm.cover || '/imgs/contents/default.png',
+          badge: fm.badge || fm.tipo || undefined,
           sortKey,
         })
       })
     )
 
     loaded.sort((a, b) => b.sortKey - a.sortKey)
-    relatedProjects.value = loaded.slice(0, 3)
+    relatedContents.value = loaded.slice(0, 3)
   })
 </script>
 
@@ -95,28 +124,37 @@
   <v-app>
     <NavBar />
 
-    <!-- sem padding-top: o banner verde ocupa o fundo atrás da navbar -->
+    <!-- sem padding-top: o banner azul ocupa o fundo atrás da navbar -->
     <v-main class="detail-main-root">
       <ParentLayout>
         <!-- esconde a navbar padrão do tema -->
         <template #navbar></template>
 
-        <!-- CONTEÚDO DA PÁGINA DE PROJETO -->
+        <!-- CONTEÚDO DA PÁGINA DE CONTEÚDO -->
         <template #page>
           <div class="detail-wrapper">
-            <!-- FAIXA VERDE "PROJETOS" -->
+            <!-- FAIXA AZUL "CONTEÚDOS" -->
             <section class="detail-banner">
               <v-container class="site-container">
-                <h1 class="banner-title">Projetos</h1>
+                <h1 class="banner-title">Conteúdos</h1>
               </v-container>
             </section>
 
-            <!-- TÍTULO, DATA, IMAGEM E TEXTO -->
+            <!-- TÍTULO, TIPO, DATA, IMAGEM E TEXTO -->
             <section class="detail-main">
               <v-container class="site-container">
                 <article class="detail-article">
                   <header class="detail-header">
-                    <h2 class="detail-title">{{ title }}</h2>
+                    <div class="header-left">
+                      <div v-if="badgeLabel" class="content-badge-pill">
+                        <v-icon size="16" class="pill-icon">
+                          {{ badgeIcon }}
+                        </v-icon>
+                        <span>{{ badgeLabel }}</span>
+                      </div>
+
+                      <h2 class="detail-title">{{ title }}</h2>
+                    </div>
 
                     <div v-if="formattedDate" class="detail-date-wrapper">
                       <v-icon size="16" class="detail-date-icon">
@@ -137,13 +175,16 @@
                   </div>
                 </article>
 
-                <!-- OUTROS PROJETOS -->
-                <section class="detail-related" v-if="relatedProjects.length">
-                  <h3 class="related-title">Outros projetos</h3>
+                <!-- OUTROS CONTEÚDOS -->
+                <section class="detail-related" v-if="relatedContents.length">
+                  <h3 class="related-title">
+                    Conteúdo relacionado
+                    <span class="related-underline" />
+                  </h3>
 
                   <div class="related-grid">
                     <RouterLink
-                      v-for="item in relatedProjects"
+                      v-for="item in relatedContents"
                       :key="item.path"
                       :to="item.path"
                       class="related-card"
@@ -153,7 +194,7 @@
                       </div>
 
                       <div class="related-body">
-                        <p class="related-type">Projeto</p>
+                        <p class="related-type">{{ getBadgeLabel(item.badge) }}</p>
                         <p class="related-text">{{ item.title }}</p>
                       </div>
                     </RouterLink>
@@ -166,12 +207,37 @@
       </ParentLayout>
     </v-main>
 
-    <!-- footer sempre visível, independente do ParentLayout -->
+    <!-- footer sempre visível -->
     <CustomFooter />
   </v-app>
 </template>
 
 <style scoped>
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .content-badge-pill {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: #aec8ff;
+    color: #2563eb;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .pill-icon {
+    margin-right: 2px;
+  }
+
   .detail-main-root {
     padding-top: 0 !important;
     background: #f3f4f6;
@@ -188,11 +254,10 @@
     padding-inline: clamp(1rem, 4vw, 2.5rem);
   }
 
-  /* FAIXA VERDE SUPERIOR */
+  /* FAIXA AZUL SUPERIOR */
   .detail-banner {
-    background: #f29226;
+    background: linear-gradient(90deg, #12358f, #2563eb);
     color: #ffffff;
-    /* espaço grande para parecer um header cheio + área atrás da navbar */
     padding-top: 10rem;
     padding-bottom: 1.8rem;
     margin-bottom: 2.25rem;
@@ -200,8 +265,8 @@
 
   .banner-title {
     margin: 0;
-    font-weight: 600;
-    font-size: 2.6rem;
+    font-weight: 700;
+    font-size: 2.4rem;
   }
 
   /* BLOCO PRINCIPAL */
@@ -220,7 +285,7 @@
     gap: 1.5rem;
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
-    border-bottom: 3px solid #f29226; /* linha verde embaixo do título + data */
+    border-bottom: 3px solid #2563eb;
   }
 
   .detail-title {
@@ -228,8 +293,8 @@
     font-size: 2rem;
     font-weight: 600;
     color: #0a0e1c;
-    border-bottom: none !important; /* remove a barrinha cinza do tema */
-    padding-bottom: 0; /* garante que não sobra espaço da borda */
+    border-bottom: none !important;
+    padding-bottom: 0;
   }
 
   .detail-date-wrapper {
@@ -241,10 +306,9 @@
   }
 
   .detail-date-icon {
-    color: #f97316;
+    color: #2563eb;
   }
 
-  /* corpo sem card, fundo igual ao da página */
   .detail-text-block {
     background: transparent;
     border-radius: 0;
@@ -280,7 +344,7 @@
     margin-bottom: 0.7rem;
     font-weight: 700;
     color: #111827;
-    border-bottom: none !important; /* sem linhas nos subtítulos */
+    border-bottom: none !important;
   }
 
   .markdown-body :deep(img) {
@@ -289,17 +353,28 @@
     margin-block: 1.5rem;
   }
 
-  /* OUTROS PROJETOS */
+  /* OUTROS CONTEÚDOS */
   .detail-related {
     margin-top: 2.5rem;
-    padding-bottom: 1.6rem; /* espaço antes do footer */
+    padding-bottom: 1.6rem;
   }
 
   .related-title {
     font-size: 1.05rem;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .related-underline {
+    width: 60px;
+    height: 3px;
+    background-color: #2563eb;
+    border-radius: 999px;
   }
 
   .related-grid {
@@ -342,7 +417,7 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #f97316;
+    color: #2563eb;
     margin: 0 0 0.25rem;
   }
 

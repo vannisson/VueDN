@@ -9,6 +9,7 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import DetailProject from './layouts/DetailProject.vue'
+import DetailContent from './layouts/DetailContent.vue'
 
 export default defineClientConfig({
   enhance({ app }) {
@@ -30,5 +31,5 @@ export default defineClientConfig({
     })
     app.use(vuetify)
   },
-  layouts: { Layout, DetailProject },
+  layouts: { Layout, DetailProject, DetailContent },
 })

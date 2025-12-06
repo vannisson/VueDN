@@ -9,17 +9,12 @@
           <span class="hero-highlight">transformando todo nosso coletivo</span>
         </p>
 
-        <!-- BUSCA -->
+        <!-- BUSCA (mesma da página de conteúdos) -->
         <div class="hero-search">
           <div class="search-bar">
             <v-icon size="18" class="search-icon-left">mdi-magnify</v-icon>
 
             <input v-model="searchQuery" type="text" class="search-input" placeholder="Pesquisar" />
-
-            <!-- ícone só visual por enquanto (pode virar select/filtro depois) -->
-            <button type="button" class="search-right">
-              <v-icon size="18">mdi-chevron-down</v-icon>
-            </button>
           </div>
         </div>
       </v-container>
@@ -219,7 +214,7 @@
   }
 
   .hero-highlight {
-    color: #ff8800;
+    color: #f29226;
     font-weight: 600;
   }
 
@@ -235,7 +230,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 520px;
+    max-width: 720px; /* mesmo valor da barra de Contents */
     padding: 0.55rem 0.9rem;
     border-radius: 999px;
     background: #ffffff;
