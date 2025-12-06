@@ -63,14 +63,40 @@
   const badgeLabel = computed(() => getBadgeLabel(rawBadge.value))
   const badgeIcon = computed(() => getBadgeIcon(rawBadge.value))
 
+  // ========== COMPARTILHAMENTO / REDES SOCIAIS ==========
+  const shareUrl = computed(() => {
+    if (typeof window === 'undefined') return ''
+    const origin = window.location.origin ?? ''
+    return origin + (page.value.path || '')
+  })
+
+  const whatsappShareUrl = computed(() =>
+    shareUrl.value ? `https://wa.me/?text=${encodeURIComponent(shareUrl.value)}` : '#'
+  )
+
+  const linkedinShareUrl = computed(() =>
+    shareUrl.value
+      ? `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl.value)}`
+      : '#'
+  )
+
+  const facebookShareUrl = computed(() =>
+    shareUrl.value
+      ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl.value)}`
+      : '#'
+  )
+
   /**
-   * OUTROS CONTEÚDOS
-   * Carrega outros arquivos de /conteudos/ (ou type: 'conteudo'),
-   * excluindo a página atual, ordenados por data.
+   * OUTROS CONTEÚDOS – CARROSSEL
    */
+  const MAX_RELATED = 6
+  const VISIBLE_PER_PAGE = 3
+
   const relatedContents = ref<
     { path: string; title: string; image: string; badge?: string; sortKey: number }[]
   >([])
+
+  const currentSlide = ref(0)
 
   onMounted(async () => {
     const loaded: any[] = []
@@ -116,8 +142,37 @@
     )
 
     loaded.sort((a, b) => b.sortKey - a.sortKey)
-    relatedContents.value = loaded.slice(0, 3)
+    relatedContents.value = loaded.slice(0, MAX_RELATED)
+    currentSlide.value = 0
   })
+
+  const maxSlide = computed(() => {
+    if (!relatedContents.value.length) return 0
+    return Math.max(0, Math.ceil(relatedContents.value.length / VISIBLE_PER_PAGE) - 1)
+  })
+
+  const visibleContents = computed(() => {
+    const start = currentSlide.value * VISIBLE_PER_PAGE
+    return relatedContents.value.slice(start, start + VISIBLE_PER_PAGE)
+  })
+
+  function nextSlide() {
+    if (!relatedContents.value.length) return
+    if (currentSlide.value >= maxSlide.value) {
+      currentSlide.value = 0
+    } else {
+      currentSlide.value++
+    }
+  }
+
+  function prevSlide() {
+    if (!relatedContents.value.length) return
+    if (currentSlide.value <= 0) {
+      currentSlide.value = maxSlide.value
+    } else {
+      currentSlide.value--
+    }
+  }
 </script>
 
 <template>
@@ -173,18 +228,78 @@
                       <Content />
                     </article>
                   </div>
+
+                  <!-- AUTOR + REDES SOCIAIS -->
+                  <div class="detail-social">
+                    <div class="social-left"></div>
+
+                    <div class="social-right">
+                      <span class="social-label">Compartilhe:</span>
+
+                      <a
+                        class="social-btn whatsapp"
+                        :href="whatsappShareUrl"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Compartilhar via WhatsApp"
+                      >
+                        <v-icon size="18">mdi-whatsapp</v-icon>
+                      </a>
+
+                      <a
+                        class="social-btn linkedin"
+                        :href="linkedinShareUrl"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Compartilhar no LinkedIn"
+                      >
+                        <v-icon size="18">mdi-linkedin</v-icon>
+                      </a>
+
+                      <a
+                        class="social-btn facebook"
+                        :href="facebookShareUrl"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Compartilhar no Facebook"
+                      >
+                        <v-icon size="18">mdi-facebook</v-icon>
+                      </a>
+                    </div>
+                  </div>
                 </article>
 
-                <!-- OUTROS CONTEÚDOS -->
+                <!-- CONTEÚDO RELACIONADO - CARROSSEL -->
                 <section class="detail-related" v-if="relatedContents.length">
-                  <h3 class="related-title">
-                    Conteúdo relacionado
-                    <span class="related-underline" />
-                  </h3>
+                  <div class="related-header">
+                    <div class="related-title-wrapper">
+                      <h3 class="related-title">Conteúdo relacionado</h3>
+                      <span class="related-line"></span>
+                    </div>
+
+                    <div class="related-nav" v-if="relatedContents.length > VISIBLE_PER_PAGE">
+                      <button
+                        type="button"
+                        class="related-nav-btn"
+                        @click="prevSlide"
+                        aria-label="Conteúdos anteriores"
+                      >
+                        <v-icon size="18">mdi-chevron-left</v-icon>
+                      </button>
+                      <button
+                        type="button"
+                        class="related-nav-btn"
+                        @click="nextSlide"
+                        aria-label="Próximos conteúdos"
+                      >
+                        <v-icon size="18">mdi-chevron-right</v-icon>
+                      </button>
+                    </div>
+                  </div>
 
                   <div class="related-grid">
                     <RouterLink
-                      v-for="item in relatedContents"
+                      v-for="item in visibleContents"
                       :key="item.path"
                       :to="item.path"
                       class="related-card"
@@ -247,7 +362,6 @@
     background: #f3f4f6;
   }
 
-  /* CONTAINER BASE */
   .site-container {
     max-width: 1200px;
     margin-inline: auto;
@@ -269,7 +383,6 @@
     font-size: 2.4rem;
   }
 
-  /* BLOCO PRINCIPAL */
   .detail-main {
     padding-bottom: 3rem;
   }
@@ -331,7 +444,6 @@
     color: #111827;
   }
 
-  /* markdown básica */
   .markdown-body :deep(p) {
     margin-bottom: 0.9rem;
     line-height: 1.7;
@@ -353,28 +465,121 @@
     margin-block: 1.5rem;
   }
 
-  /* OUTROS CONTEÚDOS */
+  /* ===== SOCIAL / COMPARTILHAR ===== */
+  .detail-social {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .social-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .social-avatar :deep(.v-avatar) {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  .social-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .social-label {
+    font-size: 0.85rem;
+    color: #374151;
+    margin-right: 0.5rem;
+  }
+
+  .social-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .social-btn:hover {
+    filter: brightness(0.9);
+  }
+
+  .social-btn.whatsapp {
+    background: #25d366;
+  }
+
+  .social-btn.linkedin {
+    background: #0a66c2;
+  }
+
+  .social-btn.facebook {
+    background: #1877f2;
+  }
+
+  /* ===== CONTEÚDO RELACIONADO / CARROSSEL ===== */
   .detail-related {
     margin-top: 2.5rem;
     padding-bottom: 1.6rem;
+  }
+
+  .related-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .related-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
   }
 
   .related-title {
     font-size: 1.05rem;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 1rem;
-    position: relative;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    white-space: nowrap;
+    margin: 0;
   }
 
-  .related-underline {
-    width: 60px;
+  .related-line {
     height: 3px;
-    background-color: #2563eb;
+    background: #2563eb;
+    flex: 1;
     border-radius: 999px;
+  }
+
+  .related-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .related-nav-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .related-nav-btn:hover {
+    background: #f3f4f6;
   }
 
   .related-grid {
@@ -435,6 +640,11 @@
       align-items: flex-start;
     }
 
+    .detail-social {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
     .related-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -443,6 +653,15 @@
   @media (max-width: 640px) {
     .related-grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .related-title-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .related-line {
+      width: 100%;
     }
   }
 </style>

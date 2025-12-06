@@ -34,14 +34,38 @@
 
   const cover = computed<string | null>(() => frontmatter.value.cover ?? null)
 
-  /**
-   * OUTROS PROJETOS
-   * Carrega outros arquivos de /projetos/ (ou type: 'projeto'),
-   * excluindo a página atual, ordenados por data/ano.
-   */
-  const relatedProjects = ref<{ path: string; title: string; image: string; category?: string }[]>(
-    []
+  // ===== COMPARTILHAMENTO / REDES SOCIAIS =====
+  const shareUrl = computed(() => {
+    if (typeof window === 'undefined') return ''
+    const origin = window.location.origin ?? ''
+    return origin + (page.value.path || '')
+  })
+
+  const whatsappShareUrl = computed(() =>
+    shareUrl.value ? `https://wa.me/?text=${encodeURIComponent(shareUrl.value)}` : '#'
   )
+
+  const linkedinShareUrl = computed(() =>
+    shareUrl.value
+      ? `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl.value)}`
+      : '#'
+  )
+
+  const facebookShareUrl = computed(() =>
+    shareUrl.value
+      ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl.value)}`
+      : '#'
+  )
+
+  /**
+   * OUTROS PROJETOS - CARROSSEL
+   */
+  const MAX_RELATED = 6
+  const VISIBLE_PER_PAGE = 3
+
+  const relatedProjects = ref<{ path: string; title: string; image: string; sortKey: number }[]>([])
+
+  const currentSlide = ref(0)
 
   onMounted(async () => {
     const loaded: any[] = []
@@ -87,24 +111,50 @@
     )
 
     loaded.sort((a, b) => b.sortKey - a.sortKey)
-    relatedProjects.value = loaded.slice(0, 3)
+    relatedProjects.value = loaded.slice(0, MAX_RELATED)
+    currentSlide.value = 0
   })
+
+  const maxSlide = computed(() => {
+    if (!relatedProjects.value.length) return 0
+    return Math.max(0, Math.ceil(relatedProjects.value.length / VISIBLE_PER_PAGE) - 1)
+  })
+
+  const visibleProjects = computed(() => {
+    const start = currentSlide.value * VISIBLE_PER_PAGE
+    return relatedProjects.value.slice(start, start + VISIBLE_PER_PAGE)
+  })
+
+  function nextSlide() {
+    if (!relatedProjects.value.length) return
+    if (currentSlide.value >= maxSlide.value) {
+      currentSlide.value = 0
+    } else {
+      currentSlide.value++
+    }
+  }
+
+  function prevSlide() {
+    if (!relatedProjects.value.length) return
+    if (currentSlide.value <= 0) {
+      currentSlide.value = maxSlide.value
+    } else {
+      currentSlide.value--
+    }
+  }
 </script>
 
 <template>
   <v-app>
     <NavBar />
 
-    <!-- sem padding-top: o banner verde ocupa o fundo atrás da navbar -->
     <v-main class="detail-main-root">
       <ParentLayout>
-        <!-- esconde a navbar padrão do tema -->
         <template #navbar></template>
 
-        <!-- CONTEÚDO DA PÁGINA DE PROJETO -->
         <template #page>
           <div class="detail-wrapper">
-            <!-- FAIXA VERDE "PROJETOS" -->
+            <!-- FAIXA SUPERIOR -->
             <section class="detail-banner">
               <v-container class="site-container">
                 <h1 class="banner-title">Projetos</h1>
@@ -135,15 +185,80 @@
                       <Content />
                     </article>
                   </div>
+
+                  <!-- AUTOR + REDES SOCIAIS -->
+                  <div class="detail-social">
+                    <div class="social-left">
+                      <!-- Se quiser nome/cargo, dá pra adicionar aqui -->
+                    </div>
+
+                    <div class="social-right">
+                      <strong class="social-label">Compartilhe:</strong>
+
+                      <a
+                        class="social-btn whatsapp"
+                        :href="whatsappShareUrl"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Compartilhar via WhatsApp"
+                      >
+                        <v-icon size="18">mdi-whatsapp</v-icon>
+                      </a>
+
+                      <a
+                        class="social-btn linkedin"
+                        :href="linkedinShareUrl"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Compartilhar no LinkedIn"
+                      >
+                        <v-icon size="18">mdi-linkedin</v-icon>
+                      </a>
+
+                      <a
+                        class="social-btn facebook"
+                        :href="facebookShareUrl"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Compartilhar no Facebook"
+                      >
+                        <v-icon size="18">mdi-facebook</v-icon>
+                      </a>
+                    </div>
+                  </div>
                 </article>
 
-                <!-- OUTROS PROJETOS -->
+                <!-- OUTROS PROJETOS - CARROSSEL -->
                 <section class="detail-related" v-if="relatedProjects.length">
-                  <h3 class="related-title">Outros projetos</h3>
+                  <div class="related-header">
+                    <div class="related-title-wrapper">
+                      <h3 class="related-title">Outros projetos</h3>
+                      <span class="related-line"></span>
+                    </div>
+
+                    <div class="related-nav" v-if="relatedProjects.length > VISIBLE_PER_PAGE">
+                      <button
+                        type="button"
+                        class="related-nav-btn"
+                        @click="prevSlide"
+                        aria-label="Projetos anteriores"
+                      >
+                        <v-icon size="18">mdi-chevron-left</v-icon>
+                      </button>
+                      <button
+                        type="button"
+                        class="related-nav-btn"
+                        @click="nextSlide"
+                        aria-label="Próximos projetos"
+                      >
+                        <v-icon size="18">mdi-chevron-right</v-icon>
+                      </button>
+                    </div>
+                  </div>
 
                   <div class="related-grid">
                     <RouterLink
-                      v-for="item in relatedProjects"
+                      v-for="item in visibleProjects"
                       :key="item.path"
                       :to="item.path"
                       class="related-card"
@@ -166,7 +281,6 @@
       </ParentLayout>
     </v-main>
 
-    <!-- footer sempre visível, independente do ParentLayout -->
     <CustomFooter />
   </v-app>
 </template>
@@ -181,18 +295,15 @@
     background: #f3f4f6;
   }
 
-  /* CONTAINER BASE */
   .site-container {
     max-width: 1200px;
     margin-inline: auto;
     padding-inline: clamp(1rem, 4vw, 2.5rem);
   }
 
-  /* FAIXA VERDE SUPERIOR */
   .detail-banner {
     background: #f29226;
     color: #ffffff;
-    /* espaço grande para parecer um header cheio + área atrás da navbar */
     padding-top: 10rem;
     padding-bottom: 1.8rem;
     margin-bottom: 2.25rem;
@@ -204,7 +315,6 @@
     font-size: 2.6rem;
   }
 
-  /* BLOCO PRINCIPAL */
   .detail-main {
     padding-bottom: 3rem;
   }
@@ -220,7 +330,7 @@
     gap: 1.5rem;
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
-    border-bottom: 3px solid #f29226; /* linha verde embaixo do título + data */
+    border-bottom: 3px solid #f29226;
   }
 
   .detail-title {
@@ -228,8 +338,8 @@
     font-size: 2rem;
     font-weight: 600;
     color: #0a0e1c;
-    border-bottom: none !important; /* remove a barrinha cinza do tema */
-    padding-bottom: 0; /* garante que não sobra espaço da borda */
+    border-bottom: none !important;
+    padding-bottom: 0;
   }
 
   .detail-date-wrapper {
@@ -244,11 +354,10 @@
     color: #f97316;
   }
 
-  /* corpo sem card, fundo igual ao da página */
   .detail-text-block {
     background: transparent;
     border-radius: 0;
-    padding: 0 0 2.5rem;
+    padding: 0 0 1.5rem;
     box-shadow: none;
   }
 
@@ -267,7 +376,6 @@
     color: #111827;
   }
 
-  /* markdown básica */
   .markdown-body :deep(p) {
     margin-bottom: 0.9rem;
     line-height: 1.7;
@@ -280,7 +388,7 @@
     margin-bottom: 0.7rem;
     font-weight: 700;
     color: #111827;
-    border-bottom: none !important; /* sem linhas nos subtítulos */
+    border-bottom: none !important;
   }
 
   .markdown-body :deep(img) {
@@ -289,17 +397,122 @@
     margin-block: 1.5rem;
   }
 
-  /* OUTROS PROJETOS */
+  /* ===== SOCIAL / COMPARTILHAR ===== */
+  .detail-social {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .social-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .social-avatar :deep(.v-avatar) {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  .social-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .social-label {
+    font-size: 0.85rem;
+    color: #374151;
+    margin-right: 0.5rem;
+  }
+
+  .social-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .social-btn:hover {
+    filter: brightness(0.9);
+  }
+
+  .social-btn.whatsapp {
+    background: #25d366;
+  }
+
+  .social-btn.linkedin {
+    background: #0a66c2;
+  }
+
+  .social-btn.facebook {
+    background: #1877f2;
+  }
+
+  /* ===== OUTROS PROJETOS / CARROSSEL ===== */
+
   .detail-related {
     margin-top: 2.5rem;
-    padding-bottom: 1.6rem; /* espaço antes do footer */
+    padding-bottom: 1.6rem;
+  }
+
+  .related-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .related-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
   }
 
   .related-title {
     font-size: 1.05rem;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 1.2rem;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .related-line {
+    height: 3px;
+    background: #f29226;
+    flex: 1;
+    border-radius: 999px;
+  }
+
+  .related-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .related-nav-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .related-nav-btn:hover {
+    background: #f3f4f6;
   }
 
   .related-grid {
@@ -360,6 +573,11 @@
       align-items: flex-start;
     }
 
+    .detail-social {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
     .related-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -368,6 +586,15 @@
   @media (max-width: 640px) {
     .related-grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .related-title-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .related-line {
+      width: 100%;
     }
   }
 </style>

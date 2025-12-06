@@ -24,7 +24,13 @@ collections:
     preview_path: 'projetos/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailProject' }
+      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'projeto' }
       - { label: 'Título', name: 'title', widget: 'string', required: true }
+      - label: 'Descrição (lista de projetos)'
+        name: 'description'
+        widget: 'text'
+        required: false
+        hint: 'Resumo curto que aparece no card da lista de projetos.'
       - label: 'Data'
         name: 'date'
         widget: 'datetime'
@@ -36,10 +42,6 @@ collections:
         widget: 'image'
         required: false
         allow_multiple: false
-      - label: 'Tags'
-        name: 'tags'
-        widget: 'list'
-        required: false
       - label: 'Corpo'
         name: 'body'
         widget: 'markdown'
@@ -56,6 +58,10 @@ collections:
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailVideo' }
       - { label: 'Título', name: 'title', widget: 'string', required: true }
+      - label: 'Descrição (lista de vídeos)'
+        name: 'description'
+        widget: 'text'
+        required: false
       - label: 'Data'
         name: 'date'
         widget: 'datetime'
@@ -67,10 +73,6 @@ collections:
         widget: 'image'
         required: false
         allow_multiple: false
-      - label: 'Tags'
-        name: 'tags'
-        widget: 'list'
-        required: false
       - label: 'Corpo'
         name: 'body'
         widget: 'markdown'
@@ -86,26 +88,32 @@ collections:
     preview_path: 'publicacoes/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailPublication' }
+      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'publicacao' }
       - { label: 'Título', name: 'title', widget: 'string', required: true }
-      - label: 'Data'
-        name: 'date'
-        widget: 'datetime'
-        format: 'YYYY-MM-DD'
-        time_format: false
+      - label: 'Autores'
+        name: 'authors'
+        widget: 'text'
         required: true
-      - label: 'Imagem de capa'
-        name: 'cover'
-        widget: 'image'
+        hint: 'Lista de autores em texto corrido, na ordem correta.'
+      - label: 'Conferência / Periódico'
+        name: 'conference'
+        widget: 'string'
+        required: true
+        hint: 'Nome do evento ou periódico onde foi publicado.'
+      - label: 'Ano'
+        name: 'year'
+        widget: 'string'
+        required: true
+      - label: 'Arquivo PDF da publicação'
+        name: 'download'
+        widget: 'file'
+        required: true
+        hint: 'Envie o PDF do artigo. O botão de download usará este arquivo.'
+      - label: 'Link original do paper (DOI, site da conferência, etc.)'
+        name: 'sourceUrl'
+        widget: 'string'
         required: false
-        allow_multiple: false
-      - label: 'Tags'
-        name: 'tags'
-        widget: 'list'
-        required: false
-      - label: 'Corpo'
-        name: 'body'
-        widget: 'markdown'
-        hint: 'Texto, imagens, links e embeds (YouTube, etc.) são aceitos.'
+        hint: 'Se estiver vazio, o botão de "Ver no site original" pode ficar desabilitado.'
 
   # ============== CONTEÚDOS (GERAIS) ==============
   - name: 'conteudos'
@@ -117,7 +125,22 @@ collections:
     preview_path: 'conteudos/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailContent' }
+      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'conteudo' }
       - { label: 'Título', name: 'title', widget: 'string', required: true }
+      - label: 'Tipo de conteúdo'
+        name: 'badge'
+        widget: 'select'
+        required: false
+        options:
+          - { label: 'Material', value: 'material' }
+          - { label: 'Vídeo', value: 'video' }
+          - { label: 'Notícia', value: 'noticia' }
+        hint: 'Define o selinho (material / vídeo / notícia) e o ícone nos cards e no detalhe.'
+      - label: 'Descrição (lista de conteúdos)'
+        name: 'description'
+        widget: 'text'
+        required: false
+        hint: 'Resumo que aparece no card de conteúdo.'
       - label: 'Data'
         name: 'date'
         widget: 'datetime'
@@ -129,10 +152,6 @@ collections:
         widget: 'image'
         required: false
         allow_multiple: false
-      - label: 'Tags'
-        name: 'tags'
-        widget: 'list'
-        required: false
       - label: 'Corpo'
         name: 'body'
         widget: 'markdown'

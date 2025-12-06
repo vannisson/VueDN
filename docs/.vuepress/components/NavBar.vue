@@ -92,8 +92,8 @@
     { label: 'Início', to: '/' },
     { label: 'Quem somos', to: '/about/' },
     { label: 'Pesquisadores', to: '/pesquisadores/' },
-    { label: 'Projetos', to: '/projetos/' },
     { label: 'Conteúdos', to: '/conteudos/' },
+    { label: 'Projetos', to: '/projetos/' },
     { label: 'Publicações', to: '/publicacoes/' },
   ]
 

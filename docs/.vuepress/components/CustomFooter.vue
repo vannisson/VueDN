@@ -1,47 +1,50 @@
 <template>
   <v-footer class="footer" padless>
-    <!-- Fundo arredondado ocupando 100% -->
     <div class="footer-shell" aria-hidden="true"></div>
 
-    <!-- Conteúdo por cima do fundo -->
     <v-container class="footer-container">
-      <v-row class="footer-row" align="start" justify="space-between">
-        <!-- Coluna 1 -->
+      <v-row class="footer-row" justify="space-between">
+        <!-- COLUNA LAME -->
         <v-col cols="12" md="4" class="logo-col">
-          <div class="mb-6">
+          <div class="brand-wrapper">
             <v-img
               src="/imgs/footer/icon_lame_white.svg"
-              width="64"
+              width="80"
               contain
               eager
               class="brand-logo"
             />
           </div>
-          <div class="d-flex flex-column link-list">
-            <span>Início</span>
-            <span>Quem somos</span>
-            <span>Projetos</span>
-            <span>Fale conosco</span>
-          </div>
+
+          <nav class="link-list" aria-label="Links principais">
+            <RouterLink to="/" class="footer-link">Início</RouterLink>
+            <RouterLink to="/quem-somos/" class="footer-link">Quem somos</RouterLink>
+            <RouterLink to="/pesquisadores/" class="footer-link">Pesquisadores</RouterLink>
+            <RouterLink to="/projetos/" class="footer-link">Projetos</RouterLink>
+            <RouterLink to="/conteudos/" class="footer-link">Conteúdos</RouterLink>
+            <RouterLink to="/publicacoes/" class="footer-link">Publicações</RouterLink>
+          </nav>
         </v-col>
 
-        <!-- Coluna 2 -->
+        <!-- COLUNA CONTATOS -->
         <v-col cols="12" md="4" class="center-col">
           <h4 class="col-title">CONTATOS</h4>
-          <div class="d-flex flex-column contact-list">
+
+          <div class="contact-list">
             <p>Email: exemplo@email.com</p>
             <p>Telefone: (00) 00000-0000</p>
-            <p>Endereço: Rua Exemplo, 123<br />Cidade - UF, 00000000</p>
+            <p>Endereço: Rua Exemplo, 123</p>
+            <p>Cidade - UF, 00000000</p>
           </div>
         </v-col>
 
-        <!-- Coluna 3 -->
+        <!-- COLUNA APOIO -->
         <v-col cols="12" md="4" class="support-col">
           <h4 class="col-title">APOIO</h4>
+
           <div class="support-logos">
-            <!-- width explícito + contain -->
-            <v-img src="/imgs/footer/icon_ufal.svg" width="64" contain />
-            <v-img src="/imgs/footer/icon_cnpq.svg" width="128" contain />
+            <v-img src="/imgs/footer/icon_ufal.svg" width="80" contain />
+            <v-img src="/imgs/footer/icon_cnpq.svg" width="110" contain />
           </div>
         </v-col>
       </v-row>
@@ -49,7 +52,9 @@
   </v-footer>
 </template>
 
-<script setup></script>
+<script setup>
+  import { RouterLink } from 'vue-router'
+</script>
 
 <style scoped>
   .footer {
@@ -58,12 +63,12 @@
     padding: 0 !important;
     width: 100%;
   }
+
   .footer-shell {
     position: absolute;
     inset: 0;
     background: #1e2a38;
     border-radius: 48px 48px 0 0;
-    margin: 0;
     z-index: 0;
   }
 
@@ -73,93 +78,96 @@
     color: #fff;
     padding-block: clamp(28px, 5vw, 56px);
   }
+
+  /* ===== GRID / COLUNAS ===== */
+
   .footer-row {
     row-gap: 28px;
+    align-items: flex-start; /* topo alinhado */
   }
 
-  .col-title {
-    text-align: center;
-    margin: 0 0 1rem;
-    letter-spacing: 0.03em;
-    font-weight: 700;
-  }
-  .logo-col .link-list span {
-    margin: 0.5rem 0;
-    cursor: pointer;
-  }
-
-  .center-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .center-col .contact-list {
-    text-align: left;
-    gap: 1rem;
-  }
-
-  .support-col {
-    text-align: center;
-  }
-
-  /* garante que nada do conteúdo fique atrás do shell */
-  .footer-container,
-  .footer-row,
   .logo-col,
   .center-col,
   .support-col {
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem; /* espaçamento vertical uniforme */
   }
 
-  /* coluna de apoio (desktop) */
+  /* ===== COLUNA LAME ===== */
+
+  .brand-wrapper {
+    margin: 0; /* sem margin extra, alinhado com os títulos das outras colunas */
+  }
+
+  .link-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .footer-link {
+    cursor: pointer;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ===== TÍTULOS / CONTATOS ===== */
+
+  .col-title {
+    margin: 0;
+    letter-spacing: 0.03em;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem; /* igual aos links da esquerda */
+  }
+
+  .contact-list p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ===== APOIO ===== */
+
   .support-logos {
     display: flex;
-    flex-direction: column; /* desktop: em coluna */
-    gap: 1rem;
+    flex-direction: row;
+    gap: 1.5rem;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
-  /* ====== Mobile: tudo empilhado e centralizado ====== */
+  /* ===== MOBILE ===== */
+
   @media (max-width: 960px) {
-    /* cada coluna vira um bloco centralizado */
     .logo-col,
     .center-col,
     .support-col {
-      display: flex;
-      flex-direction: column;
       align-items: center;
       text-align: center;
     }
 
-    /* links do menu também centralizados */
-    .logo-col .link-list {
+    .link-list {
       align-items: center;
     }
 
-    /* contatos centralizados (inclusive os textos) */
-    .center-col .contact-list {
-      text-align: center;
-      gap: 0.75rem;
-    }
-
-    /* logos lado a lado e centralizadas */
     .support-logos {
-      flex-direction: row; /* mobile: lado a lado */
-      gap: 1.25rem;
       justify-content: center;
-    }
-  }
-
-  @media (max-width: 960px) {
-    .col-title {
-      text-align: left;
-    }
-    .support-logos {
-      flex-direction: row;
-      gap: 1.5rem;
     }
   }
 </style>

@@ -41,7 +41,6 @@
       </v-row>
 
       <!-- CARDS -->
-      <!-- CARDS -->
       <v-row class="cards-row" align="stretch" justify="space-between">
         <!-- CONTEÚDOS (AZUL) -->
         <v-col cols="12" sm="6" md="4" class="card-col d-flex">
@@ -60,7 +59,7 @@
               </div>
 
               <div class="card-actions">
-                <v-btn class="card-btn card-btn-blue" variant="flat"> Saiba mais </v-btn>
+                <v-btn variant="text" class="card-link blue" to="/conteudos/"> Saiba mais </v-btn>
               </div>
 
               <div class="card-bottom-bar bar-blue" />
@@ -79,13 +78,13 @@
 
                 <p class="card-title">Projetos</p>
                 <p class="card-description">
-                  Projetos de pesquisa e extensão coordenados pelo LAME, desenvolvidos em parceria
-                  com escolas e instituições no Brasil e no exterior.
+                  Projetos de pesquisa e extensão coordenados pelo LAME, em parceria com escolas e
+                  instituições no Brasil e no exterior.
                 </p>
               </div>
 
               <div class="card-actions">
-                <v-btn class="card-btn card-btn-orange" variant="flat"> Saiba mais </v-btn>
+                <v-btn variant="text" class="card-link orange" to="/projetos/"> Saiba mais </v-btn>
               </div>
 
               <div class="card-bottom-bar bar-orange" />
@@ -104,13 +103,15 @@
 
                 <p class="card-title">Publicações</p>
                 <p class="card-description">
-                  Artigos, livros e capítulos que divulgam resultados das pesquisas do LAME e
-                  contribuem para o ensino e a aprendizagem de Língua Portuguesa.
+                  Artigos, livros e capítulos que divulgam resultados das pesquisas do LAME e apoiam
+                  o ensino e a aprendizagem de Língua Portuguesa.
                 </p>
               </div>
 
               <div class="card-actions">
-                <v-btn class="card-btn card-btn-green" variant="flat"> Saiba mais </v-btn>
+                <v-btn variant="text" class="card-link green" to="/publicacoes/">
+                  Saiba mais
+                </v-btn>
               </div>
 
               <div class="card-bottom-bar bar-green" />
@@ -228,6 +229,7 @@
     description: string
     date: string
     categoryColor: string
+    to: string // 👈 adiciona isso
   }
 
   const pagesData = usePagesData()
@@ -316,6 +318,7 @@
           date: formattedDate,
           categoryColor,
           sortKey,
+          to: page.path, // 👈 rota do DetailContent daquele MD
         })
       })
     )
@@ -509,6 +512,7 @@
   }
 
   /* ============================= CARDS (CONTEÚDOS / PROJETOS / PUBLICAÇÕES) ============================= */
+  /* ============================= CARDS (CONTEÚDOS / PROJETOS / PUBLICAÇÕES) ============================= */
   .cards-row {
     padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3.5rem, 7vw, 6rem);
   }
@@ -559,20 +563,23 @@
   .icon-blue {
     background: #2563eb;
   }
+
   .icon-orange {
     background: #f68700;
   }
+
   .icon-green {
     background: #56b057;
   }
 
+  /* Títulos */
   .card-title {
     margin-top: 0.5rem;
     font-weight: 800;
     font-size: 1.35rem;
     line-height: 1.2;
     color: #0a0e1c;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .card-description {
@@ -583,52 +590,63 @@
     line-height: 1.55;
     color: #003b52;
 
-    /* garante altura parecida entre os cards */
-    min-height: 90px;
+    /* garante altura parecida entre os três textos */
+    min-height: 96px;
   }
 
+  /* Ações (Saiba mais) */
   .card-actions {
-    padding: 0 20px 12px;
-    margin-top: 1rem;
+    padding: 0 20px 22px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .card-btn {
-    width: 140px;
+  /* BOTÃO TRANSPARENTE — apenas texto colorido */
+  .card-link {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
     font-weight: 700;
-    font-size: 1rem;
-    border-radius: 10px;
-    padding: 0.55rem 1rem;
-    color: #ffffff !important;
+    font-size: 1.05rem;
     text-transform: none;
-    transition: 0.25s ease;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+
+    /* sobe o texto */
+    margin-bottom: 4px;
   }
 
-  .card-btn-blue {
-    background: #2563eb !important;
+  /* CORES DO TEXTO */
+  .card-link.blue {
+    color: #2563eb !important;
   }
-  .card-btn-orange {
-    background: #f68700 !important;
+  .card-link.orange {
+    color: #f68700 !important;
   }
-  .card-btn-green {
-    background: #56b057 !important;
+  .card-link.green {
+    color: #56b057 !important;
   }
 
-  .card-btn-blue:hover {
-    background: #1d4fc4 !important;
-    transform: translateY(-2px);
-  }
-  .card-btn-orange:hover {
-    background: #d96f00 !important;
-    transform: translateY(-2px);
-  }
-  .card-btn-green:hover {
-    background: #449b45 !important;
+  /* ===== HOVER (texto mais escuro, leve lift) ===== */
+  .card-link.blue:hover {
+    color: #1d4fc4 !important;
     transform: translateY(-2px);
   }
 
+  .card-link.orange:hover {
+    color: #d96f00 !important;
+    transform: translateY(-2px);
+  }
+
+  .card-link.green:hover {
+    color: #449b45 !important;
+    transform: translateY(-2px);
+  }
+
+  /* Barrinha inferior colorida */
   .card-bottom-bar {
     height: 6px;
     width: 100%;
