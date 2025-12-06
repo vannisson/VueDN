@@ -332,7 +332,7 @@
 
   .map-frame {
     width: 100%;
-    height: 420px;
+    height: 32rem;
     border: 0;
   }
 

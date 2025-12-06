@@ -10,6 +10,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import DetailProject from './layouts/DetailProject.vue'
 import DetailContent from './layouts/DetailContent.vue'
+import DetailPublication from './layouts/DetailPublication.vue'
 
 export default defineClientConfig({
   enhance({ app }) {
@@ -31,5 +32,5 @@ export default defineClientConfig({
     })
     app.use(vuetify)
   },
-  layouts: { Layout, DetailProject, DetailContent },
+  layouts: { Layout, DetailProject, DetailContent, DetailPublication },
 })

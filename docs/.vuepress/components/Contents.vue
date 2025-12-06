@@ -158,7 +158,6 @@
     const loaded: ContentCard[] = []
 
     const entries = Object.entries(pagesData.value ?? {})
-    console.log('[Contents] páginas encontradas:', entries.length)
 
     await Promise.all(
       entries.map(async ([path, getPageData]) => {
@@ -198,8 +197,6 @@
     // opcional: ordenar por título ou outra coisa
     loaded.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
     contents.value = loaded
-
-    console.log('[Contents] cards montados:', contents.value)
   })
 
   const filteredContents = computed(() => {

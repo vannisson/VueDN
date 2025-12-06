@@ -22,7 +22,9 @@
             linguístico.
           </p>
 
-          <v-btn class="cta" prepend-icon="mdi-compass-outline">Conheça nossos projetos</v-btn>
+          <v-btn class="cta" prepend-icon="mdi-compass-outline" @click="router.push('/about/')">
+            Conheça nossa história
+          </v-btn>
         </v-col>
 
         <!-- Imagem -->
@@ -39,63 +41,79 @@
       </v-row>
 
       <!-- CARDS -->
+      <!-- CARDS -->
       <v-row class="cards-row" align="stretch" justify="space-between">
+        <!-- CONTEÚDOS (AZUL) -->
         <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-          <v-card class="custom-card card-a" elevation="3">
+          <v-card class="custom-card card-conteudos" elevation="3">
             <div class="card-inner">
               <div class="card-content">
-                <v-img src="/imgs/home/icon_green.svg" width="72" class="card-icon" alt="" />
-                <p class="card-title">Pesquisadores</p>
+                <div class="card-icon-wrapper icon-blue">
+                  <v-icon size="32" color="white">mdi-library-outline</v-icon>
+                </div>
+
+                <p class="card-title">Conteúdos</p>
                 <p class="card-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                  nostrud.
+                  Materiais, vídeos e notícias produzidos pelo LAME para apoiar pesquisas, formações
+                  e práticas em sala de aula.
                 </p>
               </div>
 
               <div class="card-actions">
-                <v-btn variant="text" class="card-link">Saiba mais</v-btn>
+                <v-btn class="card-btn card-btn-blue" variant="flat"> Saiba mais </v-btn>
               </div>
+
+              <div class="card-bottom-bar bar-blue" />
             </div>
           </v-card>
         </v-col>
 
+        <!-- PROJETOS (LARANJA) -->
         <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-          <v-card class="custom-card card-b" elevation="3">
+          <v-card class="custom-card card-projetos" elevation="3">
             <div class="card-inner">
               <div class="card-content">
-                <v-img src="/imgs/home/icon_orange.svg" width="72" class="card-icon" alt="" />
-                <p class="card-title">O que é o LAME?</p>
+                <div class="card-icon-wrapper icon-orange">
+                  <v-icon size="32" color="white">mdi-file-tree-outline</v-icon>
+                </div>
+
+                <p class="card-title">Projetos</p>
                 <p class="card-description">
-                  Espaço de pesquisa, formação e reflexão vinculado à Universidade Federal de
-                  Alagoas, dedicado ao estudo da escrita escolar como expressão pedagógica,
-                  histórica e linguística. No LAME, cada manuscrito revela saberes em construção.
+                  Projetos de pesquisa e extensão coordenados pelo LAME, desenvolvidos em parceria
+                  com escolas e instituições no Brasil e no exterior.
                 </p>
               </div>
 
               <div class="card-actions">
-                <v-btn variant="text" class="card-link">Saiba mais</v-btn>
+                <v-btn class="card-btn card-btn-orange" variant="flat"> Saiba mais </v-btn>
               </div>
+
+              <div class="card-bottom-bar bar-orange" />
             </div>
           </v-card>
         </v-col>
 
+        <!-- PUBLICAÇÕES (VERDE) -->
         <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-          <v-card class="custom-card card-c" elevation="3">
+          <v-card class="custom-card card-publicacoes" elevation="3">
             <div class="card-inner">
               <div class="card-content">
-                <v-img src="/imgs/home/icon_blue.svg" width="72" class="card-icon" alt="" />
-                <p class="card-title">Nossos projetos</p>
+                <div class="card-icon-wrapper icon-green">
+                  <v-icon size="32" color="white">mdi-book-open-variant</v-icon>
+                </div>
+
+                <p class="card-title">Publicações</p>
                 <p class="card-description">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                  nostrud.
+                  Artigos, livros e capítulos que divulgam resultados das pesquisas do LAME e
+                  contribuem para o ensino e a aprendizagem de Língua Portuguesa.
                 </p>
               </div>
 
               <div class="card-actions">
-                <v-btn variant="text" class="card-link">Saiba mais</v-btn>
+                <v-btn class="card-btn card-btn-green" variant="flat"> Saiba mais </v-btn>
               </div>
+
+              <div class="card-bottom-bar bar-green" />
             </div>
           </v-card>
         </v-col>
@@ -133,8 +151,12 @@
                 muito distinta entre os países do globo? Essas e outras indagações são temáticas
                 discutidas pelo Laboratório do Manuscrito Escolar (LAME).
               </p>
-              <v-btn class="cta" prepend-icon="mdi-compass-outline">
-                Conheça nossos projetos
+              <v-btn
+                class="cta"
+                prepend-icon="mdi-account-group-outline"
+                @click="router.push('/pesquisadores/')"
+              >
+                Conheça nossos pesquisadores
               </v-btn>
             </v-col>
           </v-row>
@@ -181,7 +203,9 @@
         <div class="strip-fade right" :class="{ show: !atEnd }"></div>
 
         <div class="strip-footer">
-          <v-btn class="cta" prepend-icon="mdi-library-outline">Veja mais conteúdos</v-btn>
+          <v-btn class="cta" prepend-icon="mdi-library-outline" @click="router.push('/conteudos/')">
+            Veja mais conteúdos
+          </v-btn>
         </div>
       </section>
     </v-container>
@@ -190,75 +214,120 @@
 
 <script setup lang="ts">
   import NewsCard from '../components/NewsCard.vue'
-
-  const newsList = [
-    {
-      image: '/imgs/home/home_03.png',
-      category: 'Notícia',
-      title: 'Pesquisa internacional do LAME integrará 4ª jornada do manuscrito escolar.',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-      date: '22/01/2024',
-      categoryColor: 'notice',
-    },
-    {
-      image: '/imgs/home/home_03.png',
-      category: 'Aula',
-      title: 'Aula LAME 2024',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '22/01/2024',
-      categoryColor: 'audio',
-    },
-    {
-      image: '/imgs/home/home_03.png',
-      category: 'Aula',
-      title: 'Aula LAME 2025',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '22/01/2025',
-      categoryColor: 'audio',
-    },
-    {
-      image: '/imgs/home/home_03.png',
-      category: 'Aula',
-      title: 'Aula LAME 2025',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '22/01/2025',
-      categoryColor: 'audio',
-    },
-    {
-      image: '/imgs/home/home_03.png',
-      category: 'Aula',
-      title: 'Aula LAME 2025',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '22/01/2025',
-      categoryColor: 'audio',
-    },
-    {
-      image: '/imgs/home/home_03.png',
-      category: 'Aula',
-      title: 'Aula LAME 2025',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '22/01/2025',
-      categoryColor: 'audio',
-    },
-    {
-      image: '/imgs/home/home_03.png',
-      category: 'Aula',
-      title: 'Aula LAME 2025',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '22/01/2025',
-      categoryColor: 'audio',
-    },
-  ]
-
   import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+  import { usePagesData } from '@vuepress/client'
+  import { useRouter } from 'vue-router'
 
+  const router = useRouter()
+
+  // ==== TIPAGEM DOS CARDS DO CARROSSEL ====
+  type NewsItem = {
+    image: string
+    category: string
+    title: string
+    description: string
+    date: string
+    categoryColor: string
+  }
+
+  const pagesData = usePagesData()
+
+  // lista final usada no v-for
+  const newsList = ref<NewsItem[]>([])
+
+  // ==== helpers para montar os itens a partir dos MDs ====
+  function normalizeBadge(value?: string) {
+    return (value || '')
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .toLowerCase()
+  }
+
+  function getCategoryAndColor(rawBadge?: string) {
+    const norm = normalizeBadge(rawBadge)
+
+    if (norm === 'noticia') {
+      return { category: 'Notícia', categoryColor: 'notice' }
+    }
+    if (norm === 'video') {
+      return { category: 'Vídeo', categoryColor: 'audio' }
+    }
+    if (norm === 'material') {
+      return { category: 'Material', categoryColor: 'material' }
+    }
+
+    return { category: 'Conteúdo', categoryColor: 'default' }
+  }
+
+  async function loadNewsFromContents() {
+    const entries = Object.entries(pagesData.value ?? {})
+    const loaded: (NewsItem & { sortKey: number })[] = []
+
+    await Promise.all(
+      entries.map(async ([path, getPageData]) => {
+        if (typeof getPageData !== 'function') return
+
+        let page: any
+        try {
+          page = await getPageData()
+        } catch {
+          return
+        }
+
+        if (!page || typeof page !== 'object') return
+        const fm: any = page.frontmatter ?? {}
+
+        // só pega páginas de conteúdo
+        const isContentPath = path.startsWith('/conteudos/')
+        const isContentType = fm.type === 'conteudo'
+        if (!(isContentPath || isContentType)) return
+
+        const rawDate = fm.date ?? page.git?.createdTime
+        let sortKey = 0
+        let formattedDate = ''
+
+        if (rawDate) {
+          const d = new Date(rawDate as any)
+          if (!Number.isNaN(d.getTime())) {
+            sortKey = d.getTime()
+            formattedDate = d.toLocaleDateString('pt-BR', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            })
+          } else {
+            formattedDate = String(rawDate)
+          }
+        }
+
+        const descSource: string = fm.description ?? (page.excerpt as string | undefined) ?? ''
+
+        const description =
+          descSource.trim() ||
+          'Conteúdo produzido pelo LAME em parceria com diferentes iniciativas.'
+
+        const { category, categoryColor } = getCategoryAndColor(fm.badge || fm.tipo)
+
+        loaded.push({
+          image: fm.cover || '/imgs/contents/default.png',
+          category,
+          title: fm.title || page.title || 'Conteúdo',
+          description,
+          date: formattedDate,
+          categoryColor,
+          sortKey,
+        })
+      })
+    )
+
+    // ordena do mais recente para o mais antigo
+    loaded.sort((a, b) => b.sortKey - a.sortKey)
+
+    // limita aos 10 mais recentes
+    newsList.value = loaded.slice(0, 10)
+  }
+
+  // ==== lógica de scroll do carrossel ====
   const strip = ref<HTMLElement | null>(null)
   const atStart = ref(true)
   const atEnd = ref(false)
@@ -282,16 +351,18 @@
     if (!el) return
     const amount = Math.round(el.clientWidth * 0.85)
     el.scrollBy({ left: dir * amount, behavior: 'smooth' })
-    // após a animação, recalcule
     setTimeout(updateState, 400)
   }
 
   onMounted(async () => {
-    // espera layout e imagens
+    await loadNewsFromContents() // carrega conteúdos em ordem decrescente de data
+
+    // espera layout e imagens para medir o overflow corretamente
     await nextTick()
     requestAnimationFrame(updateState)
     window.addEventListener('resize', updateState)
   })
+
   onBeforeUnmount(() => {
     window.removeEventListener('resize', updateState)
   })
@@ -352,11 +423,10 @@
     font-weight: 700;
     text-transform: none;
     box-shadow: 0 6px 16px rgba(246, 135, 0, 0.25);
-    display: inline-flex; /* garante alinhamento do ícone com o texto */
+    display: inline-flex;
     align-items: center;
   }
 
-  /* alinhamento fino entre ícone e label */
   .cta .v-btn__content {
     gap: 0.5rem;
     align-items: center;
@@ -379,10 +449,10 @@
     border-radius: 40px 40px 10px 40px;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
     overflow: hidden;
-    transition: none !important; /* remove transições */
-    transform: none !important; /* impede animação de scale */
-    pointer-events: none; /* evita clique ou hover */
-    object-fit: cover; /* mantém o enquadramento correto */
+    transition: none !important;
+    transform: none !important;
+    pointer-events: none;
+    object-fit: cover;
   }
 
   @media (max-width: 600px) {
@@ -412,15 +482,15 @@
   @media (max-width: 600px) {
     .cta {
       width: 100%;
-      max-width: 340px; /* largura agradável pro mobile */
-      min-height: 52px; /* área de toque confortável */
+      max-width: 340px;
+      min-height: 52px;
       height: auto;
       padding-inline: clamp(16px, 6vw, 22px);
-      border-radius: 999px; /* pílula */
-      font-size: clamp(0.95rem, 3.7vw, 1.05rem); /* texto responsivo */
-      margin-inline: auto; /* centraliza */
-      box-shadow: 0 8px 20px rgba(246, 135, 0, 0.28); /* leve upgrade na sombra */
-      white-space: nowrap; /* evita quebra feia quando couber */
+      border-radius: 999px;
+      font-size: clamp(0.95rem, 3.7vw, 1.05rem);
+      margin-inline: auto;
+      box-shadow: 0 8px 20px rgba(246, 135, 0, 0.28);
+      white-space: nowrap;
     }
     .cta .v-btn__content {
       gap: 0.4rem;
@@ -432,14 +502,13 @@
     }
   }
 
-  /* telas ultra estreitas: liberar quebra quando necessário */
   @media (max-width: 360px) {
     .cta {
       white-space: normal;
     }
   }
 
-  /* ===== Cards ===== */
+  /* ============================= CARDS (CONTEÚDOS / PROJETOS / PUBLICAÇÕES) ============================= */
   .cards-row {
     padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3.5rem, 7vw, 6rem);
   }
@@ -452,28 +521,16 @@
   .custom-card {
     width: 100%;
     max-width: 360px;
-    min-height: 400px;
+    min-height: 420px;
     background: #fff;
     border-radius: 24px;
     box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     transition: transform 0.2s ease;
   }
-  .custom-card:hover {
-    transform: translateY(-2px);
-  }
 
-  .card-a {
-    --hover-color: #56b057;
-    border-radius: 12px 24px 24px 24px;
-  }
-  .card-b {
-    --hover-color: #f68700;
-    border-radius: 24px;
-  }
-  .card-c {
-    --hover-color: #0056d2;
-    border-radius: 24px 12px 24px 24px;
+  .custom-card:hover {
+    transform: translateY(-3px);
   }
 
   .card-inner {
@@ -488,15 +545,25 @@
     text-align: center;
   }
 
-  .card-actions {
-    padding: 0 20px 20px;
+  /* Ícones circulares */
+  .card-icon-wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
-  }
-  .card-icon {
+    justify-content: center;
     margin: 0.75rem auto 1rem;
-    pointer-events: none;
+  }
+
+  .icon-blue {
+    background: #2563eb;
+  }
+  .icon-orange {
+    background: #f68700;
+  }
+  .icon-green {
+    background: #56b057;
   }
 
   .card-title {
@@ -505,39 +572,76 @@
     font-size: 1.35rem;
     line-height: 1.2;
     color: #0a0e1c;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .card-description {
-    max-width: 36ch;
+    max-width: 34ch;
     margin: 0 auto;
     font-weight: 400;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.97rem;
+    line-height: 1.55;
     color: #003b52;
+
+    /* garante altura parecida entre os cards */
+    min-height: 90px;
   }
 
-  .card-link {
+  .card-actions {
+    padding: 0 20px 12px;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-btn {
+    width: 140px;
     font-weight: 700;
-    font-size: 1.05rem;
-    color: #0a0e1c;
+    font-size: 1rem;
+    border-radius: 10px;
+    padding: 0.55rem 1rem;
+    color: #ffffff !important;
     text-transform: none;
-    padding: 0;
-    margin: 0;
-    border-radius: 8px;
-    transition: all 0.25s ease;
+    transition: 0.25s ease;
   }
 
-  .card-link:hover {
-    background-color: var(--hover-color);
-    color: #fff;
+  .card-btn-blue {
+    background: #2563eb !important;
+  }
+  .card-btn-orange {
+    background: #f68700 !important;
+  }
+  .card-btn-green {
+    background: #56b057 !important;
+  }
+
+  .card-btn-blue:hover {
+    background: #1d4fc4 !important;
     transform: translateY(-2px);
-    padding: 0.25rem 0.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .card-btn-orange:hover {
+    background: #d96f00 !important;
+    transform: translateY(-2px);
+  }
+  .card-btn-green:hover {
+    background: #449b45 !important;
+    transform: translateY(-2px);
   }
 
-  .card-link:active {
-    transform: scale(0.97);
+  .card-bottom-bar {
+    height: 6px;
+    width: 100%;
+  }
+
+  .bar-blue {
+    background: #2563eb;
+  }
+  .bar-orange {
+    background: #f68700;
+  }
+  .bar-green {
+    background: #56b057;
   }
 
   @media (max-width: 960px) {
@@ -577,7 +681,6 @@
     margin: 0 0 1.5rem;
   }
 
-  /* full-bleed wrapper */
   .mid-bleed {
     position: relative;
     left: 50%;
@@ -591,7 +694,7 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   }
 
-  /* ====== Carrossel horizontal de notícias ====== */
+  /* ============================= CARROSSEL DE CONTEÚDOS ============================= */
   .news-strip {
     position: relative;
     margin: 4rem 0;
@@ -628,12 +731,11 @@
   .strip-track {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: clamp(280px, 32vw, 360px); /* largura de cada card */
+    grid-auto-columns: clamp(280px, 32vw, 360px);
     gap: 16px;
     padding-inline: 1rem;
   }
 
-  /* card não deve encolher */
   .strip-card {
     width: 100%;
   }
@@ -663,6 +765,10 @@
   .strip-footer {
     display: flex;
     justify-content: center;
+  }
+
+  .strip-footer .cta {
+    background-color: #2563eb !important;
   }
 
   .float-nav {

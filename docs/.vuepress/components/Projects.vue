@@ -94,7 +94,6 @@
   onMounted(async () => {
     const loaded: ProjectCard[] = []
     const entries = Object.entries(pagesData.value ?? {})
-    console.log('[Projects] páginas encontradas:', entries.length)
 
     await Promise.all(
       entries.map(async ([path, getPageData]) => {
@@ -145,8 +144,6 @@
     loaded.sort((a, b) => Number(b.year) - Number(a.year))
     projects.value = loaded
     visibleCount.value = PAGE_SIZE
-
-    console.log('[Projects] cards montados:', projects.value)
   })
 
   const filteredProjects = computed(() => {

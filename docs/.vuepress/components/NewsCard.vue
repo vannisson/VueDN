@@ -1,9 +1,9 @@
 <template>
   <v-card class="news-card" elevation="4">
     <v-img :src="image" height="220" class="news-image" cover>
-      <div class="news-chip" :class="chipClass">
-        <v-icon small class="mr-1">mdi-book-open-page-variant</v-icon>
-        {{ category }}
+      <div class="news-chip">
+        <v-icon class="chip-icon">{{ chipIcon }}</v-icon>
+        <span class="chip-text">{{ category }}</span>
       </div>
     </v-img>
 
@@ -22,116 +22,147 @@
   export default {
     name: 'NewsCard',
     props: {
-      image: { type: String, required: true },
-      category: { type: String, required: true }, // "Notícia", "Aula", etc.
-      title: { type: String, required: true },
-      description: { type: String, required: true },
-      date: { type: String, required: true }, // "22/01/2025"
-      categoryColor: {
-        type: String,
-        default: 'default', // "notice" | "audio" | "default"
-      },
+      image: String,
+      category: String,
+      title: String,
+      description: String,
+      date: String,
     },
+
     computed: {
-      chipClass() {
-        // mapeia para classes de cor
-        return {
-          notice: this.categoryColor === 'notice',
-          audio: this.categoryColor === 'audio',
-          default: this.categoryColor === 'default',
-        }
+      chipIcon() {
+        const norm = this.category
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}/gu, '')
+
+        if (norm.includes('material')) return 'mdi-book-open-variant'
+        if (norm.includes('video') || norm.includes('vídeo')) return 'mdi-play-circle'
+        if (norm.includes('noticia') || norm.includes('notícia'))
+          return 'mdi-newspaper-variant-outline'
+
+        return 'mdi-file-document-outline'
       },
     },
   }
 </script>
 
 <style scoped>
+  /* ---------------- CHIP ---------------- */
+  .news-chip {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+
+    background: #aec8ff; /* azul claro */
+    color: #2563eb; /* azul forte */
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px;
+    border-radius: 999px;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .chip-icon {
+    font-size: 16px;
+    line-height: 1;
+    color: #2563eb; /* garante ícone azul */
+    margin-top: 1px; /* micro-ajuste */
+  }
+
+  .chip-text {
+    line-height: 1;
+    padding-top: 1px;
+    color: #2563eb; /* texto azul */
+  }
+
+  /* ---------------- CARD BASE ---------------- */
   .news-card {
     border-radius: 20px;
     overflow: hidden;
     background: #fff;
     display: flex;
     flex-direction: column;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    --img-h: 220px;
+    transition: 0.25s ease;
   }
+
   .news-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
   }
 
-  /* --------------- IMAGEM: altura fixa e sem encolher --------------- */
+  /* ---------------- IMAGE ---------------- */
+  /* Força a área da imagem ser fixa e idêntica em todos os cards */
   .news-image {
+    height: 220px !important;
+    min-height: 220px !important;
+    max-height: 220px !important;
+
+    width: 100%;
+    overflow: hidden;
+    display: block;
     position: relative;
-    height: var(--img-h);
-    flex: 0 0 var(--img-h);
-  }
-  .news-image .v-image__image {
-    object-fit: cover;
-  }
-  .news-chip {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background-color: #f68700;
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.75rem;
-    line-height: 1;
-    border-radius: 12px;
-    padding: 6px 10px;
-    display: inline-flex;
-    align-items: center;
-  }
-  .news-chip.notice {
-    background-color: #0056d2;
-  }
-  .news-chip.audio {
-    background-color: #f68700;
-  }
-  .news-chip.default {
-    background-color: #6b7280;
   }
 
-  /* --------------- CONTEÚDO --------------- */
+  /* Garante que a imagem interna preencha exatamente a caixa */
+  .news-image .v-image__image {
+    object-fit: cover !important;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Garante que o wrapper do Vuetify não expanda */
+  .news-image .v-responsive__sizer {
+    padding-bottom: 0 !important;
+    height: 100% !important;
+  }
+
+  /* ---------------- CONTENT ---------------- */
   .news-content {
     padding: 1rem 1.25rem 1.25rem;
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
   }
 
+  /* ---------------- TITLE ---------------- */
   .news-title {
     font-weight: 800;
     font-size: 1.05rem;
-    line-height: 1.4;
+    line-height: 1.35;
     color: #0a0e1c;
     margin-bottom: 0.5rem;
 
+    /* corte para 2 linhas */
     display: -webkit-box;
-    -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
 
-    min-height: calc(2 * 1em * 1.4);
+    /* garante altura consistente em todos os cards */
+    min-height: calc(1.35rem * 2.2);
   }
 
   .news-text {
     font-size: 0.92rem;
     line-height: 1.6;
     color: #003b52;
-    margin-bottom: 1rem;
 
     display: -webkit-box;
-    -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-box-orient: vertical;
     overflow: hidden;
 
-    min-height: calc(3 * 1em * 1.6);
+    margin-bottom: 1rem;
   }
 
   .news-footer {
