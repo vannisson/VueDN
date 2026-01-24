@@ -31,10 +31,15 @@
           <h4 class="col-title">CONTATOS</h4>
 
           <div class="contact-list">
-            <p>Email: exemplo@email.com</p>
-            <p>Telefone: (00) 00000-0000</p>
-            <p>Endereço: Rua Exemplo, 123</p>
-            <p>Cidade - UF, 00000000</p>
+            <p>Av. Lourival Melo Mota, S/N</p>
+            <p>Tabuleiro do Martins, Maceió - AL</p>
+            <p>CEP 57072-900</p>
+            <p>
+              E-mail:
+              <a href="mailto:calil@cedu.ufal.br" class="footer-link">calil@cedu.ufal.br</a>
+              |
+              <a href="mailto:kall.braga@ufrpe.br" class="footer-link">kall.braga@ufrpe.br</a>
+            </p>
           </div>
         </v-col>
 
@@ -68,7 +73,6 @@
     position: absolute;
     inset: 0;
     background: #1e2a38;
-    border-radius: 48px 48px 0 0;
     z-index: 0;
   }
 

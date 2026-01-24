@@ -1,0 +1,177 @@
+{
+  "leads": [
+    {
+      "name": "Eduardo Calil",
+      "role": "Pesquisador do CNPq e professor titular da Universidade Federal de Alagoas (Ufal)",
+      "avatar": "/imgs/researchers/calil.jpg",
+      "bio": "Pesquisador do CNPq e professor titular da Universidade Federal de Alagoas (Ufal), com atuação nos Programas de Pós-Graduação em Educação (PPGE) e em Linguística e Literatura (PPGLL). Coordena o Laboratório do Manuscrito Escolar (LAME) e lidera projetos de colaboração internacional com instituições da França e de Portugal. Concebeu o Sistema Ramos, metodologia original voltada ao estudo da autoria em escritas infantis, valorizando dimensões como criatividade, rasura e atividades metalinguísticas — aspectos que revelam os processos de construção do pensamento e da linguagem na infância.",
+      "lattes": "http://lattes.cnpq.br/6822339713125905",
+      "orcid": "https://orcid.org/0000-0002-8696-3697",
+      "email": "calil@cedu.ufal.br"
+    },
+    {
+      "name": "Kall Anne Sheyla Amorim Braga",
+      "role": "Professora Adjunta da Universidade Federal Rural de Pernambuco (UFRPE)",
+      "avatar": "/imgs/researchers/kall.jpg",
+      "bio": "Professora Adjunta da Universidade Federal Rural de Pernambuco (UFRPE). Atua no Programa de Pós-Graduação em Linguística e Literatura (PPGLL/Ufal). Doutora em Educação pela Universidade Federal de Alagoas (Ufal), com estágio sanduíche na Université Cergy-Pontoise (França). Integrante do Laboratório do Manuscrito Escolar (LAME), do Grupo de pesquisa Ensino, Texto e Criação (ET&C/Ufal) e do Grupo de Pesquisa em Linguagem e Educação (GEPLE/UFRPE). Tem estudado sobre pontuação, discurso reportado, revisão textual, ensino de gramática e didática da escrita a partir da análise da produção textual de escreventes novatos, documentos curriculares nacionais e livros didáticos de Língua Portuguesa dos anos iniciais e finais do Ensino Fundamental.",
+      "lattes": "http://lattes.cnpq.br/9420229007650053",
+      "orcid": "https://orcid.org/0000-0001-7753-6696",
+      "email": "kall.braga@ufrpe.br"
+    }
+  ],
+  "brResearchers": [
+    {
+      "name": "Adna de Almeida Lopes",
+      "avatar": "/imgs/researchers/adna.jpg",
+      "bio": "Professora Associada nível 03, classe D, Universidade Federal de Alagoas. Docente orientadora temporária da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (Capes) e temporária da Universidade Aberta do Brasil (UAB). Doutora em Linguística pela Universidade Federal de Alagoas. Tem experiência na área de Linguística, com ênfase em Psicolinguística, atuando principalmente nos seguintes temas: ensino de língua, escrita, ensino, gênero textual e produção de texto.",
+      "lattes": "http://lattes.cnpq.br/4061859895008214",
+      "email": "adnalopes@globo.com"
+    },
+    {
+      "name": "Cristina Felipeto",
+      "avatar": "/imgs/researchers/cristina.jpg",
+      "bio": "Professora Associada da Universidade Federal de Alagoas (Ufal). Atua no Programa de Pós-Graduação em Linguística e Literatura (PPGLL/Ufal). Integrante do Laboratório do Manuscrito Escolar (LAME) e do grupo de pesquisa Ensino, Texto e Criação (ET&C). Integra áreas como Linguística, Genética Textual e Psicologia Cognitiva para investigar questões relacionadas à ortografia, rasuras, metalinguagem, pausas, dentre outras, em processos de produção textual em sala de aula.",
+      "lattes": "http://lattes.cnpq.br/7535091198670076",
+      "orcid": "https://orcid.org/0000-0003-3729-0796",
+      "email": "cristinafelipeto@fale.ufal.br"
+    },
+    {
+      "name": "Eudes da Silva Santos",
+      "avatar": "/imgs/researchers/eudes.jpg",
+      "bio": "Professor Adjunto da Universidade Federal do Agreste de Pernambuco (UFAPE) e do Programa de Pós-Graduação do Mestrado Profissional em Letras (UFAPE). Doutor em Educação pela Universidade Federal de Alagoas. Integrante do Laboratório do Manuscrito Escolar (LAME), do Grupo de Pesquisa Ensino, Texto e Criação (ET&C) e do grupo de pesquisa Texto, Escrita e Sala de Aula (TEcSA/UFAPE), onde atua como líder da linha de pesquisa \"Produção de textos na escola: relações entre o texto, aquele que escreve e os documentos orientadores\".",
+      "lattes": "http://lattes.cnpq.br/8701527300251171",
+      "orcid": "https://orcid.org/0009-0001-0482-925X",
+      "email": "eudes.santos@ufape.edu.br"
+    },
+    {
+      "name": "Janaína Ligya da Rocha Queiroz",
+      "avatar": "/imgs/researchers/janaina.jpg",
+      "bio": "Doutora em Linguística pela Universidade Federal de Alagoas. Integrante do Laboratório do Manuscrito Escolar (LAME) e do Grupo de Pesquisa Ensino, Texto e Criação (ET&C). É técnica da Secretaria de Estado da Educação de Maceió (SEDUC-AL), responsável pela formação de professores. Também atua como articuladora de ensino e coordenadora pedagógica do programa \"Professor Mentor\".",
+      "lattes": "http://lattes.cnpq.br/7713687190528505",
+      "orcid": "https://orcid.org/0000-0001-5473-4091",
+      "email": "ligyajanaina@gmail.com"
+    },
+    {
+      "name": "Elian da Silva Santos Leite",
+      "avatar": "/imgs/researchers/elian.jpg",
+      "bio": "Doutora em Educação pela Universidade Federal de Alagoas (UFAL), com especialização em Linguagem e Práticas Sociais pelo Instituto Federal de Alagoas (IFAL). Áreas de investigação abrangem: (i) o ensino e a avaliação da produção textual em contexto escolar; (ii) a avaliação da complexidade lexical; (iii) a aplicação de tecnologia ao estudo da escrita; (iv) a formação de professores; (v) o desenvolvimento de conteúdos pedagógicos para a Educação a Distância (EAD).",
+      "lattes": "https://lattes.cnpq.br/4053214001115674",
+      "orcid": "https://orcid.org/0000-0002-0588-9019",
+      "email": "elian.santos@cedu.ufal.br"
+    },
+    {
+      "name": "Lidiane Evangelista Lira",
+      "avatar": "/imgs/researchers/lidiane.jpg",
+      "bio": "Professora Adjunta da Universidade de Pernambuco (UPE, Campus Garanhuns). Atua na Coordenação da Brinquedoteca (UPE, campus Garanhuns). Doutora em Educação pela Universidade Federal de Alagoas, com estágio sanduíche na Université Cergy-Pontoise (França). Integrante do Laboratório do Manuscrito Escolar (LAME) e do Grupo de Pesquisa Ensino, Texto e Criação (ET&C). Atua nos seguintes temas: práticas de ensino, produção de texto e interpretação, processo de escritura e gêneros textuais.",
+      "lattes": "http://lattes.cnpq.br/7428353456925450",
+      "orcid": "https://orcid.org/0000-0003-1347-3088",
+      "email": "lidiane.lira@upe.br"
+    },
+    {
+      "name": "Maria Hozanete Alves de Lima",
+      "avatar": "/imgs/researchers/hozanete.jpg",
+      "bio": "Professora Titular do Departamento de Letras da Universidade Federal do Rio Grande do Norte (UFRN). Realizou estágio pós-doutoral no Institut de Textes et Manuscrits Modernes (ITEM, França). Atua no Programa de Pós-Graduação em Estudos da Linguagem (UFRN). Integrante do Laboratório do Manuscrito Escolar (LAME). Áreas de interesse: História das Ideias Linguísticas; Ensino e aprendizagem de Línguas e Literaturas Clássicas (latim e grego); Estudos de tradução, com ênfase em tradução colaborativa no espaço escolar; Processo de escritura.",
+      "lattes": "http://lattes.cnpq.br/6169626776821393",
+      "orcid": "https://orcid.org/0000-0001-8916-2740",
+      "email": "hozanetelima@gmail.com"
+    },
+    {
+      "name": "Mauri Célio Alves Santana",
+      "avatar": "/imgs/researchers/mauri.jpg",
+      "bio": "Doutor em Linguística pela Universidade Federal de Alagoas (UFAL). Integra o Laboratório do Manuscrito Escolar (LAME). É professor efetivo de Língua Portuguesa da rede estadual de Pernambuco e da rede municipal de Orocó, também em Pernambuco. Atualmente, atua na função de orientador pedagógico da área de Linguagens, na Secretaria Municipal de Educação de Santa Maria da Boa Vista - PE e como colaborador de assuntos pedagógicos e projetos educacionais do Colégio Visão, em Santa Maria da Boa Vista - PE.",
+      "lattes": "http://lattes.cnpq.br/8051609371154376",
+      "orcid": "https://orcid.org/0000-0003-0627-2042",
+      "email": "maurisantana2009@hotmail.com"
+    },
+    {
+      "name": "Mayara Cordeiro da Silva",
+      "avatar": "/imgs/researchers/mayara.jpg",
+      "bio": "Doutora em Educação pela Universidade Federal de Alagoas, com estágio doutoral na Universidade de Aveiro (Portugal). Integrante do Laboratório do Manuscrito Escolar (LAME) e do Grupo de Pesquisa Ensino, Texto e Criação (ET&C). Técnica Pedagógica responsável pela formação de professores da Secretaria de Educação de Maceió. Tem se dedicado a investigar processos de escrita em sala de aula e a formação do leitor nos anos iniciais do Ensino Fundamental.",
+      "lattes": "http://lattes.cnpq.br/8276751675885023",
+      "orcid": "https://orcid.org/0000-0002-3379-9280",
+      "email": "mayaracordeiro05@gmail.com"
+    },
+    {
+      "name": "Míriam Pessôa Marques Bezerra",
+      "avatar": "/imgs/researchers/miriam.jpg",
+      "bio": "Doutora em Linguística pela Universidade Federal de Alagoas, com estágio sanduíche na Universidade do Porto (Portugal). Integrante do Laboratório do Manuscrito Escolar (LAME) e do Grupo de Pesquisa Ensino, Texto e Criação (ET&C). Dedica-se aos estudos sobre escrita e criatividade, considerando os aspectos mnemônicos envolvidos no processo de escritura.",
+      "lattes": "http://lattes.cnpq.br/5567406252079736",
+      "orcid": "https://orcid.org/0000-0002-4797-3024",
+      "email": "miriam.pess.m@gmail.com"
+    },
+    {
+      "name": "Rosiene Omena Bispo",
+      "avatar": "/imgs/researchers/rosiene.jpg",
+      "bio": "Doutora em Linguística pela Universidade Federal de Alagoas. Atua como professora desde 1993. Concursada pela Secretaria Municipal de São José da Laje (1998) e pela Secretaria Estadual da Educação de Alagoas (2006). Ocupou o cargo de Diretora no Departamento Geral de Ensino - DDGE do Sistema Municipal de Ensino de São José da Laje de 2013 a 2020. Na ocasião, contribuiu com a implantação de uma política de alfabetização baseada nas descobertas mais avançadas da neurociência, da linguística e da psicolinguística: o Sistema Scliar de Alfabetização – SSA. A implementação ocorreu em 2018 e foi supervisionada pela Emérita Dra. Leonor Scliar-Cabral - UFSC. Atualmente, como técnica da DDGE, desenvolve formações continuadas para professores dos anos iniciais do Ensino Fundamental, acompanha e monitora a implementação do SSA, além de coordenar no âmbito municipal o Programa Criança Alfabetizada (MEC), em regime de colaboração com o governo do Estado de Alagoas.",
+      "lattes": "https://lattes.cnpq.br/5574816454476606",
+      "orcid": "https://orcid.org/0000-0002-1822-2811",
+      "email": "rosyomena31@hotmail.com"
+    },
+    {
+      "name": "Salézia Magna de Oliveira Costa",
+      "avatar": "/imgs/researchers/salezia.jpg",
+      "bio": "Doutora em Educação pela Universidade Federal de Alagoas. Integrante do Laboratório do Manuscrito Escolar (LAME) e do Grupo de Pesquisa Ensino, Texto e Criação (ET&C). Atuou como coordenadora do Programa Mais Educação (Ensino Fundamental) e como Formadora do Programa Gestão da Aprendizagem Escolar - GESTAR, na área de Língua Portuguesa, na Secretaria Municipal de Educação do Município Teotônio Vilela (2009-2012). Assumiu a função de diretora escolar na Educação Infantil (2013-2015). Foi formadora de professores pelo Pacto Nacional pela Alfabetização na Idade Certa, Secretaria Municipal de Educação de Campo Alegre, AL (2016-2017). Atuou como Tutora no Programa Universidade Aberta do Brasil pela Universidade Federal de Alagoas. Atualmente é professora efetiva da Educação Básica da Prefeitura Municipal de Campo Alegre. Assessora Pedagógica da Rede Municipal de Ensino de Campo Alegre e coordenadora geral da construção do Referencial Curricular da educação deste município. Atua também como professora tutora pelo Programa Universidade Aberta do Brasil (UAB) na Universidade Estadual de Alagoas, universidade em que também faz parte do Programa de Formação Continuada e Aperfeiçoamento (PROFAP), ministrando aulas de formação continuada para professores.",
+      "lattes": "http://lattes.cnpq.br/6581485586875129",
+      "orcid": "https://orcid.org/0000-0002-3079-1304",
+      "email": "saleziamagnacosta@gmail.com"
+    }
+  ],
+  "ptResearchers": [
+    {
+      "name": "Ana Luísa Costa",
+      "avatar": "/imgs/researchers/ana_luisa.jpg",
+      "bio": "Professora Associada da Escola Superior de Educação do Instituto Politécnico de Setúbal (ESE-IPS). Pesquisadora do Centro de Linguística da Universidade de Lisboa (CLUL). Seu trabalho se concentra principalmente em Linguística Educacional, Pedagogia Gramatical, Escrita e Formação de Professores. É coordenadora do Departamento de Ciências da Linguagem e da Comunicação da ESE-IPS e coordenadora do Mestrado em Ensino do 1.º Ciclo do Ensino Básico e do Ensino de Português e História e Geografia de Portugal no 2.º Ciclo do Ensino Básico.",
+      "cv": "https://www.cienciavitae.pt/portal/AE1D-FC1A-3F3D",
+      "orcid": "https://orcid.org/0000-0002-2529-4135",
+      "email": "ana.costa@ese.ips.pt"
+    },
+    {
+      "name": "Luís Filipe Barbeiro",
+      "avatar": "/imgs/researchers/no_img.png",
+      "bio": "Professor e coordenador da Escola Superior de Educação e Ciências Sociais, Politécnico de Leiria. Doutor e agregado em Educação, respetivamente nas especialidades de Metodologia do Ensino do Português e Literacias e Ensino do Português. Pesquisador do Centro de Estudos de Linguística Geral e Aplicada (CELGA-ILTEC) da Universidade de Coimbra, desenvolvendo a sua ação no grupo Discurso e Práticas Discursivas Académicas (DPDA). Tem focado a sua investigação na didática da escrita, língua materna e não materna. Participou em vários projetos científico-pedagógicos, com relevo para os projetos Diversidade Linguística na Escola Portuguesa; Escrita: Construção e Expressão do Conhecimento; TeL4ELE (Teacher Learning for European Literacy Education / Formação de Professores para o Desenvolvimento da Literacia na Europa), Lectibe (Leitores Ibéricos), ELiCa (European Literary Canon); Euro-Mania; Protextos. Na área da didática da escrita, publicou artigos em revistas nacionais e internacionais e diversos livros. Nos anos mais recentes, na área da didática da escrita em relação com a leitura, tem investigado as estratégias da pedagogia baseada nos géneros textuais, designadamente as propostas pelo programa Reading to Learn (R2L) / Ler para Aprender.",
+      "cv": "https://cienciavitae.pt/6616-A3B7-75C9",
+      "orcid": "https://orcid.org/0000-0001-5798-2904",
+      "email": "luis.barbeiro@ipleiria.pt"
+    },
+    {
+      "name": "Luciana Graça",
+      "avatar": "/imgs/researchers/no_img.png",
+      "bio": "Professora Adjunta na Escola Superior de Educação do Instituto Politécnico de Viana do Castelo. Das experiências profissionais anteriores, destaca-se a sua atuação quer como professora do ensino básico e do ensino secundário quer como Leitora do Camões, I.P. no Departamento de Espanhol e de Português da Universidade de Toronto, no Canadá. É licenciada em Ensino de Português, Latim e Grego e em Literaturas, Línguas e Culturas (português e espanhol), pela Universidade de Aveiro (UA). Obteve o seu doutoramento europeu em Didática, com financiamento da Fundação para a Ciência e a Tecnologia (FCT), na mesma instituição. Lecionou e prosseguiu investigação no âmbito de dois Pós-Doutoramentos, também com o apoio da FCT, e igualmente na UA. As suas áreas de docência e investigação centram-se na Didática do Português (como língua materna e não materna), na Didática da Escrita e da Oralidade e na Formação de Professores. É investigadora integrada do INED - Centro de Investigação e Inovação em Educação, colaboradora do CIDTFF – Centro de Investigação em Didática e Tecnologia na Formação de Formadores e membro fundador do grupo ProTextos: Ensino e Aprendizagem da Escrita de Textos. Também tem participado em projetos de investigação nacionais e internacionais.",
+      "cv": "https://www.cienciavitae.pt/portal/3213-8D7F-ACAB",
+      "orcid": "https://orcid.org/0000-0003-1384-9540",
+      "email": "lucianagraca@ese.ipvc.pt"
+    },
+    {
+      "name": "Maria Inês Almeida Cardoso",
+      "avatar": "/imgs/researchers/maria_ines.jpg",
+      "bio": "Professora Adjunta no Instituto Politécnico de Santarém, Escola Superior de Educação de Santarém. Doutora em Didática (2009) e Licenciada em Ensino de Português, Latim e Grego (2004) pela Universidade de Aveiro. Atua na formação inicial e contínua de educadores de infância e professores. Coordena o grupo Protextos: Ensino e Aprendizagem da Escrita de Textos. É membro integrado no Centro de Investigação em Qualidade de Vida - CIEQV/Life Quality Research Centre, do Instituto Politécnico de Santarém, do Instituto Politécnico de Leiria e do Instituto Politécnico de Setúbal, e membro colaborador no Centro de Investigação \"Didática e Tecnologia na Formação de Formadores\" (CIDTFF), da Universidade de Aveiro. Foi docente do Camões, I.P. na York University, Toronto. Os seus principais interesses investigativos centram-se na Didática do Português (língua materna/não materna), Didática da Escrita e Formação de Professores, nomeadamente, a relação com a escola, a língua e o saber; relação com a escrita escolar e extraescolar; dispositivos e materiais didáticos; progressão na produção de géneros de textos escritos e orais; escrita como promotora de desenvolvimento pessoal e profissional; articulação gramática e escrita.",
+      "cv": "https://www.cienciavitae.pt/portal/F212-7DB4-E007",
+      "orcid": "https://orcid.org/0000-0003-2687-2424",
+      "email": "inescardoso@ua.pt"
+    },
+    {
+      "name": "Mariana Pinto",
+      "avatar": "/imgs/researchers/no_img.png",
+      "bio": "Professora Adjunta da Escola Superior de Educação do Instituto Politécnico de Setúbal, onde leciona unidades curriculares de língua, linguística e didática da língua aos cursos de licenciatura e mestrado. Doutora em Didática e Formação (língua portuguesa) pela Universidade de Aveiro. Suas pesquisas estão voltadas a produção textual no Ensino Básico, didática da escrita.",
+      "cv": "https://www.cienciavitae.pt/portal/9B11-9FC4-C097",
+      "orcid": "https://orcid.org/0000-0002-3077-3202",
+      "email": "mariana.pinto@ese.ips.pt"
+    }
+  ],
+  "frResearchers": [
+    {
+      "name": "Florence Mauroux",
+      "avatar": "/imgs/researchers/no_img.png",
+      "bio": "Professora Adjunta do Institut National Supérieur du Professorat et de l'Éducation (INSPE) de Toulouse Occitanie-Pyrénées, Universidade de Toulouse-Jean Jaurès, França. Doutora em Ciências da Linguagem pela Universidade de Toulouse-Jean Jaurès (2016). Membro do Laboratório Cognition, Langues, Langage, Ergonomie (CLLE, UMR 5263). Suas pesquisas centram-se na entrada na escrita e o estudo da língua no Ensino Fundamental. Nesse contexto, investiga leitura, escrita, competências metalinguísticas e práticas de ensino.",
+      "email": "florence.mauroux@univ-tlse2.fr"
+    },
+    {
+      "name": "Véronique Paolacci",
+      "avatar": "/imgs/researchers/veronique.jpg",
+      "bio": "Professora Adjunta do Institut National Supérieur du Professorat et de l'Éducation (INSPE) de Toulouse Occitanie-Pyrénées, Universidade de Toulouse-Jean Jaurès, na área de Ciências da Linguagem, França. Doutora em Ciências da Linguagem pela Universidade de Toulouse II-Le Mirail (2005). Membro do Laboratório Cognition, Langues, Langage, Ergonomie (CLLE, UMR 5263). Suas pesquisas se concentram na produção textual de aprendizes, didática da escrita, didática da pontuação e segmentação frasal. Atua também na formação inicial e contínua de professores, com ênfase no ensino da língua e literacia.",
+      "email": "veronique.paolacci@univ-tlse2.fr",
+      "cv": "https://inspe.univ-toulouse.fr/accueil/annuaire-inspe/mme-veronique-paolacci",
+      "orcid": "https://orcid.org/0009-0001-8121-8524"
+    }
+  ]
+}

@@ -73,8 +73,9 @@
             <h1 class="hero-title">Onde estamos?</h1>
 
             <p class="hero-text">
-              Universidade Federal de Alagoas Faculdade de Letras (FALE) Centro de Pesquisa em
-              Educação e Linguagem (CEPEL)
+              Av. Lourival Melo Mota, S/N - Tabuleiro do Martins, Maceió - AL, CEP 57072-900.
+              Universidade Federal de Alagoas, Faculdade de Letras (FALE), Centro de Pesquisa em
+              Educação e Linguagem (CEPEL).
             </p>
           </div>
         </v-col>
