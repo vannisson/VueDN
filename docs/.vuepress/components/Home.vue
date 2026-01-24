@@ -219,8 +219,8 @@
 <script setup lang="ts">
   import NewsCard from '../components/NewsCard.vue'
   import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
-  import { usePagesData } from '@vuepress/client'
   import { useRouter } from 'vue-router'
+  import { usePagesData } from '@vuepress/client'
 
   const router = useRouter()
 
@@ -230,12 +230,10 @@
     category: string
     title: string
     description: string
-    date: string
+    date?: string
     categoryColor: string
-    to: string // 👈 adiciona isso
+    to?: string
   }
-
-  const pagesData = usePagesData()
 
   // lista final usada no v-for
   const newsList = ref<NewsItem[]>([])
@@ -264,73 +262,72 @@
     return { category: 'Conteúdo', categoryColor: 'default' }
   }
 
-  async function loadNewsFromContents() {
-    const entries = Object.entries(pagesData.value ?? {})
-    const loaded: (NewsItem & { sortKey: number })[] = []
+  async function loadNewsFromPages() {
+    const entries: (NewsItem & { sortKey: number })[] = []
+    const today = new Date()
 
-    await Promise.all(
-      entries.map(async ([path, getPageData]) => {
-        if (typeof getPageData !== 'function') return
-
-        let page: any
-        try {
-          page = await getPageData()
-        } catch {
-          return
-        }
-
-        if (!page || typeof page !== 'object') return
-        const fm: any = page.frontmatter ?? {}
-
-        // só pega páginas de conteúdo
-        const isContentPath = path.startsWith('/conteudos/')
-        const isContentType = fm.type === 'conteudo'
-        if (!(isContentPath || isContentType)) return
-
-        const rawDate = fm.date ?? page.git?.createdTime
-        let sortKey = 0
-        let formattedDate = ''
-
-        if (rawDate) {
-          const d = new Date(rawDate as any)
-          if (!Number.isNaN(d.getTime())) {
-            sortKey = d.getTime()
-            formattedDate = d.toLocaleDateString('pt-BR', {
-              day: '2-digit',
-              month: '2-digit',
-              year: 'numeric',
-            })
-          } else {
-            formattedDate = String(rawDate)
-          }
-        }
-
-        const descSource: string = fm.description ?? (page.excerpt as string | undefined) ?? ''
-
-        const description =
-          descSource.trim() ||
-          'Conteúdo produzido pelo LAME em parceria com diferentes iniciativas.'
-
-        const { category, categoryColor } = getCategoryAndColor(fm.badge || fm.tipo)
-
-        loaded.push({
-          image: fm.cover || '/imgs/contents/default.png',
-          category,
-          title: fm.title || page.title || 'Conteúdo',
-          description,
-          date: formattedDate,
-          categoryColor,
-          sortKey,
-          to: page.path, // 👈 rota do DetailContent daquele MD
-        })
+    const formatDate = (d: Date) =>
+      d.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
       })
-    )
 
-    // ordena do mais recente para o mais antigo
-    loaded.sort((a, b) => b.sortKey - a.sortKey)
+    const pushItem = (item: any) => {
+      const rawBadge = item.badge || item.category
+      const { category, categoryColor } = getCategoryAndColor(rawBadge)
+      const rawDate = item.date
+      let sortKey = today.getTime()
+      let formattedDate = formatDate(today)
 
-    // limita aos 10 mais recentes
-    newsList.value = loaded.slice(0, 10)
+      if (rawDate) {
+        const d = new Date(rawDate as any)
+        if (!Number.isNaN(d.getTime())) {
+          sortKey = d.getTime()
+          formattedDate = formatDate(d)
+        } else {
+          formattedDate = String(rawDate)
+        }
+      }
+
+      entries.push({
+        image: item.image || '/imgs/contents/default.png',
+        category,
+        categoryColor,
+        title: item.title || 'Conteúdo',
+        description: item.description || 'Conteúdo produzido pelo LAME.',
+        date: formattedDate,
+        to: item.path || '',
+        sortKey,
+      })
+    }
+
+    const pagesData = usePagesData()
+    const loaders = Object.values(pagesData)
+    for (const load of loaders) {
+      try {
+        const data: any = await load()
+        if (
+          typeof data?.path === 'string' &&
+          data.path.startsWith('/conteudos/') &&
+          (data.frontmatter?.layout === 'DetailContent' || data.frontmatter?.type === 'conteudo')
+        ) {
+          pushItem({
+            title: data.title || data.frontmatter?.title,
+            description: data.frontmatter?.description,
+            image: data.frontmatter?.cover,
+            badge: data.frontmatter?.badge,
+            date: data.frontmatter?.date,
+            path: data.path,
+          })
+        }
+      } catch (e) {
+        // ignore broken loader
+      }
+    }
+
+    entries.sort((a, b) => b.sortKey - a.sortKey)
+    newsList.value = entries.slice(0, 10)
   }
 
   // ==== lógica de scroll do carrossel ====
@@ -361,7 +358,7 @@
   }
 
   onMounted(async () => {
-    await loadNewsFromContents() // carrega conteúdos em ordem decrescente de data
+    loadNewsFromPages() // carrega conteúdos em ordem decrescente de data
 
     // espera layout e imagens para medir o overflow corretamente
     await nextTick()
@@ -616,7 +613,9 @@
     text-transform: none;
     padding: 0;
     cursor: pointer;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
 
     /* sobe o texto */
     margin-bottom: 4px;

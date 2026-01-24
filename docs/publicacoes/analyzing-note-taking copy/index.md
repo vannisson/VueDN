@@ -1,5 +1,6 @@
 ---
-title: 'Analyzing learners’ digital note-taking strategies: A systematic review'
+title: 'Analyzing learners' digital note-taking strategies: A systematic review'
+layout: DetailPublication
 type: publicacao
 
 authors: >

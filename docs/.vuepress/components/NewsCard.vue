@@ -54,8 +54,8 @@
     top: 12px;
     left: 12px;
 
-    background: #aec8ff; /* azul claro */
-    color: #2563eb; /* azul forte */
+    background: #2563eb; /* azul forte */
+    color: #ffffff; /* texto branco */
 
     display: inline-flex;
     align-items: center;
@@ -75,14 +75,14 @@
   .chip-icon {
     font-size: 16px;
     line-height: 1;
-    color: #2563eb; /* garante ícone azul */
+    color: #ffffff;
     margin-top: 1px; /* micro-ajuste */
   }
 
   .chip-text {
     line-height: 1;
     padding-top: 1px;
-    color: #2563eb; /* texto azul */
+    color: #ffffff;
   }
 
   /* ---------------- CARD BASE ---------------- */

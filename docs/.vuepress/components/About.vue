@@ -5,14 +5,28 @@
       <v-row class="hero-row" no-gutters align="center" justify="space-between">
         <!-- Imagem (esquerda) -->
         <v-col cols="12" md="6" class="hero-image-col">
-          <v-img
-            src="/imgs/about/people01.png"
-            lazy-src="/imgs/about/people01.png"
-            :aspect-ratio="16 / 9"
-            class="hero-figure"
-            alt="Equipe reunida"
-            cover
-          />
+          <div class="hero-slider">
+            <v-carousel
+              v-model="historyIndex"
+              :height="carouselHeight"
+              show-arrows="hover"
+              hide-delimiter-background
+              cycle
+              delimiter-icon="mdi-circle"
+              class="hero-carousel"
+            >
+              <v-carousel-item v-for="(slide, i) in historySlides" :key="slide.src" :value="i">
+                <v-img
+                  :src="slide.src"
+                  :lazy-src="slide.src"
+                  :alt="slide.alt"
+                  :aspect-ratio="16 / 9"
+                  cover
+                  class="hero-figure"
+                />
+              </v-carousel-item>
+            </v-carousel>
+          </div>
         </v-col>
 
         <!-- Card de texto (direita) -->
@@ -22,14 +36,11 @@
 
             <p class="hero-text">
               O Laboratório do Manuscrito Escolar (LAME), criado em 2010 pelo professor Dr. Eduardo
-              Calil (Ufal), dedica-se ao estudo da escrita em processo, diretamente no contexto da
-              sala de aula. Calil desenvolveu o Sistema Ramos como base para as coletas e registros
-              de dados. Esse sistema registra simultaneamente as ações do escrevente — como rasuras
-              — e suas verbalizações durante situações de produção textual. Além de desenvolver
-              pesquisas sobre a gênese da produção textual escrita, o LAME tem um importante acervo
-              de manuscritos e registros escolares coletados desde 1989, possibilitando a realização
-              de pesquisas que se dedicam a compreender a gênese e a escrita do manuscrito escolar
-              há mais de três décadas.
+              Calil (Ufal), é dedicado a observar a escrita em processo, dentro da sala de aula. O
+              Sistema Ramos registra, em tempo real, as ações do escrevente — rasuras, gestos e
+              verbalizações — enquanto o texto nasce. Nosso acervo reúne manuscritos e registros
+              coletados desde 1989, permitindo compreender e valorizar a gênese do manuscrito
+              escolar ao longo de mais de três décadas.
             </p>
           </div>
         </v-col>
@@ -57,14 +68,28 @@
         <!-- Imagem (esquerda ) -->
 
         <v-col cols="12" md="6" class="hero-image-col">
-          <v-img
-            src="/imgs/about/building.png"
-            lazy-src="/imgs/about/building.png"
-            :aspect-ratio="16 / 9"
-            class="hero-figure"
-            alt="Equipe reunida"
-            cover
-          />
+          <div class="hero-slider">
+            <v-carousel
+              v-model="buildingIndex"
+              :height="carouselHeight"
+              show-arrows="hover"
+              hide-delimiter-background
+              delimiter-icon="mdi-circle"
+              cycle
+              class="hero-carousel"
+            >
+              <v-carousel-item v-for="(slide, i) in buildingSlides" :key="slide.src" :value="i">
+                <v-img
+                  :src="slide.src"
+                  :lazy-src="slide.src"
+                  :alt="slide.alt"
+                  :aspect-ratio="16 / 9"
+                  cover
+                  class="hero-figure"
+                />
+              </v-carousel-item>
+            </v-carousel>
+          </div>
         </v-col>
         <!-- Card de texto (direita) -->
 
@@ -73,9 +98,10 @@
             <h1 class="hero-title">Onde estamos?</h1>
 
             <p class="hero-text">
-              Av. Lourival Melo Mota, S/N - Tabuleiro do Martins, Maceió - AL, CEP 57072-900.
-              Universidade Federal de Alagoas, Faculdade de Letras (FALE), Centro de Pesquisa em
-              Educação e Linguagem (CEPEL).
+              Estamos no campus da Universidade Federal de Alagoas (FALE/CEPEL), onde acolhemos
+              pesquisadores, estudantes e professores que desejam conhecer o acervo e os métodos que
+              utilizamos para registrar a escrita em movimento. Nosso espaço integra salas de
+              coleta, observação e formação continuada, conectando ensino, pesquisa e extensão.
             </p>
           </div>
         </v-col>
@@ -99,6 +125,11 @@
                 referrerpolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
+            <p class="map-address">
+              Av. Lourival Melo Mota, s/n - Tabuleiro do Martins, Maceió - AL, CEP 57072-900.
+              Universidade Federal de Alagoas, Faculdade de Letras (FALE) · Centro de Pesquisa em
+              Educação e Linguagem (CEPEL).
+            </p>
           </div>
         </div>
       </v-container>
@@ -107,7 +138,19 @@
 </template>
 
 <script setup lang="ts">
-  // nada aqui por enquanto
+  import { ref } from 'vue'
+
+  const historySlides = [
+    { src: '/imgs/about/about_00.png', alt: 'Registro de campo do LAME' },
+    { src: '/imgs/about/about_01.png', alt: 'Equipe em atividade formativa' },
+    { src: '/imgs/about/about_02.jpg', alt: 'Acervo de manuscritos em análise' },
+    { src: '/imgs/about/about_03.png', alt: 'Estudantes em observação no laboratório' },
+  ]
+
+  const historyIndex = ref(0)
+  const buildingSlides = [{ src: '/imgs/about/building.png', alt: 'Fachada e espaço do LAME' }]
+  const buildingIndex = ref(0)
+  const carouselHeight = 440
 </script>
 
 <style scoped>
@@ -117,15 +160,8 @@
     position: relative;
     min-height: 100vh;
     z-index: 0;
-  }
-
-  .about-page::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: url('/imgs/about/background.png') center / cover no-repeat;
-    z-index: -1;
-    transform: translateZ(0);
+    background: url('/imgs/about/background.png') center center / cover no-repeat fixed;
+    background-color: #f6f6f6;
   }
 
   /* ========== HERO / NOSSA HISTÓRIA ========== */
@@ -170,10 +206,86 @@
     z-index: 1;
   }
 
-  .hero-figure {
-    border-radius: 40px 40px 10px 40px;
-    max-width: 560px;
+  .hero-slider {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-carousel {
+    border-radius: 32px;
     overflow: hidden;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.18);
+    min-height: 340px;
+    height: auto;
+    max-height: 460px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .hero-figure {
+    border-radius: 32px;
+    max-height: 520px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    background: #f2f4f7;
+  }
+
+  :deep(.v-carousel__controls) {
+    bottom: 10px;
+  }
+
+  :deep(.v-carousel__controls .v-btn) {
+    color: #ffffff !important;
+    opacity: 0.9;
+  }
+
+  :deep(.v-carousel__controls .v-btn.v-btn--active) {
+    opacity: 1;
+  }
+
+  .section-where .hero-figure {
+    max-width: 720px;
+    max-height: 440px;
+  }
+
+  .hero-thumbs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    gap: 10px;
+  }
+
+  .hero-thumb {
+    border: 2px solid transparent;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    transition:
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.2s ease;
+    display: block;
+    width: 100%;
+  }
+
+  .hero-thumb:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  }
+
+  .hero-thumb.active {
+    border-color: #2563eb;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  }
+
+  .hero-thumb :deep(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .hero-text-col {
@@ -188,6 +300,13 @@
     border-radius: 48px 0 0 48px;
     padding: clamp(2rem, 3vw, 2.75rem);
     width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-where .hero-card {
+    max-width: 600px;
   }
 
   .hero-title {
@@ -217,7 +336,7 @@
   /* ========== SEÇÕES GENÉRICAS ========== */
 
   .section {
-    padding-block: clamp(3.5rem, 7vw, 5rem);
+    padding-block: clamp(3rem, 6vw, 4.25rem);
   }
 
   .card {
@@ -320,7 +439,9 @@
 
   .map-shell {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
     margin-top: 2rem;
   }
 
@@ -329,12 +450,22 @@
     border-radius: 32px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
     overflow: hidden;
+    max-width: 1100px;
   }
 
   .map-frame {
     width: 100%;
     height: 32rem;
     border: 0;
+  }
+
+  .map-address {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #0a0e1c;
+    font-weight: 500;
+    text-align: center;
   }
 
   /* ========== RESPONSIVO ========== */
@@ -354,8 +485,12 @@
     }
 
     .hero-figure {
-      max-width: 520px;
-      margin-bottom: 1.75rem;
+      max-height: 420px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-slider {
+      max-width: 620px;
     }
 
     .hero-text-col {
@@ -379,6 +514,18 @@
   @media (max-width: 600px) {
     .section-text {
       max-width: 100%;
+    }
+
+    .hero-thumb {
+      height: 72px;
+    }
+
+    .map-card {
+      max-width: 100%;
+    }
+
+    .map-frame {
+      height: 24rem;
     }
   }
 </style>

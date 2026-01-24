@@ -106,7 +106,8 @@
     const isProjectDetail = p.startsWith('/projetos/') && p !== '/projetos/'
     const isContentDetail = p.startsWith('/conteudos/') && p !== '/conteudos/'
     const isPublicationDetail = p.startsWith('/publicacoes/') && p !== '/publicacoes/'
-    return isProjectDetail || isContentDetail || isPublicationDetail
+    const isAbout = p.startsWith('/about/')
+    return isProjectDetail || isContentDetail || isPublicationDetail || isAbout
   })
 
   // cor da barrinha embaixo do link ativo
@@ -155,7 +156,9 @@
   }
 
   .header-app-bar {
-    transition: background-color 0.4s ease, box-shadow 0.3s ease;
+    transition:
+      background-color 0.4s ease,
+      box-shadow 0.3s ease;
     backdrop-filter: blur(6px);
   }
 
@@ -198,7 +201,9 @@
     color: #002b3b;
     text-decoration: none;
     opacity: 0.85;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
   }
 
   .nav-link:hover {

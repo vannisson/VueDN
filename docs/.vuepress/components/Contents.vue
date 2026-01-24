@@ -43,15 +43,11 @@
 
           <!-- LISTA -->
           <div class="contents-list">
-            <component
+            <RouterLink
               v-for="item in visibleContents"
               :key="item.title"
-              :is="item.external ? 'a' : item.link ? 'RouterLink' : 'div'"
-              :href="item.external ? item.link : undefined"
-              :to="!item.external ? item.link : undefined"
+              :to="`/conteudos/${slugify(item.title)}/`"
               class="content-card-link"
-              :target="item.external ? '_blank' : undefined"
-              rel="noopener"
             >
               <article class="content-card">
                 <div class="content-main">
@@ -82,7 +78,7 @@
                   />
                 </div>
               </article>
-            </component>
+            </RouterLink>
 
             <div v-if="!filteredContents.length" class="empty-state">
               Nenhum conteúdo encontrado para “{{ searchQuery }}”.
@@ -164,8 +160,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch } from 'vue'
-  import siteContent from '../data/siteContent.json'
+  import { ref, computed, watch, onMounted } from 'vue'
+  import { usePagesData } from '@vuepress/client'
 
   type ContentCard = {
     title: string
@@ -198,6 +194,17 @@
       .toLowerCase()
   }
 
+  function slugify(title: string): string {
+    return title
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+  }
+
   function getBadgeIcon(badge?: string) {
     const norm = normalizeBadge(badge)
     if (norm === 'material') return 'mdi-book-open-variant'
@@ -211,31 +218,69 @@
     badgeFilter.value = badgeFilter.value === value ? 'all' : value
   }
 
-  const buildContents = () => {
-    const fromVideos: ContentCard[] = (siteContent.videos || []).map(v => ({
-      title: v.title,
-      description: v.description,
-      image: v.image || '/imgs/contents/default.png',
-      badge: v.badge || 'Vídeo',
-      link: v.link || '',
-      external: !!v.link,
-    }))
-
-    const fromNews: ContentCard[] = (siteContent.news || []).map(n => ({
-      title: n.title,
-      description: n.description,
-      image: n.image || '/imgs/contents/default.png',
-      badge: n.badge || 'Notícia',
-      link: n.link || '',
-      external: !!n.link,
-    }))
-
-    const merged = [...fromVideos, ...fromNews]
-    merged.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
-    contents.value = merged
+  async function buildContents() {
+    const pagesData = usePagesData()
+    const loaders = Object.values(pagesData)
+    const list: ContentCard[] = []
+    for (const load of loaders) {
+      try {
+        const data: any = await load()
+        if (
+          typeof data?.path === 'string' &&
+          data.path.startsWith('/conteudos/') &&
+          (data.frontmatter?.layout === 'DetailContent' || data.frontmatter?.type === 'conteudo')
+        ) {
+          list.push({
+            title: data.title || data.frontmatter?.title || 'Sem título',
+            description: data.frontmatter?.description || '',
+            image: data.frontmatter?.cover || '/imgs/contents/default.png',
+            badge: data.frontmatter?.badge || undefined,
+            link: '',
+            external: false,
+          })
+        }
+      } catch (e) {
+        // ignore broken loader
+      }
+    }
+    list.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
+    
+    // Mock data if no contents found
+    if (list.length === 0) {
+      list.push(
+        {
+          title: 'Solitária',
+          description: 'Interação entre alunas discutindo escolha lexical (triste x solitária) no manuscrito "Os três Todinhos" (1º ano, 1991), evidenciando rasura oral e negociação de sentido.',
+          image: '/imgs/contents/default.png',
+          badge: 'Vídeo',
+          link: '',
+          external: false,
+        },
+        {
+          title: 'Sistema Ramos',
+          description: 'Sistema de categorização e análise de dados coletados em sala de aula. Metodologia de pesquisa colaborativa entre Brasil, França e Portugal.',
+          image: '/imgs/contents/default.png',
+          badge: 'Material',
+          link: '',
+          external: false,
+        },
+        {
+          title: 'Ordem Alfabética',
+          description: 'Análise de atividades metalinguísticas em sequências de escrita. Abordagem enunciativa da produção textual infantil.',
+          image: '/imgs/contents/default.png',
+          badge: 'Material',
+          link: '',
+          external: false,
+        }
+      )
+    }
+    
+    contents.value = list
   }
 
-  buildContents()
+  onMounted(() => {
+    buildContents()
+  })
 
   const filteredContents = computed(() => {
     const q = searchQuery.value.trim().toLowerCase()
@@ -253,7 +298,9 @@
     })
   })
 
-  const totalPages = computed(() => Math.max(1, Math.ceil(filteredContents.value.length / PAGE_SIZE)))
+  const totalPages = computed(() =>
+    Math.max(1, Math.ceil(filteredContents.value.length / PAGE_SIZE))
+  )
 
   const pageNumbers = computed(() => {
     const total = totalPages.value
@@ -388,6 +435,9 @@
   .section-contents {
     background: #f3f4f6;
     padding-bottom: 4rem; /* espaço antes do footer */
+    min-height: calc(100vh - 320px);
+    display: flex;
+    flex-direction: column;
   }
 
   .contents-layout {
@@ -425,8 +475,12 @@
     background: #ffffff;
     color: #4b5563;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease,
-      border-color 0.15s ease, transform 0.1s ease;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.1s ease;
   }
 
   .badge-filter:hover {
@@ -478,8 +532,8 @@
     gap: 0.3rem;
     padding: 0.2rem 0.7rem;
     border-radius: 999px;
-    background: #aec8ff;
-    color: #2563eb;
+    background: #2563eb;
+    color: #ffffff;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -488,6 +542,7 @@
 
   .pill-icon {
     margin-right: 2px;
+    color: #ffffff;
   }
 
   .content-title {
@@ -564,7 +619,10 @@
     padding: 0.35rem 0.7rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .page-number:hover {

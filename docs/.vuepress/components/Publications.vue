@@ -73,29 +73,24 @@
               <!-- AÇÕES -->
               <div class="publication-actions">
                 <v-btn
-                  v-if="pub.download"
                   class="publication-btn"
                   color="green"
                   variant="flat"
                   rounded
                   size="small"
-                  :href="pub.download"
-                  download
+                  disabled
                 >
                   <v-icon size="16" class="mr-1">mdi-download</v-icon>
                   Baixar
                 </v-btn>
 
                 <v-btn
-                  v-if="pub.sourceUrl"
                   class="publication-btn"
                   color="green"
                   variant="outlined"
                   rounded
                   size="small"
-                  :href="pub.sourceUrl"
-                  target="_blank"
-                  rel="noopener"
+                  disabled
                 >
                   <v-icon size="16" class="mr-1">mdi-open-in-new</v-icon>
                   Fonte
@@ -166,8 +161,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch } from 'vue'
-  import siteContent from '../data/siteContent.json'
+  import { ref, computed, watch, onMounted } from 'vue'
+  import { usePagesData } from '@vuepress/client'
 
   type PublicationCard = {
     title: string
@@ -179,7 +174,67 @@
   }
 
   const searchQuery = ref('')
-  const publications = ref<PublicationCard[]>(siteContent.publications || [])
+  const publications = ref<PublicationCard[]>([])
+  async function buildPublications() {
+    const pagesData = usePagesData()
+    const loaders = Object.values(pagesData)
+    const list: PublicationCard[] = []
+    for (const load of loaders) {
+      try {
+        const data: any = await load()
+        if (
+          typeof data?.path === 'string' &&
+          data.path.startsWith('/publicacoes/') &&
+          (data.frontmatter?.layout === 'DetailPublication' ||
+            data.frontmatter?.type === 'publicacao')
+        ) {
+          list.push({
+            title: data.title || data.frontmatter?.title || 'Sem título',
+            authors: data.frontmatter?.authors || '',
+            conference: data.frontmatter?.conference || '',
+            year: data.frontmatter?.year || '',
+            download: data.frontmatter?.download || '',
+            sourceUrl: data.frontmatter?.sourceUrl || '',
+          })
+        }
+      } catch (e) {
+        // ignore broken loader
+      }
+    }
+    // sort by year desc then title
+    list.sort((a, b) => {
+      const ay = Number(a.year) || 0
+      const by = Number(b.year) || 0
+      if (by !== ay) return by - ay
+      return (a.title || '').localeCompare(b.title || '', 'pt-BR')
+    })
+    
+    // Mock data if no publications found
+    if (list.length === 0) {
+      list.push(
+        {
+          title: 'Multimodal feedback to support digital note-taking in higher education',
+          authors: 'Marcos Vinícius Prado Albuquerque, Geovane Carvalho Filho, Eduardo Henrique Tavares Moura, Felipe César Gonçalves de Andrade',
+          conference: 'Brazilian Symposium on Computers in Education (SBIE)',
+          year: '2023',
+          sourceUrl: 'https://ieeeaccess.ieee.org/',
+        },
+        {
+          title: 'Analyzing learners\' digital note-taking strategies: A systematic review',
+          authors: 'Marcos Vinícius Prado Albuquerque, Eduardo Henrique Tavares Moura, Felipe César Gonçalves de Andrade',
+          conference: 'International Conference on Awesome Learning',
+          year: '2024',
+          sourceUrl: 'https://ieeeaccess.ieee.org/',
+        }
+      )
+    }
+    
+    publications.value = list
+  }
+
+  onMounted(() => {
+    buildPublications()
+  })
 
   // ✅ Agora 10 artigos por página com paginação
   const PAGE_SIZE = 10
@@ -209,7 +264,9 @@
     })
   })
 
-  const totalPages = computed(() => Math.max(1, Math.ceil(filteredPublications.value.length / PAGE_SIZE)))
+  const totalPages = computed(() =>
+    Math.max(1, Math.ceil(filteredPublications.value.length / PAGE_SIZE))
+  )
 
   const pageNumbers = computed(() => {
     const total = totalPages.value
@@ -328,6 +385,9 @@
   .section-publications {
     background: #f3f4f6;
     padding-bottom: 4rem;
+    min-height: calc(100vh - 320px);
+    display: flex;
+    flex-direction: column;
   }
 
   .publications-list {
@@ -439,7 +499,10 @@
     padding: 0.35rem 0.7rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .page-number:hover {

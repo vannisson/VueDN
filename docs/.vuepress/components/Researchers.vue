@@ -109,7 +109,12 @@
                 <div class="researcher-links">
                   <!-- CV -->
                   <template v-if="r.cv">
-                    <a :href="r.cv" class="link-chip small" target="_blank" rel="noopener noreferrer">
+                    <a
+                      :href="r.cv"
+                      class="link-chip small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <v-icon size="16" class="mr-1"> mdi-file-document-outline </v-icon>
                       CV
                     </a>
@@ -179,7 +184,12 @@
                 <div class="researcher-links">
                   <!-- CV -->
                   <template v-if="r.cv">
-                    <a :href="r.cv" class="link-chip small" target="_blank" rel="noopener noreferrer">
+                    <a
+                      :href="r.cv"
+                      class="link-chip small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <v-icon size="16" class="mr-1"> mdi-file-document-outline </v-icon>
                       CV
                     </a>
@@ -262,7 +272,12 @@
 
                   <!-- CV -->
                   <template v-if="r.cv">
-                    <a :href="r.cv" class="link-chip small" target="_blank" rel="noopener noreferrer">
+                    <a
+                      :href="r.cv"
+                      class="link-chip small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <v-icon size="16" class="mr-1"> mdi-file-document-outline </v-icon>
                       CV
                     </a>
@@ -471,7 +486,9 @@
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
     height: 100%;
     min-height: 420px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .researcher-card:hover {
@@ -547,7 +564,10 @@
     font-size: clamp(0.8rem, 0.95vw, 0.9rem);
     font-weight: 500;
     text-decoration: none;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease,
+      background 0.12s ease;
     box-shadow: 0 6px 14px rgba(255, 136, 0, 0.4);
     cursor: pointer;
     white-space: nowrap;
@@ -655,7 +675,7 @@
       row-gap: 0.75rem;
       column-gap: 0.5rem;
     }
-esearcher-card {
+    esearcher-card {
       padding: 1rem;
     }
 
@@ -674,4 +694,3 @@ esearcher-card {
     }
   }
 </style>
-

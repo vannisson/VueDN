@@ -1,5 +1,6 @@
 ---
 title: Multimodal feedback to support digital note-taking in higher education
+layout: DetailPublication
 type: publicacao
 authors: >
   Marcos Vinícius Prado Albuquerque, Geovane Carvalho Filho, Eduardo Henrique Tavares Moura, Felipe

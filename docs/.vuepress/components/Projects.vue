@@ -24,14 +24,11 @@
     <section class="section-projects">
       <v-container class="site-container">
         <div class="projects-grid">
-          <component
-            :is="project.link ? 'a' : 'div'"
+          <RouterLink
             v-for="project in visibleProjects"
             :key="project.title"
-            :href="project.link || undefined"
+            :to="`/projetos/${slugify(project.title)}/`"
             class="project-card-link"
-            :target="project.link ? '_blank' : undefined"
-            rel="noopener"
           >
             <article class="project-card">
               <div class="project-media">
@@ -55,7 +52,7 @@
                 </div>
               </div>
             </article>
-          </component>
+          </RouterLink>
         </div>
 
         <div v-if="!filteredProjects.length" class="empty-state">
@@ -119,8 +116,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch } from 'vue'
-  import siteContent from '../data/siteContent.json'
+  import { ref, computed, watch, onMounted } from 'vue'
+  import { usePagesData } from '@vuepress/client'
 
   type ProjectCard = {
     title: string
@@ -131,7 +128,7 @@
   }
 
   const searchQuery = ref('')
-  const projects = ref<ProjectCard[]>(siteContent.projects || [])
+  const projects = ref<ProjectCard[]>([])
 
   const PAGE_SIZE = 6
   const currentPage = ref(1)
@@ -154,7 +151,9 @@
     })
   })
 
-  const totalPages = computed(() => Math.max(1, Math.ceil(filteredProjects.value.length / PAGE_SIZE)))
+  const totalPages = computed(() =>
+    Math.max(1, Math.ceil(filteredProjects.value.length / PAGE_SIZE))
+  )
 
   const pageNumbers = computed(() => {
     const total = totalPages.value
@@ -171,6 +170,62 @@
   const visibleProjects = computed(() => {
     const start = (currentPage.value - 1) * PAGE_SIZE
     return filteredProjects.value.slice(start, start + PAGE_SIZE)
+  })
+
+  function slugify(title: string): string {
+    return title
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+  }
+
+  async function buildProjects() {
+    const pagesData = usePagesData()
+    const loaders = Object.values(pagesData)
+    const list: ProjectCard[] = []
+    for (const load of loaders) {
+      try {
+        const data: any = await load()
+        if (
+          typeof data?.path === 'string' &&
+          data.path.startsWith('/projetos/') &&
+          (data.frontmatter?.layout === 'DetailProject' || data.frontmatter?.type === 'projeto')
+        ) {
+          list.push({
+            title: data.title || data.frontmatter?.title || 'Sem título',
+            description: data.frontmatter?.description || '',
+            year: data.frontmatter?.year || '',
+            image: data.frontmatter?.cover || '/imgs/projects/default.png',
+          })
+        }
+      } catch (e) {
+        // ignore broken loader
+      }
+    }
+    // sort by title for stable order
+    list.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
+    
+    // Mock data if no projects found
+    if (list.length === 0) {
+      list.push(
+        {
+          title: 'PROJETO PRODUÇÃO TEXTUAL E ATIVIDADES METALINGUÍSTICAS (METAWRITING II)',
+          description: 'Estudo de atividades metalinguísticas em produção textual nos anos iniciais, articulando práticas docentes e comentários de alunos com dados coletados no Brasil, França e Portugal.',
+          year: '2024-2028',
+          image: '/imgs/projects/default.png',
+        }
+      )
+    }
+    
+    projects.value = list
+  }
+
+  onMounted(() => {
+    buildProjects()
   })
 
   function goToPage(page: number) {
@@ -285,6 +340,9 @@
   .section-projects {
     background: #f3f4f6;
     padding-bottom: 4rem; /* espaço antes do footer */
+    min-height: calc(100vh - 320px);
+    display: flex;
+    flex-direction: column;
   }
 
   .projects-grid {
@@ -305,7 +363,9 @@
     background: #ffffff;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
     overflow: hidden;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
   }
 
   .project-card:hover {
@@ -383,7 +443,10 @@
     padding: 0.35rem 0.7rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .page-number:hover {
