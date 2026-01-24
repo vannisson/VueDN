@@ -43,11 +43,15 @@
 
           <!-- LISTA -->
           <div class="contents-list">
-            <RouterLink
-              v-for="item in filteredContents"
-              :key="item.path"
-              :to="item.path"
+            <component
+              v-for="item in visibleContents"
+              :key="item.title"
+              :is="item.external ? 'a' : item.link ? 'RouterLink' : 'div'"
+              :href="item.external ? item.link : undefined"
+              :to="!item.external ? item.link : undefined"
               class="content-card-link"
+              :target="item.external ? '_blank' : undefined"
+              rel="noopener"
             >
               <article class="content-card">
                 <div class="content-main">
@@ -78,7 +82,7 @@
                   />
                 </div>
               </article>
-            </RouterLink>
+            </component>
 
             <div v-if="!filteredContents.length" class="empty-state">
               Nenhum conteúdo encontrado para “{{ searchQuery }}”.
@@ -102,27 +106,80 @@
             <span>{{ type.label }}</span>
           </button>
         </div>
+
+        <div v-if="filteredContents.length" class="pagination-wrapper">
+          <v-btn
+            class="page-btn"
+            variant="outlined"
+            rounded
+            size="small"
+            :disabled="currentPage === 1"
+            @click="goToPage(currentPage - 1)"
+          >
+            <v-icon size="16" class="mr-1">mdi-chevron-left</v-icon>
+            Anterior
+          </v-btn>
+
+          <div class="page-numbers">
+            <button
+              v-for="n in pageNumbers"
+              :key="n"
+              type="button"
+              class="page-number"
+              :class="{ active: n === currentPage }"
+              @click="goToPage(n)"
+            >
+              {{ n }}
+            </button>
+          </div>
+
+          <div class="page-input">
+            <label for="content-page-input">Ir para</label>
+            <input
+              id="content-page-input"
+              type="number"
+              :min="1"
+              :max="totalPages"
+              :value="currentPage"
+              @change="onPageInput($event)"
+            />
+            <span>/ {{ totalPages }}</span>
+          </div>
+
+          <v-btn
+            class="page-btn"
+            variant="outlined"
+            rounded
+            size="small"
+            :disabled="currentPage === totalPages"
+            @click="goToPage(currentPage + 1)"
+          >
+            Próxima
+            <v-icon size="16" class="ml-1">mdi-chevron-right</v-icon>
+          </v-btn>
+        </div>
       </v-container>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted, watch } from 'vue'
-  import { usePagesData } from '@vuepress/client'
+  import { ref, computed, watch } from 'vue'
+  import siteContent from '../data/siteContent.json'
 
   type ContentCard = {
-    path: string
     title: string
     description: string
     image: string
     badge?: string // "Material" | "Vídeo" | "Notícia"
+    link?: string
+    external?: boolean
   }
 
   const searchQuery = ref('')
   const contents = ref<ContentCard[]>([])
-
-  const pagesData = usePagesData()
+  const PAGE_SIZE = 6
+  const currentPage = ref(1)
 
   // Tipos de badge / filtro lateral
   const badgeTypes = [
@@ -154,59 +211,39 @@
     badgeFilter.value = badgeFilter.value === value ? 'all' : value
   }
 
-  onMounted(async () => {
-    const loaded: ContentCard[] = []
+  const buildContents = () => {
+    const fromVideos: ContentCard[] = (siteContent.videos || []).map(v => ({
+      title: v.title,
+      description: v.description,
+      image: v.image || '/imgs/contents/default.png',
+      badge: v.badge || 'Vídeo',
+      link: v.link || '',
+      external: !!v.link,
+    }))
 
-    const entries = Object.entries(pagesData.value ?? {})
+    const fromNews: ContentCard[] = (siteContent.news || []).map(n => ({
+      title: n.title,
+      description: n.description,
+      image: n.image || '/imgs/contents/default.png',
+      badge: n.badge || 'Notícia',
+      link: n.link || '',
+      external: !!n.link,
+    }))
 
-    await Promise.all(
-      entries.map(async ([path, getPageData]) => {
-        if (typeof getPageData !== 'function') return
+    const merged = [...fromVideos, ...fromNews]
+    merged.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
+    contents.value = merged
+  }
 
-        let page: any
-        try {
-          page = await getPageData()
-        } catch (err) {
-          console.error('[Contents] erro ao carregar página', path, err)
-          return
-        }
-
-        if (!page || typeof page !== 'object') return
-
-        const fm: any = page.frontmatter ?? {}
-
-        // Só pega páginas de conteúdo
-        // ajuste se você usar outro path ou outro campo no frontmatter
-        if (!path.startsWith('/conteudos/') && fm.type !== 'conteudo') return
-
-        const descSource: string = fm.description ?? (page.excerpt as string | undefined) ?? ''
-        const description =
-          descSource.trim() ||
-          'Conteúdo produzido pelo LAME em parceria com diferentes iniciativas.'
-
-        loaded.push({
-          path: page.path,
-          title: fm.title || page.title || 'Conteúdo',
-          description,
-          image: fm.cover || '/imgs/contents/default.png',
-          badge: fm.badge || fm.tipo || undefined, // deixe assim pra aceitar "badge" ou "tipo" no MD
-        })
-      })
-    )
-
-    loaded.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
-    contents.value = loaded
-  })
+  buildContents()
 
   const filteredContents = computed(() => {
     const q = searchQuery.value.trim().toLowerCase()
 
     return contents.value.filter(c => {
-      // filtro por texto
       const txtFields = [c.title, c.description]
       const matchText = !q || txtFields.some(f => f.toLowerCase().includes(q))
 
-      // filtro por badge
       let matchBadge = true
       if (badgeFilter.value !== 'all') {
         matchBadge = normalizeBadge(c.badge) === normalizeBadge(badgeFilter.value as string)
@@ -216,10 +253,44 @@
     })
   })
 
+  const totalPages = computed(() => Math.max(1, Math.ceil(filteredContents.value.length / PAGE_SIZE)))
+
+  const pageNumbers = computed(() => {
+    const total = totalPages.value
+    const current = currentPage.value
+    const span = 2
+    const start = Math.max(1, current - span)
+    const end = Math.min(total, start + span * 2)
+    const adjustedStart = Math.max(1, end - span * 2)
+    const nums: number[] = []
+    for (let i = adjustedStart; i <= end; i++) nums.push(i)
+    return nums
+  })
+
+  const visibleContents = computed(() => {
+    const start = (currentPage.value - 1) * PAGE_SIZE
+    return filteredContents.value.slice(start, start + PAGE_SIZE)
+  })
+
+  function goToPage(page: number) {
+    const clamped = Math.min(Math.max(1, page), totalPages.value)
+    currentPage.value = clamped
+  }
+
+  function onPageInput(event: Event) {
+    const target = event.target as HTMLInputElement
+    const value = Number(target.value)
+    if (Number.isNaN(value)) return
+    goToPage(value)
+  }
+
   // sempre que mudar a busca, reseta badge? (opcional — aqui não)
   watch(searchQuery, () => {
-    // se quiser resetar o filtro, descomente:
-    // badgeFilter.value = 'all'
+    currentPage.value = 1
+  })
+
+  watch(badgeFilter, () => {
+    currentPage.value = 1
   })
 </script>
 
@@ -462,6 +533,65 @@
     text-align: center;
     font-size: 0.95rem;
     color: #7b8a99;
+  }
+
+  /* PAGINAÇÃO */
+  .pagination-wrapper {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .page-btn {
+    text-transform: none;
+    font-weight: 600;
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .page-number {
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #111827;
+    border-radius: 10px;
+    padding: 0.35rem 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .page-number:hover {
+    border-color: #2563eb;
+    color: #1e4fb8;
+  }
+
+  .page-number.active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+  }
+
+  .page-input {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+  }
+
+  .page-input input {
+    width: 64px;
+    padding: 0.3rem 0.45rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
   }
 
   /* BADGES MOBILE */

@@ -24,11 +24,14 @@
     <section class="section-projects">
       <v-container class="site-container">
         <div class="projects-grid">
-          <RouterLink
+          <component
+            :is="project.link ? 'a' : 'div'"
             v-for="project in visibleProjects"
-            :key="project.path"
-            :to="project.path"
+            :key="project.title"
+            :href="project.link || undefined"
             class="project-card-link"
+            :target="project.link ? '_blank' : undefined"
+            rel="noopener"
           >
             <article class="project-card">
               <div class="project-media">
@@ -52,18 +55,63 @@
                 </div>
               </div>
             </article>
-          </RouterLink>
-        </div>
-
-        <div v-if="showLoadMore" class="load-more-wrapper">
-          <v-btn class="load-more-btn" color="orange" variant="flat" rounded @click="loadMore">
-            <v-icon size="18" class="mr-1">mdi-plus</v-icon>
-            Ver mais
-          </v-btn>
+          </component>
         </div>
 
         <div v-if="!filteredProjects.length" class="empty-state">
           Nenhum projeto encontrado para “{{ searchQuery }}”.
+        </div>
+
+        <div v-else class="pagination-wrapper">
+          <v-btn
+            class="page-btn"
+            variant="outlined"
+            rounded
+            size="small"
+            :disabled="currentPage === 1"
+            @click="goToPage(currentPage - 1)"
+          >
+            <v-icon size="16" class="mr-1">mdi-chevron-left</v-icon>
+            Anterior
+          </v-btn>
+
+          <div class="page-numbers">
+            <button
+              v-for="n in pageNumbers"
+              :key="n"
+              type="button"
+              class="page-number"
+              :class="{ active: n === currentPage }"
+              @click="goToPage(n)"
+            >
+              {{ n }}
+            </button>
+          </div>
+
+          <div class="page-input">
+            <label for="proj-page-input">Ir para</label>
+            <input
+              id="proj-page-input"
+              type="number"
+              :min="1"
+              :max="totalPages"
+              :value="currentPage"
+              @change="onPageInput($event)"
+            />
+            <span>/ {{ totalPages }}</span>
+          </div>
+
+          <v-btn
+            class="page-btn"
+            variant="outlined"
+            rounded
+            size="small"
+            :disabled="currentPage === totalPages"
+            @click="goToPage(currentPage + 1)"
+          >
+            Próxima
+            <v-icon size="16" class="ml-1">mdi-chevron-right</v-icon>
+          </v-btn>
         </div>
       </v-container>
     </section>
@@ -71,107 +119,75 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted, watch } from 'vue'
-  import { usePagesData } from '@vuepress/client'
+  import { ref, computed, watch } from 'vue'
+  import siteContent from '../data/siteContent.json'
 
   type ProjectCard = {
-    path: string
     title: string
     description: string
     year: string
     image: string
-    category?: string
+    link?: string
   }
 
   const searchQuery = ref('')
-  const projects = ref<ProjectCard[]>([])
+  const projects = ref<ProjectCard[]>(siteContent.projects || [])
 
   const PAGE_SIZE = 6
-  const visibleCount = ref(PAGE_SIZE)
+  const currentPage = ref(1)
 
-  const pagesData = usePagesData()
-
-  onMounted(async () => {
-    const loaded: ProjectCard[] = []
-    const entries = Object.entries(pagesData.value ?? {})
-
-    await Promise.all(
-      entries.map(async ([path, getPageData]) => {
-        if (typeof getPageData !== 'function') return
-
-        let page: any
-        try {
-          page = await getPageData()
-        } catch (err) {
-          console.error('[Projects] erro ao carregar página', path, err)
-          return
-        }
-
-        if (!page || typeof page !== 'object') return
-
-        const fm: any = page.frontmatter ?? {}
-
-        // Só pega páginas de projeto
-        if (!path.startsWith('/projetos/') && fm.type !== 'projeto') return
-
-        const rawDate = fm.date ?? page.git?.createdTime
-        let year = ''
-        if (rawDate) {
-          const d = new Date(rawDate as any)
-          year = Number.isNaN(d.getTime()) ? String(rawDate) : String(d.getFullYear())
-        }
-
-        const descSource: string = fm.description ?? (page.excerpt as string | undefined) ?? ''
-
-        const description =
-          descSource.trim() ||
-          'Projeto desenvolvido pelo LAME em parceria com diferentes instituições.'
-
-        const category: string | undefined =
-          fm.category ?? (Array.isArray(fm.tags) && fm.tags.length ? String(fm.tags[0]) : undefined)
-
-        loaded.push({
-          path: page.path,
-          title: fm.title || page.title || 'Projeto',
-          description,
-          year,
-          image: fm.cover || '/imgs/projects/default.png',
-          category,
-        })
-      })
-    )
-
-    loaded.sort((a, b) => Number(b.year) - Number(a.year))
-    projects.value = loaded
-    visibleCount.value = PAGE_SIZE
-  })
+  watch(
+    projects,
+    list => {
+      currentPage.value = 1
+    },
+    { immediate: true }
+  )
 
   const filteredProjects = computed(() => {
     const q = searchQuery.value.trim().toLowerCase()
     if (!q) return projects.value
 
     return projects.value.filter(p => {
-      const fields = [p.title, p.description, p.year, p.category ?? '']
+      const fields = [p.title, p.description, p.year]
       return fields.some(f => f.toLowerCase().includes(q))
     })
   })
 
-  const visibleProjects = computed(() => {
-    // garante que o visibleCount nunca ultrapasse o total filtrado
-    const total = filteredProjects.value.length
-    const limit = Math.min(visibleCount.value, total)
-    return filteredProjects.value.slice(0, limit)
+  const totalPages = computed(() => Math.max(1, Math.ceil(filteredProjects.value.length / PAGE_SIZE)))
+
+  const pageNumbers = computed(() => {
+    const total = totalPages.value
+    const current = currentPage.value
+    const span = 2
+    const start = Math.max(1, current - span)
+    const end = Math.min(total, start + span * 2)
+    const adjustedStart = Math.max(1, end - span * 2)
+    const nums: number[] = []
+    for (let i = adjustedStart; i <= end; i++) nums.push(i)
+    return nums
   })
 
-  const showLoadMore = computed(() => filteredProjects.value.length > visibleProjects.value.length)
+  const visibleProjects = computed(() => {
+    const start = (currentPage.value - 1) * PAGE_SIZE
+    return filteredProjects.value.slice(start, start + PAGE_SIZE)
+  })
 
-  function loadMore() {
-    visibleCount.value += PAGE_SIZE
+  function goToPage(page: number) {
+    const clamped = Math.min(Math.max(1, page), totalPages.value)
+    currentPage.value = clamped
   }
 
-  // sempre que mudar a busca, volta a mostrar só os 6 primeiros
+  function onPageInput(event: Event) {
+    const target = event.target as HTMLInputElement
+    const value = Number(target.value)
+    if (Number.isNaN(value)) return
+    goToPage(value)
+  }
+
+  // sempre que mudar a busca, volta para a primeira página
   watch(searchQuery, () => {
-    visibleCount.value = PAGE_SIZE
+    currentPage.value = 1
   })
 </script>
 
@@ -338,19 +354,63 @@
     color: #9ca3af;
   }
 
-  /* VER MAIS */
-
-  .load-more-wrapper {
+  /* PAGINAÇÃO */
+  .pagination-wrapper {
+    margin-top: 2rem;
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 2.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
-  .load-more-btn {
+  .page-btn {
     text-transform: none;
     font-weight: 600;
-    border-radius: 999px;
-    padding-inline: 1.75rem !important;
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .page-number {
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #111827;
+    border-radius: 10px;
+    padding: 0.35rem 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .page-number:hover {
+    border-color: #f29226;
+    color: #c46e12;
+  }
+
+  .page-number.active {
+    background: #f29226;
+    border-color: #f29226;
+    color: #ffffff;
+  }
+
+  .page-input {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+  }
+
+  .page-input input {
+    width: 64px;
+    padding: 0.3rem 0.45rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
   }
 
   .empty-state {

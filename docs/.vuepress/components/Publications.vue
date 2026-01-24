@@ -29,7 +29,7 @@
     <section class="section-publications">
       <v-container class="site-container">
         <div class="publications-list">
-          <article v-for="pub in visiblePublications" :key="pub.path" class="publication-card">
+          <article v-for="pub in visiblePublications" :key="pub.title" class="publication-card">
             <!-- ÍCONE / STATUS -->
             <div class="publication-icon-wrapper">
               <div class="publication-icon-circle">
@@ -39,12 +39,24 @@
 
             <!-- CONTEÚDO -->
             <div class="publication-body">
-              <!-- TÍTULO (link para o MD da publicação) -->
-              <RouterLink :to="pub.path" class="publication-title-link">
+              <!-- TÍTULO (link externo se disponível) -->
+              <template v-if="pub.sourceUrl">
+                <a
+                  :href="pub.sourceUrl"
+                  class="publication-title-link"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <p class="publication-title">
+                    {{ pub.title }}
+                  </p>
+                </a>
+              </template>
+              <template v-else>
                 <p class="publication-title">
                   {{ pub.title }}
                 </p>
-              </RouterLink>
+              </template>
 
               <!-- AUTORES -->
               <p v-if="pub.authors" class="publication-authors">
@@ -75,15 +87,15 @@
                 </v-btn>
 
                 <v-btn
+                  v-if="pub.sourceUrl"
                   class="publication-btn"
                   color="green"
                   variant="outlined"
                   rounded
                   size="small"
-                  :href="pub.sourceUrl || undefined"
+                  :href="pub.sourceUrl"
                   target="_blank"
                   rel="noopener"
-                  :disabled="!pub.sourceUrl"
                 >
                   <v-icon size="16" class="mr-1">mdi-open-in-new</v-icon>
                   Fonte
@@ -93,15 +105,60 @@
           </article>
         </div>
 
-        <div v-if="showLoadMore" class="load-more-wrapper">
-          <v-btn class="load-more-btn" color="green" variant="flat" rounded @click="loadMore">
-            <v-icon size="18" class="mr-1">mdi-plus</v-icon>
-            Ver mais
-          </v-btn>
-        </div>
-
         <div v-if="!filteredPublications.length" class="empty-state">
           Nenhuma publicação encontrada para “{{ searchQuery }}”.
+        </div>
+
+        <div v-else class="pagination-wrapper">
+          <v-btn
+            class="page-btn"
+            variant="outlined"
+            rounded
+            size="small"
+            :disabled="currentPage === 1"
+            @click="goToPage(currentPage - 1)"
+          >
+            <v-icon size="16" class="mr-1">mdi-chevron-left</v-icon>
+            Anterior
+          </v-btn>
+
+          <div class="page-numbers">
+            <button
+              v-for="n in pageNumbers"
+              :key="n"
+              type="button"
+              class="page-number"
+              :class="{ active: n === currentPage }"
+              @click="goToPage(n)"
+            >
+              {{ n }}
+            </button>
+          </div>
+
+          <div class="page-input">
+            <label for="pub-page-input">Ir para</label>
+            <input
+              id="pub-page-input"
+              type="number"
+              :min="1"
+              :max="totalPages"
+              :value="currentPage"
+              @change="onPageInput($event)"
+            />
+            <span>/ {{ totalPages }}</span>
+          </div>
+
+          <v-btn
+            class="page-btn"
+            variant="outlined"
+            rounded
+            size="small"
+            :disabled="currentPage === totalPages"
+            @click="goToPage(currentPage + 1)"
+          >
+            Próxima
+            <v-icon size="16" class="ml-1">mdi-chevron-right</v-icon>
+          </v-btn>
         </div>
       </v-container>
     </section>
@@ -109,11 +166,10 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted, watch } from 'vue'
-  import { usePagesData } from '@vuepress/client'
+  import { ref, computed, watch } from 'vue'
+  import siteContent from '../data/siteContent.json'
 
   type PublicationCard = {
-    path: string
     title: string
     authors: string
     conference?: string
@@ -123,69 +179,25 @@
   }
 
   const searchQuery = ref('')
-  const publications = ref<PublicationCard[]>([])
+  const publications = ref<PublicationCard[]>(siteContent.publications || [])
 
-  // ✅ Agora 10 artigos por “página”
+  // ✅ Agora 10 artigos por página com paginação
   const PAGE_SIZE = 10
-  const visibleCount = ref(PAGE_SIZE)
+  const currentPage = ref(1)
 
-  const pagesData = usePagesData()
-
-  onMounted(async () => {
-    const loaded: PublicationCard[] = []
-    const entries = Object.entries(pagesData.value ?? {})
-    console.log('[Publications] páginas encontradas:', entries.length)
-
-    await Promise.all(
-      entries.map(async ([path, getPageData]) => {
-        if (typeof getPageData !== 'function') return
-
-        let page: any
-        try {
-          page = await getPageData()
-        } catch (err) {
-          console.error('[Publications] erro ao carregar página', path, err)
-          return
-        }
-
-        if (!page || typeof page !== 'object') return
-
-        const fm: any = page.frontmatter ?? {}
-
-        // Apenas páginas de PUBLICAÇÃO
-        if (!path.startsWith('/publicacoes/') && fm.type !== 'publicacao') return
-
-        const rawDate = fm.date ?? page.git?.createdTime
-        let year = fm.year || ''
-        if (!year && rawDate) {
-          const d = new Date(rawDate as any)
-          year = Number.isNaN(d.getTime()) ? String(rawDate) : String(d.getFullYear())
-        }
-
-        loaded.push({
-          path: page.path,
-          title: fm.title || page.title || 'Publicação acadêmica',
-          authors: fm.authors || '',
-          conference: fm.conference || '',
-          year,
-          download: fm.download || '',
-          sourceUrl: fm.sourceUrl || '',
-        })
+  watch(
+    publications,
+    list => {
+      list.sort((a, b) => {
+        const ay = Number(a.year) || 0
+        const by = Number(b.year) || 0
+        return by - ay
       })
-    )
 
-    // Ordena por ano desc, se existir
-    loaded.sort((a, b) => {
-      const ay = Number(a.year) || 0
-      const by = Number(b.year) || 0
-      return by - ay
-    })
-
-    publications.value = loaded
-    visibleCount.value = PAGE_SIZE
-
-    console.log('[Publications] cards montados:', publications.value)
-  })
+      currentPage.value = 1
+    },
+    { immediate: true }
+  )
 
   const filteredPublications = computed(() => {
     const q = searchQuery.value.trim().toLowerCase()
@@ -197,24 +209,40 @@
     })
   })
 
-  const visiblePublications = computed(() => {
-    const total = filteredPublications.value.length
-    const limit = Math.min(visibleCount.value, total)
-    return filteredPublications.value.slice(0, limit)
+  const totalPages = computed(() => Math.max(1, Math.ceil(filteredPublications.value.length / PAGE_SIZE)))
+
+  const pageNumbers = computed(() => {
+    const total = totalPages.value
+    const current = currentPage.value
+    const span = 2
+    const start = Math.max(1, current - span)
+    const end = Math.min(total, start + span * 2)
+    const adjustedStart = Math.max(1, end - span * 2)
+    const nums: number[] = []
+    for (let i = adjustedStart; i <= end; i++) nums.push(i)
+    return nums
   })
 
-  // ✅ “Carregar mais” só aparece quando tiver mais do que o visível
-  const showLoadMore = computed(
-    () => filteredPublications.value.length > visiblePublications.value.length
-  )
+  const visiblePublications = computed(() => {
+    const start = (currentPage.value - 1) * PAGE_SIZE
+    return filteredPublications.value.slice(start, start + PAGE_SIZE)
+  })
 
-  function loadMore() {
-    visibleCount.value += PAGE_SIZE
+  function goToPage(page: number) {
+    const clamped = Math.min(Math.max(1, page), totalPages.value)
+    currentPage.value = clamped
   }
 
-  // ao mudar a busca, volta para os primeiros 10
+  function onPageInput(event: Event) {
+    const target = event.target as HTMLInputElement
+    const value = Number(target.value)
+    if (Number.isNaN(value)) return
+    goToPage(value)
+  }
+
+  // ao mudar a busca, volta para a primeira página
   watch(searchQuery, () => {
-    visibleCount.value = PAGE_SIZE
+    currentPage.value = 1
   })
 </script>
 
@@ -382,19 +410,63 @@
     font-weight: 600;
   }
 
-  /* VER MAIS */
-
-  .load-more-wrapper {
+  /* PAGINAÇÃO */
+  .pagination-wrapper {
+    margin-top: 2rem;
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 2.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
-  .load-more-btn {
+  .page-btn {
     text-transform: none;
     font-weight: 600;
-    border-radius: 999px;
-    padding-inline: 1.75rem !important;
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .page-number {
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #111827;
+    border-radius: 10px;
+    padding: 0.35rem 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .page-number:hover {
+    border-color: #21a946;
+    color: #0f7b31;
+  }
+
+  .page-number.active {
+    background: #21a946;
+    border-color: #21a946;
+    color: #ffffff;
+  }
+
+  .page-input {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+  }
+
+  .page-input input {
+    width: 64px;
+    padding: 0.3rem 0.45rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
   }
 
   /* EMPTY */
