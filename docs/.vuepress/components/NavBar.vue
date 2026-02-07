@@ -92,11 +92,12 @@
     { label: 'Início', to: '/' },
     { label: 'Quem somos', to: '/about/' },
     { label: 'Pesquisadores', to: '/pesquisadores/' },
-    { label: 'Projetos', to: '/projetos/' },
+    { label: 'Pesquisas', to: '/projetos/' },
     { label: 'Publicações', to: '/publicacoes/' },
     { label: 'Vídeos', to: '/videos/' },
     { label: 'Notícias', to: '/noticias/' },
     { label: 'Materiais', to: '/materiais/' },
+    // { label: 'METAWRITING II', to: '/metawriting/' },
   ]
 
   const scrolled = ref(false)

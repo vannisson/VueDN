@@ -3,7 +3,7 @@
     <!-- ============ HERO ============ -->
     <section class="hero">
       <v-container class="site-container">
-        <p class="hero-title">Nossos projetos</p>
+        <p class="hero-title">Pesquisas em andamento</p>
         <p class="hero-subtitle">
           Conheça as iniciativas que estão
           <span class="hero-highlight">transformando todo nosso coletivo</span>
@@ -378,7 +378,9 @@
     overflow: hidden;
     height: 100%;
     cursor: pointer;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
   }
 
   .project-card:hover {

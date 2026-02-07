@@ -226,7 +226,7 @@
     <!-- ============ PESQUISADORES BRASILEIROS ============ -->
     <section class="section section-list">
       <v-container class="site-container">
-        <p class="section-title center">Pesquisadores (Brasil)</p>
+        <p class="section-title center">Pesquisadores brasileiros</p>
 
         <v-row class="researcher-grid" justify="center" align="stretch">
           <v-col

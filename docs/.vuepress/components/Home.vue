@@ -41,6 +41,53 @@
       </v-row>
 
       <!-- CARDS -->
+
+      <!-- BLOCO MEIO -->
+      <div class="mid-bleed">
+        <v-container class="site-container">
+          <v-row class="mid-row" align="center">
+            <!-- Imagem -->
+            <v-col
+              cols="12"
+              md="6"
+              lg="6"
+              order="1"
+              order-md="1"
+              class="d-flex justify-center px-4"
+            >
+              <v-img
+                src="/imgs/home/home_02.png"
+                class="mid-image"
+                alt="Crianças estudando"
+                width="100%"
+                max-width="640"
+                cover
+              />
+            </v-col>
+
+            <!-- Texto -->
+            <v-col cols="12" md="6" lg="5" order="2" order-md="2" class="px-4">
+              <h2 class="section-title">O que estudamos?</h2>
+              <p class="section-text">
+                Os integrantes do LAME realizam pesquisas para aprofundar conhecimento sobre a
+                gênese e a construção do manuscrito escolar, de modo a colaborar com a formação
+                docente e com a aprendizagem discente. As pesquisas são realizadas a partir da
+                análise multimodal do manuscrito escolar e das falas do professor em situações de
+                produção textual. No LAME, também são analisados documentos curriculares e livros
+                didáticos.
+              </p>
+              <v-btn
+                class="cta"
+                prepend-icon="mdi-account-group-outline"
+                @click="router.push('/pesquisadores/')"
+              >
+                Conheça nossos pesquisadores
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+
       <div class="cards-block">
         <v-row class="cards-row cards-row-primary" align="stretch" justify="center">
           <!-- PROJETOS (LARANJA) -->
@@ -175,52 +222,6 @@
             </v-card>
           </v-col>
         </v-row>
-      </div>
-
-      <!-- BLOCO MEIO -->
-      <div class="mid-bleed">
-        <v-container class="site-container">
-          <v-row class="mid-row" align="center">
-            <!-- Imagem -->
-            <v-col
-              cols="12"
-              md="6"
-              lg="6"
-              order="1"
-              order-md="1"
-              class="d-flex justify-center px-4"
-            >
-              <v-img
-                src="/imgs/home/home_02.png"
-                class="mid-image"
-                alt="Crianças estudando"
-                width="100%"
-                max-width="640"
-                cover
-              />
-            </v-col>
-
-            <!-- Texto -->
-            <v-col cols="12" md="6" lg="5" order="2" order-md="2" class="px-4">
-              <h2 class="section-title">Realizando estudos para...</h2>
-              <p class="section-text">
-                Os integrantes do LAME realizam pesquisas para aprofundar conhecimento sobre a
-                gênese e a construção do manuscrito escolar, de modo a colaborar com formação
-                docente e aprendizagem discente. As pesquisas são realizadas a partir da análise
-                multimodal do manuscrito escolar e das falas docentes em situações de produção
-                textual. No LAME, também são analisados documentos didático-curriculares, como
-                livros didáticos.
-              </p>
-              <v-btn
-                class="cta"
-                prepend-icon="mdi-account-group-outline"
-                @click="router.push('/pesquisadores/')"
-              >
-                Conheça nossos pesquisadores
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
       </div>
 
       <!-- NOTÍCIAS -->
@@ -537,7 +538,9 @@
     box-shadow: 0 6px 16px rgba(246, 135, 0, 0.25);
     display: inline-flex;
     align-items: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .cta:hover {

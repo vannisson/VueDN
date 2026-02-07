@@ -141,17 +141,20 @@
   import { ref } from 'vue'
 
   const historySlides = [
+    { src: '/imgs/about/about_07.jpeg', alt: 'Estudantes em observação no laboratório' },
+    { src: '/imgs/about/about_06.jpeg', alt: 'Estudantes em observação no laboratório' },
     { src: '/imgs/about/about_00.png', alt: 'Registro de campo do LAME' },
-    { src: '/imgs/about/about_01.png', alt: 'Equipe em atividade formativa' },
     { src: '/imgs/about/about_02.jpg', alt: 'Acervo de manuscritos em análise' },
-    { src: '/imgs/about/about_03.png', alt: 'Estudantes em observação no laboratório' },
+    { src: '/imgs/about/about_04.jpeg', alt: 'Estudantes em observação no laboratório' },
+    { src: '/imgs/about/about_05.jpeg', alt: 'Estudantes em observação no laboratório' },
+    { src: '/imgs/about/about_01.png', alt: 'Equipe em atividade formativa' },
   ]
 
   const historyIndex = ref(0)
   const buildingSlides = [
     { src: '/imgs/about/fale01.jpg', alt: 'FALE - Vista 1' },
     { src: '/imgs/about/fale02.jpg', alt: 'FALE - Vista 2' },
-    { src: '/imgs/about/fale03.png', alt: 'FALE - Vista 3' },
+    // { src: '/imgs/about/fale03.png', alt: 'FALE - Vista 3' },
   ]
   const buildingIndex = ref(0)
   const carouselHeight = 440
