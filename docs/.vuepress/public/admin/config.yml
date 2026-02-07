@@ -7,6 +7,8 @@ publish_mode: editorial_workflow
 
 display_url: https://vuedn.netlify.app/
 
+logo_url: /imgs/header/icon_lame.svg
+
 media_folder: 'docs/.vuepress/public/media'
 public_folder: '/media'
 
@@ -56,7 +58,8 @@ collections:
     slug: '{{slug}}/index'
     preview_path: 'videos/{{slug}}/'
     fields:
-      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailVideo' }
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailContent' }
+      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'video' }
       - { label: 'Título', name: 'title', widget: 'string', required: true }
       - label: 'Descrição (lista de vídeos)'
         name: 'description'
@@ -107,7 +110,7 @@ collections:
       - label: 'Arquivo PDF da publicação'
         name: 'download'
         widget: 'file'
-        required: true
+        required: false
         hint: 'Envie o PDF do artigo. O botão de download usará este arquivo.'
       - label: 'Link original do paper (DOI, site da conferência, etc.)'
         name: 'sourceUrl'
@@ -115,32 +118,22 @@ collections:
         required: false
         hint: 'Se estiver vazio, o botão de "Ver no site original" pode ficar desabilitado.'
 
-  # ============== CONTEÚDOS (GERAIS) ==============
-  - name: 'conteudos'
-    label: 'Conteúdos'
-    label_singular: 'Conteúdo'
-    folder: 'docs/conteudos'
+  # ============== NOTÍCIAS ==============
+  - name: 'noticias'
+    label: 'Notícias'
+    label_singular: 'Notícia'
+    folder: 'docs/noticias'
     create: true
     slug: '{{slug}}/index'
-    preview_path: 'conteudos/{{slug}}/'
+    preview_path: 'noticias/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailContent' }
-      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'conteudo' }
+      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'noticia' }
       - { label: 'Título', name: 'title', widget: 'string', required: true }
-      - label: 'Tipo de conteúdo'
-        name: 'badge'
-        widget: 'select'
-        required: false
-        options:
-          - { label: 'Material', value: 'material' }
-          - { label: 'Vídeo', value: 'video' }
-          - { label: 'Notícia', value: 'noticia' }
-        hint: 'Define o selinho (material / vídeo / notícia) e o ícone nos cards e no detalhe.'
-      - label: 'Descrição (lista de conteúdos)'
+      - label: 'Descrição (lista de notícias)'
         name: 'description'
         widget: 'text'
         required: false
-        hint: 'Resumo que aparece no card de conteúdo.'
       - label: 'Data'
         name: 'date'
         widget: 'datetime'
@@ -155,4 +148,36 @@ collections:
       - label: 'Corpo'
         name: 'body'
         widget: 'markdown'
-        hint: 'Use markdown livre: títulos, imagens, links, vídeos (via iframe), etc.'
+        hint: 'Use markdown livre: títulos, imagens, links, etc.'
+
+  # ============== MATERIAIS ==============
+  - name: 'materiais'
+    label: 'Materiais'
+    label_singular: 'Material'
+    folder: 'docs/materiais'
+    create: true
+    slug: '{{slug}}/index'
+    preview_path: 'materiais/{{slug}}/'
+    fields:
+      - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailContent' }
+      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'material' }
+      - { label: 'Título', name: 'title', widget: 'string', required: true }
+      - label: 'Descrição (lista de materiais)'
+        name: 'description'
+        widget: 'text'
+        required: false
+      - label: 'Data'
+        name: 'date'
+        widget: 'datetime'
+        format: 'YYYY-MM-DD'
+        time_format: false
+        required: true
+      - label: 'Imagem de capa'
+        name: 'cover'
+        widget: 'image'
+        required: false
+        allow_multiple: false
+      - label: 'Corpo'
+        name: 'body'
+        widget: 'markdown'
+        hint: 'Use markdown livre: títulos, imagens, links, etc.'

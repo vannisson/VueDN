@@ -34,34 +34,70 @@
 
   const cover = computed<string | null>(() => frontmatter.value.cover ?? null)
 
-  // ========== TIPO / BADGE (Material, Vídeo, Notícia) ==========
-  const rawBadge = computed(() => frontmatter.value.badge || frontmatter.value.tipo)
-
-  function normalizeBadge(value?: string) {
+  // ========== TIPO / SECAO (Video, Noticia, Material) ==========
+  function normalizeType(value?: string) {
     return (value || '')
       .normalize('NFD')
       .replace(/\p{Diacritic}/gu, '')
       .toLowerCase()
   }
 
-  function getBadgeLabel(badge?: string) {
-    const norm = normalizeBadge(badge)
-    if (norm === 'material') return 'Material'
-    if (norm === 'video') return 'Vídeo'
-    if (norm === 'noticia') return 'Notícia'
-    return 'Conteúdo'
+  function inferTypeFromPath(path?: string) {
+    if (!path) return ''
+    if (path.startsWith('/videos/')) return 'video'
+    if (path.startsWith('/noticias/')) return 'noticia'
+    if (path.startsWith('/materiais/')) return 'material'
+    return ''
   }
 
-  function getBadgeIcon(badge?: string) {
-    const norm = normalizeBadge(badge)
-    if (norm === 'material') return 'mdi-book-open-variant'
-    if (norm === 'video') return 'mdi-play-circle'
+  function getSectionTitle(type?: string) {
+    const norm = normalizeType(type)
+    if (norm === 'video') return 'Vídeos'
+    if (norm === 'noticia') return 'Notícias'
+    if (norm === 'material') return 'Materiais'
+    return 'Conteúdos'
+  }
+
+  function getBasePath(type?: string) {
+    const norm = normalizeType(type)
+    if (norm === 'video') return '/videos/'
+    if (norm === 'noticia') return '/noticias/'
+    if (norm === 'material') return '/materiais/'
+    return ''
+  }
+
+  const currentType = computed(
+    () => normalizeType(frontmatter.value.type) || inferTypeFromPath(page.value.path)
+  )
+  const sectionTitle = computed(() => getSectionTitle(currentType.value))
+  const relatedHeading = computed(() => `${sectionTitle.value} relacionados`)
+
+  const placeholderIcon = computed(() => {
+    const norm = currentType.value
+    if (norm === 'video') return 'mdi-filmstrip'
     if (norm === 'noticia') return 'mdi-newspaper-variant-outline'
-    return 'mdi-file-document-outline'
+    if (norm === 'material') return 'mdi-folder-open-outline'
+    return 'mdi-book-open-page-variant-outline'
+  })
+
+  // ========== COR DINÂMICA POR TIPO ==========
+  function getAccentColor(type?: string) {
+    const norm = normalizeType(type)
+    if (norm === 'video') return '#2563eb'
+    if (norm === 'noticia') return '#ca8a04'
+    if (norm === 'material') return '#0891b2'
+    return '#2563eb'
   }
 
-  const badgeLabel = computed(() => getBadgeLabel(rawBadge.value))
-  const badgeIcon = computed(() => getBadgeIcon(rawBadge.value))
+  function getGradient(type?: string) {
+    const norm = normalizeType(type)
+    if (norm === 'noticia') return 'linear-gradient(90deg, #92400e, #ca8a04)'
+    if (norm === 'material') return 'linear-gradient(90deg, #155e75, #0891b2)'
+    return 'linear-gradient(90deg, #12358f, #2563eb)'
+  }
+
+  const accentColor = computed(() => getAccentColor(currentType.value))
+  const bannerGradient = computed(() => getGradient(currentType.value))
 
   // ========== COMPARTILHAMENTO / REDES SOCIAIS ==========
   const shareUrl = computed(() => {
@@ -92,9 +128,7 @@
   const MAX_RELATED = 6
   const VISIBLE_PER_PAGE = 3
 
-  const relatedContents = ref<
-    { path: string; title: string; image: string; badge?: string; sortKey: number }[]
-  >([])
+  const relatedContents = ref<{ path: string; title: string; image: string; sortKey: number }[]>([])
 
   const currentSlide = ref(0)
 
@@ -102,10 +136,12 @@
     const loaded: any[] = []
     const currentPath = page.value.path
 
-    const entries = Object.entries(pagesData.value ?? {})
+    // pagesData keys are internal VuePress keys (e.g. "v-5d45ffb4"),
+    // NOT page paths. We must load each page and check p.path.
+    const allLoaders = Object.values(pagesData.value ?? {})
 
     await Promise.all(
-      entries.map(async ([path, getPageData]) => {
+      allLoaders.map(async getPageData => {
         if (typeof getPageData !== 'function') return
 
         let p: any
@@ -118,10 +154,12 @@
         if (!p || typeof p !== 'object') return
         const fm: any = p.frontmatter ?? {}
 
-        // só páginas de conteúdo, excluindo a atual
-        const isContentPath = path.startsWith('/conteudos/')
-        const isContentType = fm.type === 'conteudo'
-        if (!(isContentPath || isContentType)) return
+        const basePath = getBasePath(currentType.value)
+        const samePath = basePath ? p.path?.startsWith(basePath) : false
+        const sameType = normalizeType(fm.type) === currentType.value
+
+        // só paginas do mesmo tipo, excluindo a atual
+        if (!(samePath || sameType)) return
         if (p.path === currentPath) return
 
         const rawDate = fm.date ?? p.git?.createdTime
@@ -131,11 +169,14 @@
           sortKey = Number.isNaN(d.getTime()) ? 0 : d.getTime()
         }
 
+        // skip listing pages (README.md)
+        const basePaths = ['/videos/', '/noticias/', '/materiais/']
+        if (basePaths.includes(p.path)) return
+
         loaded.push({
           path: p.path,
-          title: fm.title || p.title || 'Conteúdo',
-          image: fm.cover || '/imgs/contents/default.png',
-          badge: fm.badge || fm.tipo || undefined,
+          title: fm.title || p.title || '',
+          image: fm.cover || '',
           sortKey,
         })
       })
@@ -188,10 +229,10 @@
         <!-- CONTEÚDO DA PÁGINA DE CONTEÚDO -->
         <template #page>
           <div class="detail-wrapper">
-            <!-- FAIXA AZUL "CONTEÚDOS" -->
-            <section class="detail-banner">
+            <!-- FAIXA SUPERIOR -->
+            <section class="detail-banner" :style="{ background: bannerGradient }">
               <v-container class="site-container">
-                <h1 class="banner-title">Conteúdos</h1>
+                <h1 class="banner-title">{{ sectionTitle }}</h1>
               </v-container>
             </section>
 
@@ -201,13 +242,6 @@
                 <article class="detail-article">
                   <header class="detail-header">
                     <div class="header-left">
-                      <div v-if="badgeLabel" class="content-badge-pill">
-                        <v-icon size="16" class="pill-icon">
-                          {{ badgeIcon }}
-                        </v-icon>
-                        <span>{{ badgeLabel }}</span>
-                      </div>
-
                       <h2 class="detail-title">{{ title }}</h2>
                     </div>
 
@@ -273,7 +307,7 @@
                 <section class="detail-related" v-if="relatedContents.length">
                   <div class="related-header">
                     <div class="related-title-wrapper">
-                      <h3 class="related-title">Conteúdo relacionado</h3>
+                      <h3 class="related-title">{{ relatedHeading }}</h3>
                       <span class="related-line"></span>
                     </div>
 
@@ -305,11 +339,13 @@
                       class="related-card"
                     >
                       <div class="related-media">
-                        <v-img :src="item.image" :alt="item.title" cover class="related-img" />
+                        <v-img v-if="item.image" :src="item.image" :alt="item.title" cover class="related-img" />
+                        <div v-else class="related-placeholder">
+                          <v-icon size="40" color="#ffffff">{{ placeholderIcon }}</v-icon>
+                        </div>
                       </div>
 
                       <div class="related-body">
-                        <p class="related-type">{{ getBadgeLabel(item.badge) }}</p>
                         <p class="related-text">{{ item.title }}</p>
                       </div>
                     </RouterLink>
@@ -334,25 +370,6 @@
     gap: 0.35rem;
   }
 
-  .content-badge-pill {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.2rem 0.7rem;
-    border-radius: 999px;
-    background: #aec8ff;
-    color: #2563eb;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .pill-icon {
-    margin-right: 2px;
-  }
-
   .detail-main-root {
     padding-top: 0 !important;
     background: #f3f4f6;
@@ -368,12 +385,12 @@
     padding-inline: clamp(1rem, 4vw, 2.5rem);
   }
 
-  /* FAIXA AZUL SUPERIOR */
+  /* FAIXA SUPERIOR */
   .detail-banner {
-    background: linear-gradient(90deg, #12358f, #2563eb);
     color: #ffffff;
-    padding-top: 10rem;
-    padding-bottom: 1.8rem;
+    padding-top: 5.5rem;
+    padding-bottom: 1.5rem;
+    margin-top: 100px;
     margin-bottom: 2.25rem;
   }
 
@@ -398,7 +415,7 @@
     gap: 1.5rem;
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
-    border-bottom: 3px solid #2563eb;
+    border-bottom: 3px solid v-bind(accentColor);
   }
 
   .detail-title {
@@ -419,7 +436,7 @@
   }
 
   .detail-date-icon {
-    color: #2563eb;
+    color: v-bind(accentColor);
   }
 
   .detail-text-block {
@@ -554,7 +571,7 @@
 
   .related-line {
     height: 3px;
-    background: #2563eb;
+    background: v-bind(accentColor);
     flex: 1;
     border-radius: 999px;
   }
@@ -597,7 +614,9 @@
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    transition:
+      transform 0.16s ease,
+      box-shadow 0.16s ease;
   }
 
   .related-card:hover {
@@ -614,16 +633,17 @@
     height: 100%;
   }
 
-  .related-body {
-    padding: 0.85rem 1rem 1.1rem;
+  .related-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #9ca3af;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .related-type {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #2563eb;
-    margin: 0 0 0.25rem;
+  .related-body {
+    padding: 0.85rem 1rem 1.1rem;
   }
 
   .related-text {

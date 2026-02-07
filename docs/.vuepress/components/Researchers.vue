@@ -581,6 +581,12 @@
   .link-chip:hover:not(.disabled) {
     transform: translateY(-1px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+    text-decoration: none !important;
+  }
+
+  .link-chip,
+  .link-chip * {
+    text-decoration: none !important;
   }
 
   .link-chip.disabled {

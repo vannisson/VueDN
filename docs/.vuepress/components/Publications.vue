@@ -3,7 +3,7 @@
     <!-- ============ HERO ============ -->
     <section class="hero">
       <v-container class="site-container">
-        <p class="hero-title">Publicações Acadêmicas</p>
+        <p class="hero-title">Publicações</p>
         <p class="hero-subtitle">
           Conheça os trabalhos científicos produzidos pelo
           <span class="hero-highlight">coletivo LAME</span>
@@ -28,7 +28,7 @@
     <!-- ============ LISTA DE PUBLICAÇÕES ============ -->
     <section class="section-publications">
       <v-container class="site-container">
-        <div class="publications-list">
+        <div class="publications-list" :class="{ 'list-empty': !filteredPublications.length }">
           <article v-for="pub in visiblePublications" :key="pub.title" class="publication-card">
             <!-- ÍCONE / STATUS -->
             <div class="publication-icon-wrapper">
@@ -78,7 +78,10 @@
                   variant="flat"
                   rounded
                   size="small"
-                  disabled
+                  :disabled="!pub.download"
+                  :href="pub.download || undefined"
+                  :target="pub.download ? '_blank' : undefined"
+                  :rel="pub.download ? 'noopener' : undefined"
                 >
                   <v-icon size="16" class="mr-1">mdi-download</v-icon>
                   Baixar
@@ -90,7 +93,10 @@
                   variant="outlined"
                   rounded
                   size="small"
-                  disabled
+                  :disabled="!pub.sourceUrl"
+                  :href="pub.sourceUrl || undefined"
+                  :target="pub.sourceUrl ? '_blank' : undefined"
+                  :rel="pub.sourceUrl ? 'noopener' : undefined"
                 >
                   <v-icon size="16" class="mr-1">mdi-open-in-new</v-icon>
                   Fonte
@@ -98,13 +104,15 @@
               </div>
             </div>
           </article>
+
+          <div v-if="!filteredPublications.length" class="empty-state">
+            <v-icon size="48" color="#b0bec5" class="empty-icon">mdi-file-search-outline</v-icon>
+            <p class="empty-title">Nenhuma publicação encontrada</p>
+            <p class="empty-subtitle">Não encontramos resultados para "{{ searchQuery }}".</p>
+          </div>
         </div>
 
-        <div v-if="!filteredPublications.length" class="empty-state">
-          Nenhuma publicação encontrada para “{{ searchQuery }}”.
-        </div>
-
-        <div v-else class="pagination-wrapper">
+        <div v-if="filteredPublications.length" class="pagination-wrapper">
           <v-btn
             class="page-btn"
             variant="outlined"
@@ -177,7 +185,7 @@
   const publications = ref<PublicationCard[]>([])
   async function buildPublications() {
     const pagesData = usePagesData()
-    const loaders = Object.values(pagesData)
+    const loaders = Object.values(pagesData.value || {})
     const list: PublicationCard[] = []
     for (const load of loaders) {
       try {
@@ -208,27 +216,7 @@
       if (by !== ay) return by - ay
       return (a.title || '').localeCompare(b.title || '', 'pt-BR')
     })
-    
-    // Mock data if no publications found
-    if (list.length === 0) {
-      list.push(
-        {
-          title: 'Multimodal feedback to support digital note-taking in higher education',
-          authors: 'Marcos Vinícius Prado Albuquerque, Geovane Carvalho Filho, Eduardo Henrique Tavares Moura, Felipe César Gonçalves de Andrade',
-          conference: 'Brazilian Symposium on Computers in Education (SBIE)',
-          year: '2023',
-          sourceUrl: 'https://ieeeaccess.ieee.org/',
-        },
-        {
-          title: 'Analyzing learners\' digital note-taking strategies: A systematic review',
-          authors: 'Marcos Vinícius Prado Albuquerque, Eduardo Henrique Tavares Moura, Felipe César Gonçalves de Andrade',
-          conference: 'International Conference on Awesome Learning',
-          year: '2024',
-          sourceUrl: 'https://ieeeaccess.ieee.org/',
-        }
-      )
-    }
-    
+
     publications.value = list
   }
 
@@ -236,8 +224,8 @@
     buildPublications()
   })
 
-  // ✅ Agora 10 artigos por página com paginação
-  const PAGE_SIZE = 10
+  // ✅ Agora 6 artigos por página com paginação
+  const PAGE_SIZE = 6
   const currentPage = ref(1)
 
   watch(
@@ -339,7 +327,7 @@
   }
 
   .hero-highlight {
-    color: #2fbf4c;
+    color: #56b057;
     font-weight: 600;
   }
 
@@ -395,6 +383,14 @@
     flex-direction: column;
     gap: 1.5rem;
     margin-top: 2rem;
+    min-height: 900px;
+  }
+
+  .publications-list.list-empty {
+    min-height: 0;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
   }
 
   .publication-card {
@@ -405,6 +401,12 @@
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
     padding: 1.4rem 1.6rem;
     gap: 1.2rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .publication-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
   }
 
   .publication-icon-wrapper {
@@ -416,14 +418,14 @@
     width: 44px;
     height: 44px;
     border-radius: 999px;
-    background: #e3f8e9;
+    background: #eaf5ea;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .publication-icon {
-    color: #21a946;
+    color: #56b057;
   }
 
   .publication-body {
@@ -506,13 +508,13 @@
   }
 
   .page-number:hover {
-    border-color: #21a946;
-    color: #0f7b31;
+    border-color: #56b057;
+    color: #3d8a3e;
   }
 
   .page-number.active {
-    background: #21a946;
-    border-color: #21a946;
+    background: #56b057;
+    border-color: #56b057;
     color: #ffffff;
   }
 
@@ -535,10 +537,33 @@
   /* EMPTY */
 
   .empty-state {
-    margin-top: 1.5rem;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    gap: 0.5rem;
+    padding: 3rem 1rem;
+    grid-column: 1 / -1;
+  }
+
+  .empty-icon {
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
+
+  .empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 0;
+  }
+
+  .empty-subtitle {
     font-size: 0.95rem;
-    color: #7b8a99;
+    color: #9ca3af;
+    margin: 0;
   }
 
   /* RESPONSIVO */

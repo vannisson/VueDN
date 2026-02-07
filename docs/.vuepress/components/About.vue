@@ -64,7 +64,7 @@
 
     <!-- ============ ONDE ESTAMOS ============ -->
     <section class="section section-where">
-      <v-row class="hero-row" align="center" justify="space-between">
+      <v-row class="hero-row" no-gutters align="center" justify="space-between">
         <!-- Imagem (esquerda ) -->
 
         <v-col cols="12" md="6" class="hero-image-col">
@@ -148,7 +148,11 @@
   ]
 
   const historyIndex = ref(0)
-  const buildingSlides = [{ src: '/imgs/about/building.png', alt: 'Fachada e espaço do LAME' }]
+  const buildingSlides = [
+    { src: '/imgs/about/fale01.jpg', alt: 'FALE - Vista 1' },
+    { src: '/imgs/about/fale02.jpg', alt: 'FALE - Vista 2' },
+    { src: '/imgs/about/fale03.png', alt: 'FALE - Vista 3' },
+  ]
   const buildingIndex = ref(0)
   const carouselHeight = 440
 </script>
@@ -300,13 +304,13 @@
     border-radius: 48px 0 0 48px;
     padding: clamp(2rem, 3vw, 2.75rem);
     width: 100%;
-    max-width: 600px;
+    max-width: 720px;
     margin-left: auto;
     margin-right: auto;
   }
 
   .section-where .hero-card {
-    max-width: 600px;
+    max-width: 720px;
   }
 
   .hero-title {
@@ -315,18 +319,18 @@
     line-height: 1.1;
     color: #0a0e1c;
     margin: 0 0 1rem;
-    max-width: 90%;
-    text-align: justify;
+    max-width: 100%;
+    text-align: center;
   }
 
   .hero-text {
     color: #003b52;
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.8;
     margin: 0 0 0.75rem;
-    max-width: 90%;
-    text-align: justify;
+    max-width: 100%;
+    text-align: center;
   }
 
   .section .hero-text {
@@ -351,7 +355,7 @@
 
   .section-title {
     font-weight: 800;
-    font-size: clamp(2.1rem, 2.4vw + 1rem, 2.6rem);
+    font-size: clamp(2.4rem, 3vw + 1rem, 3.1rem);
     line-height: 1.2;
     color: #0a0e1c;
     margin: 0 0 1.25rem;
@@ -368,7 +372,7 @@
   .section-text {
     color: #003b52;
     font-weight: 300;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1.8;
     margin: 0 0 0.75rem;
   }
@@ -461,7 +465,7 @@
 
   .map-address {
     margin-top: 1rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.6;
     color: #0a0e1c;
     font-weight: 500;

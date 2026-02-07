@@ -71,10 +71,10 @@
     const loaded: any[] = []
     const currentPath = page.value.path
 
-    const entries = Object.entries(pagesData.value ?? {})
+    const allLoaders = Object.values(pagesData.value ?? {})
 
     await Promise.all(
-      entries.map(async ([path, getPageData]) => {
+      allLoaders.map(async getPageData => {
         if (typeof getPageData !== 'function') return
 
         let p: any
@@ -88,7 +88,7 @@
         const fm: any = p.frontmatter ?? {}
 
         // só páginas de projeto, excluindo a atual
-        const isProjectPath = path.startsWith('/projetos/')
+        const isProjectPath = (p.path || '').startsWith('/projetos/')
         const isProjectType = fm.type === 'projeto'
         if (!(isProjectPath || isProjectType)) return
         if (p.path === currentPath) return
@@ -101,10 +101,13 @@
           sortKey = Number.isNaN(d.getTime()) ? 0 : d.getTime()
         }
 
+        // skip listing pages (README.md)
+        if (p.path === '/projetos/') return
+
         loaded.push({
           path: p.path,
-          title: fm.title || p.title || 'Projeto',
-          image: fm.cover || '/imgs/projects/default.png',
+          title: fm.title || p.title || '',
+          image: fm.cover || '',
           sortKey,
         })
       })
@@ -264,7 +267,10 @@
                       class="related-card"
                     >
                       <div class="related-media">
-                        <v-img :src="item.image" :alt="item.title" cover class="related-img" />
+                        <v-img v-if="item.image" :src="item.image" :alt="item.title" cover class="related-img" />
+                        <div v-else class="related-placeholder">
+                          <v-icon size="40" color="#ffffff">mdi-book-open-page-variant-outline</v-icon>
+                        </div>
                       </div>
 
                       <div class="related-body">
@@ -302,10 +308,11 @@
   }
 
   .detail-banner {
-    background: #f29226;
+    background: #f68700;
     color: #ffffff;
-    padding-top: 10rem;
-    padding-bottom: 1.8rem;
+    padding-top: 5.5rem;
+    padding-bottom: 1.5rem;
+    margin-top: 100px;
     margin-bottom: 2.25rem;
   }
 
@@ -330,7 +337,7 @@
     gap: 1.5rem;
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
-    border-bottom: 3px solid #f29226;
+    border-bottom: 3px solid #f68700;
   }
 
   .detail-title {
@@ -351,7 +358,7 @@
   }
 
   .detail-date-icon {
-    color: #f97316;
+    color: #f68700;
   }
 
   .detail-text-block {
@@ -487,7 +494,7 @@
 
   .related-line {
     height: 3px;
-    background: #f29226;
+    background: #f68700;
     flex: 1;
     border-radius: 999px;
   }
@@ -530,7 +537,9 @@
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    transition:
+      transform 0.16s ease,
+      box-shadow 0.16s ease;
   }
 
   .related-card:hover {
@@ -547,6 +556,15 @@
     height: 100%;
   }
 
+  .related-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #9ca3af;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .related-body {
     padding: 0.85rem 1rem 1.1rem;
   }
@@ -555,7 +573,7 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #f97316;
+    color: #f68700;
     margin: 0 0 0.25rem;
   }
 

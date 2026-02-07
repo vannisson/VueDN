@@ -1,18 +1,3 @@
-// .footer,
-// .push {
-//   height: 50px;
-// }
-
-// .center {
-//   // to align center in Firefox, -webkit-center is not recognized in Firefox
-//   // The order matters
-//   text-align: center;
-//   text-align: -webkit-center;
-// }
-
-// .spaced {
-//   padding-bottom: 1rem;
-// }
 /* Remove estilos padrão do defaultTheme */
 .theme-default-content {
   max-width: none !important;
@@ -43,4 +28,8 @@
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #f6f6f6;
+}
+
+.back-to-top {
+  display: none !important;
 }

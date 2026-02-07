@@ -1,18 +1,15 @@
 {
-  "name": "vuepress-decapcms-netlify",
+  "name": "lame-site",
   "version": "1.0.0",
-  "description": "Vuepress boilerplate integrated with Decap CMS hosted on Netlify",
-  "main": "index.js",
-  "author": "(Stanley Ndagi <stan@md.engineer>)",
-  "license": "MIT",
+  "description": "Site do Laboratório do Manuscrito Escolar (LAME)",
+  "private": true,
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
   },
   "devDependencies": {
     "@vuepress/plugin-register-components": "^2.0.0-beta.61",
     "@vuepress/plugin-search": "^2.0.0-beta.61",
-    "glob": "^10.1.0",
     "vuepress": "^2.0.0-beta.61"
   },
   "dependencies": {

@@ -2,58 +2,64 @@
   <v-footer class="footer" padless>
     <div class="footer-shell" aria-hidden="true"></div>
 
-    <v-container class="footer-container">
-      <v-row class="footer-row" justify="space-between">
-        <!-- COLUNA LAME -->
-        <v-col cols="12" md="4" class="logo-col">
-          <div class="brand-wrapper">
-            <v-img
-              src="/imgs/footer/icon_lame_white.svg"
-              width="80"
-              contain
-              eager
-              class="brand-logo"
-            />
+    <div class="footer-inner">
+      <!-- LINHA SUPERIOR: Logo + Contato + Apoio -->
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="/imgs/footer/icon_lame_white.svg" alt="LAME" class="brand-logo" />
+        </div>
+
+        <div class="footer-contact">
+          <div class="contact-block">
+            <p class="contact-label">Endereço</p>
+            <p>Av. Lourival Melo Mota, S/N</p>
+            <p>Tabuleiro do Martins, Maceió – AL</p>
+            <p>CEP 57072-900</p>
           </div>
 
-          <nav class="link-list" aria-label="Links principais">
-            <RouterLink to="/" class="footer-link">Início</RouterLink>
-            <RouterLink to="/quem-somos/" class="footer-link">Quem somos</RouterLink>
-            <RouterLink to="/pesquisadores/" class="footer-link">Pesquisadores</RouterLink>
-            <RouterLink to="/projetos/" class="footer-link">Projetos</RouterLink>
-            <RouterLink to="/conteudos/" class="footer-link">Conteúdos</RouterLink>
-            <RouterLink to="/publicacoes/" class="footer-link">Publicações</RouterLink>
-          </nav>
-        </v-col>
-
-        <!-- COLUNA CONTATOS -->
-        <v-col cols="12" md="4" class="center-col">
-          <h4 class="col-title">CONTATOS</h4>
-
-          <div class="contact-list">
-            <p>Av. Lourival Melo Mota, S/N</p>
-            <p>Tabuleiro do Martins, Maceió - AL</p>
-            <p>CEP 57072-900</p>
+          <div class="contact-block">
+            <p class="contact-label">E-mail</p>
             <p>
-              E-mail:
               <a href="mailto:calil@cedu.ufal.br" class="footer-link">calil@cedu.ufal.br</a>
-              |
+            </p>
+            <p>
               <a href="mailto:kall.braga@ufrpe.br" class="footer-link">kall.braga@ufrpe.br</a>
             </p>
           </div>
-        </v-col>
+        </div>
 
-        <!-- COLUNA APOIO -->
-        <v-col cols="12" md="4" class="support-col">
-          <h4 class="col-title">APOIO</h4>
-
+        <div class="footer-support">
+          <p class="contact-label">Apoio</p>
           <div class="support-logos">
-            <v-img src="/imgs/footer/icon_ufal.svg" width="80" contain />
-            <v-img src="/imgs/footer/icon_cnpq.svg" width="110" contain />
+            <img
+              src="/imgs/footer/icon_ufal.svg"
+              alt="UFAL"
+              class="support-logo support-logo--ufal"
+            />
+            <img
+              src="/imgs/footer/icon_cnpq.svg"
+              alt="CNPq"
+              class="support-logo support-logo--cnpq"
+            />
           </div>
-        </v-col>
-      </v-row>
-    </v-container>
+        </div>
+      </div>
+
+      <!-- DIVISOR -->
+      <hr class="footer-divider" />
+
+      <!-- LINHA INFERIOR: Links de navegação -->
+      <nav class="footer-nav" aria-label="Links principais">
+        <RouterLink to="/" class="footer-link">Início</RouterLink>
+        <RouterLink to="/about/" class="footer-link">Quem somos</RouterLink>
+        <RouterLink to="/pesquisadores/" class="footer-link">Pesquisadores</RouterLink>
+        <RouterLink to="/projetos/" class="footer-link">Projetos</RouterLink>
+        <RouterLink to="/publicacoes/" class="footer-link">Publicações</RouterLink>
+        <RouterLink to="/videos/" class="footer-link">Vídeos</RouterLink>
+        <RouterLink to="/noticias/" class="footer-link">Notícias</RouterLink>
+        <RouterLink to="/materiais/" class="footer-link">Materiais</RouterLink>
+      </nav>
+    </div>
   </v-footer>
 </template>
 
@@ -76,102 +82,159 @@
     z-index: 0;
   }
 
-  .footer-container {
+  .footer-inner {
     position: relative;
     z-index: 1;
     color: #fff;
-    padding-block: clamp(28px, 5vw, 56px);
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
   }
 
-  /* ===== GRID / COLUNAS ===== */
+  /* ===== LINHA SUPERIOR ===== */
 
-  .footer-row {
-    row-gap: 28px;
-    align-items: flex-start; /* topo alinhado */
-  }
-
-  .logo-col,
-  .center-col,
-  .support-col {
-    position: relative;
-    z-index: 1;
+  .footer-top {
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
-    gap: 0.9rem; /* espaçamento vertical uniforme */
+    gap: clamp(2rem, 5vw, 5rem);
+    flex-wrap: wrap;
   }
 
-  /* ===== COLUNA LAME ===== */
-
-  .brand-wrapper {
-    margin: 0; /* sem margin extra, alinhado com os títulos das outras colunas */
+  .footer-brand {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
   }
 
-  .link-list {
+  .brand-logo {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-contact {
+    display: flex;
+    gap: clamp(2rem, 4vw, 4rem);
+    min-width: 0;
+  }
+
+  .contact-block {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: 0.15rem;
+  }
+
+  .contact-block p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .contact-label {
+    font-weight: 700;
+    font-size: 0.8rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .footer-support {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .support-logos {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .support-logo {
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .support-logo--ufal {
+    height: 48px;
+  }
+
+  .support-logo--cnpq {
+    height: 34px;
+  }
+
+  /* ===== DIVISOR ===== */
+
+  .footer-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin: 1.5rem 0 1.25rem;
+  }
+
+  /* ===== NAVEGAÇÃO INFERIOR ===== */
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    justify-content: center;
   }
 
   .footer-link {
     cursor: pointer;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     line-height: 1.5;
+    transition: color 0.15s;
   }
 
   .footer-link:hover {
+    color: #fff;
     text-decoration: underline;
   }
 
-  /* ===== TÍTULOS / CONTATOS ===== */
-
-  .col-title {
-    margin: 0;
-    letter-spacing: 0.03em;
-    font-weight: 700;
-    font-size: 0.95rem;
-  }
-
-  .contact-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem; /* igual aos links da esquerda */
-  }
-
-  .contact-list p {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-
-  /* ===== APOIO ===== */
-
-  .support-logos {
-    display: flex;
-    flex-direction: row;
-    gap: 1.5rem;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  /* ===== MOBILE ===== */
+  /* ===== RESPONSIVO ===== */
 
   @media (max-width: 960px) {
-    .logo-col,
-    .center-col,
-    .support-col {
+    .footer-top {
+      flex-direction: column;
       align-items: center;
       text-align: center;
     }
 
-    .link-list {
+    .footer-contact {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .contact-block {
+      align-items: center;
+    }
+
+    .footer-support {
       align-items: center;
     }
 
     .support-logos {
       justify-content: center;
+    }
+
+    .footer-nav {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-nav {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
     }
   }
 </style>

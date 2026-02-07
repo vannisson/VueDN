@@ -41,85 +41,141 @@
       </v-row>
 
       <!-- CARDS -->
-      <v-row class="cards-row" align="stretch" justify="space-between">
-        <!-- CONTEÚDOS (AZUL) -->
+      <div class="cards-block">
+        <v-row class="cards-row cards-row-primary" align="stretch" justify="center">
+          <!-- PROJETOS (LARANJA) -->
+          <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+            <v-card class="custom-card card-projetos" elevation="3">
+              <div class="card-inner">
+                <div class="card-content">
+                  <div class="card-icon-wrapper icon-orange">
+                    <v-icon size="32" color="white">mdi-file-tree-outline</v-icon>
+                  </div>
 
-        <!-- PROJETOS (LARANJA) -->
-        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-          <v-card class="custom-card card-projetos" elevation="3">
-            <div class="card-inner">
-              <div class="card-content">
-                <div class="card-icon-wrapper icon-orange">
-                  <v-icon size="32" color="white">mdi-file-tree-outline</v-icon>
+                  <p class="card-title">Projetos</p>
+                  <p class="card-description">
+                    Projetos de pesquisa e extensão coordenados pelo LAME, em parceria com escolas e
+                    instituições no Brasil e no exterior.
+                  </p>
                 </div>
 
-                <p class="card-title">Projetos</p>
-                <p class="card-description">
-                  Projetos de pesquisa e extensão coordenados pelo LAME, em parceria com escolas e
-                  instituições no Brasil e no exterior.
-                </p>
-              </div>
-
-              <div class="card-actions">
-                <v-btn variant="text" class="card-link orange" to="/projetos/"> Saiba mais </v-btn>
-              </div>
-
-              <div class="card-bottom-bar bar-orange" />
-            </div>
-          </v-card>
-        </v-col>
-
-        <!-- PUBLICAÇÕES (VERDE) -->
-        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-          <v-card class="custom-card card-publicacoes" elevation="3">
-            <div class="card-inner">
-              <div class="card-content">
-                <div class="card-icon-wrapper icon-green">
-                  <v-icon size="32" color="white">mdi-book-open-variant</v-icon>
+                <div class="card-actions">
+                  <v-btn variant="flat" class="card-link pill orange" to="/projetos/">
+                    Saiba mais
+                  </v-btn>
                 </div>
 
-                <p class="card-title">Publicações</p>
-                <p class="card-description">
-                  Artigos, livros e capítulos que divulgam resultados das pesquisas do LAME e apoiam
-                  o ensino e a aprendizagem de Língua Portuguesa.
-                </p>
+                <div class="card-bottom-bar bar-orange" />
               </div>
+            </v-card>
+          </v-col>
 
-              <div class="card-actions">
-                <v-btn variant="text" class="card-link green" to="/publicacoes/">
-                  Saiba mais
-                </v-btn>
-              </div>
+          <!-- PUBLICAÇÕES (VERDE) -->
+          <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+            <v-card class="custom-card card-publicacoes" elevation="3">
+              <div class="card-inner">
+                <div class="card-content">
+                  <div class="card-icon-wrapper icon-green">
+                    <v-icon size="32" color="white">mdi-book-open-variant</v-icon>
+                  </div>
 
-              <div class="card-bottom-bar bar-green" />
-            </div>
-          </v-card>
-        </v-col>
-
-        <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-          <v-card class="custom-card card-conteudos" elevation="3">
-            <div class="card-inner">
-              <div class="card-content">
-                <div class="card-icon-wrapper icon-blue">
-                  <v-icon size="32" color="white">mdi-library-outline</v-icon>
+                  <p class="card-title">Publicações</p>
+                  <p class="card-description">
+                    Artigos, livros e capítulos que divulgam resultados das pesquisas do LAME e
+                    apoiam o ensino e a aprendizagem de Língua Portuguesa.
+                  </p>
                 </div>
 
-                <p class="card-title">Vídeos e Notícias</p>
-                <p class="card-description">
-                  Vídeos e notícias produzidos pelo LAME para apoiar pesquisas, formações e práticas
-                  em sala de aula.
-                </p>
-              </div>
+                <div class="card-actions">
+                  <v-btn variant="flat" class="card-link pill green" to="/publicacoes/">
+                    Saiba mais
+                  </v-btn>
+                </div>
 
-              <div class="card-actions">
-                <v-btn variant="text" class="card-link blue" to="/conteudos/"> Saiba mais </v-btn>
+                <div class="card-bottom-bar bar-green" />
               </div>
+            </v-card>
+          </v-col>
 
-              <div class="card-bottom-bar bar-blue" />
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
+          <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+            <v-card class="custom-card card-videos" elevation="3">
+              <div class="card-inner">
+                <div class="card-content">
+                  <div class="card-icon-wrapper icon-blue">
+                    <v-icon size="32" color="white">mdi-play-circle</v-icon>
+                  </div>
+
+                  <p class="card-title">Vídeos</p>
+                  <p class="card-description">
+                    Registros audiovisuais do LAME para apoiar pesquisas, formações e práticas em
+                    sala de aula.
+                  </p>
+                </div>
+
+                <div class="card-actions">
+                  <v-btn variant="flat" class="card-link pill blue" to="/videos/">
+                    Saiba mais
+                  </v-btn>
+                </div>
+
+                <div class="card-bottom-bar bar-blue" />
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <v-row class="cards-row cards-row-secondary" align="stretch" justify="center">
+          <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+            <v-card class="custom-card card-noticias" elevation="3">
+              <div class="card-inner">
+                <div class="card-content">
+                  <div class="card-icon-wrapper icon-gold">
+                    <v-icon size="32" color="white">mdi-newspaper-variant-outline</v-icon>
+                  </div>
+
+                  <p class="card-title">Notícias</p>
+                  <p class="card-description">
+                    Comunicados e atualizações do LAME, com informações sobre eventos e atividades.
+                  </p>
+                </div>
+
+                <div class="card-actions">
+                  <v-btn variant="flat" class="card-link pill gold" to="/noticias/">
+                    Saiba mais
+                  </v-btn>
+                </div>
+
+                <div class="card-bottom-bar bar-gold" />
+              </div>
+            </v-card>
+          </v-col>
+
+          <v-col cols="12" sm="6" md="4" class="card-col d-flex">
+            <v-card class="custom-card card-materiais" elevation="3">
+              <div class="card-inner">
+                <div class="card-content">
+                  <div class="card-icon-wrapper icon-cyan">
+                    <v-icon size="32" color="white">mdi-file-document-multiple-outline</v-icon>
+                  </div>
+
+                  <p class="card-title">Materiais</p>
+                  <p class="card-description">
+                    Materiais de apoio, referências e recursos para formação e pesquisa no LAME.
+                  </p>
+                </div>
+
+                <div class="card-actions">
+                  <v-btn variant="flat" class="card-link pill cyan" to="/materiais/">
+                    Saiba mais
+                  </v-btn>
+                </div>
+
+                <div class="card-bottom-bar bar-cyan" />
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
 
       <!-- BLOCO MEIO -->
       <div class="mid-bleed">
@@ -170,7 +226,7 @@
       <!-- NOTÍCIAS -->
       <section class="news-strip">
         <div class="strip-header">
-          <h2 class="section-title">Últimos Vídeos e Notícias</h2>
+          <h2 class="section-title">Novidades do LAME</h2>
 
           <div class="strip-ctrls">
             <v-btn
@@ -206,9 +262,28 @@
         <div class="strip-fade left" :class="{ show: !atStart }"></div>
         <div class="strip-fade right" :class="{ show: !atEnd }"></div>
 
+        <p class="strip-subtitle">Veja mais em:</p>
         <div class="strip-footer">
-          <v-btn class="cta" prepend-icon="mdi-library-outline" @click="router.push('/conteudos/')">
-            Veja mais conteúdos
+          <v-btn
+            class="cta cta-blue"
+            prepend-icon="mdi-play-circle"
+            @click="router.push('/videos/')"
+          >
+            Vídeos
+          </v-btn>
+          <v-btn
+            class="cta cta-gold"
+            prepend-icon="mdi-newspaper-variant-outline"
+            @click="router.push('/noticias/')"
+          >
+            Notícias
+          </v-btn>
+          <v-btn
+            class="cta cta-cyan"
+            prepend-icon="mdi-file-document-multiple-outline"
+            @click="router.push('/materiais/')"
+          >
+            Materiais
           </v-btn>
         </div>
       </section>
@@ -218,7 +293,7 @@
 
 <script setup lang="ts">
   import NewsCard from '../components/NewsCard.vue'
-  import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+  import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
   import { useRouter } from 'vue-router'
   import { usePagesData } from '@vuepress/client'
 
@@ -239,21 +314,21 @@
   const newsList = ref<NewsItem[]>([])
 
   // ==== helpers para montar os itens a partir dos MDs ====
-  function normalizeBadge(value?: string) {
+  function normalizeType(value?: string) {
     return (value || '')
       .normalize('NFD')
       .replace(/\p{Diacritic}/gu, '')
       .toLowerCase()
   }
 
-  function getCategoryAndColor(rawBadge?: string) {
-    const norm = normalizeBadge(rawBadge)
+  function getCategoryAndColor(rawType?: string) {
+    const norm = normalizeType(rawType)
 
     if (norm === 'noticia') {
       return { category: 'Notícia', categoryColor: 'notice' }
     }
     if (norm === 'video') {
-      return { category: 'Vídeo', categoryColor: 'audio' }
+      return { category: 'Vídeo', categoryColor: 'video' }
     }
     if (norm === 'material') {
       return { category: 'Material', categoryColor: 'material' }
@@ -262,9 +337,32 @@
     return { category: 'Conteúdo', categoryColor: 'default' }
   }
 
+  function parseDateFromPath(path?: string) {
+    if (!path) return null
+    const match = path.match(/\b(\d{4}-\d{2}-\d{2})\b/)
+    if (!match) return null
+    const d = new Date(match[1])
+    return Number.isNaN(d.getTime()) ? null : d
+  }
+
+  function getSortKeyAndDate(fm: any, data: any) {
+    const rawDate = fm.date ?? data?.git?.updatedTime ?? data?.git?.createdTime
+    if (rawDate) {
+      const d = new Date(rawDate as any)
+      if (!Number.isNaN(d.getTime())) return { sortKey: d.getTime(), date: d }
+    }
+
+    const pathDate = parseDateFromPath(data?.path)
+    if (pathDate) return { sortKey: pathDate.getTime(), date: pathDate }
+
+    const now = new Date()
+    return { sortKey: now.getTime(), date: now }
+  }
+
+  const pagesData = usePagesData()
+
   async function loadNewsFromPages() {
     const entries: (NewsItem & { sortKey: number })[] = []
-    const today = new Date()
 
     const formatDate = (d: Date) =>
       d.toLocaleDateString('pt-BR', {
@@ -273,61 +371,56 @@
         year: 'numeric',
       })
 
-    const pushItem = (item: any) => {
-      const rawBadge = item.badge || item.category
-      const { category, categoryColor } = getCategoryAndColor(rawBadge)
-      const rawDate = item.date
-      let sortKey = today.getTime()
-      let formattedDate = formatDate(today)
+    // pagesData keys are internal VuePress keys (e.g. "v-5d45ffb4"),
+    // NOT page paths. We must load each page and check data.path.
+    const allLoaders = Object.values(pagesData.value || {})
+    for (const load of allLoaders) {
+      if (typeof load !== 'function') continue
 
-      if (rawDate) {
-        const d = new Date(rawDate as any)
-        if (!Number.isNaN(d.getTime())) {
-          sortKey = d.getTime()
-          formattedDate = formatDate(d)
-        } else {
-          formattedDate = String(rawDate)
-        }
-      }
-
-      entries.push({
-        image: item.image || '/imgs/contents/default.png',
-        category,
-        categoryColor,
-        title: item.title || 'Conteúdo',
-        description: item.description || 'Conteúdo produzido pelo LAME.',
-        date: formattedDate,
-        to: item.path || '',
-        sortKey,
-      })
-    }
-
-    const pagesData = usePagesData()
-    const loaders = Object.values(pagesData)
-    for (const load of loaders) {
       try {
         const data: any = await load()
+        if (!data || typeof data.path !== 'string') continue
+
+        const pagePath = data.path
+
+        // Only include posts from videos, noticias, materiais
         if (
-          typeof data?.path === 'string' &&
-          data.path.startsWith('/conteudos/') &&
-          (data.frontmatter?.layout === 'DetailContent' || data.frontmatter?.type === 'conteudo')
+          !pagePath.startsWith('/videos/') &&
+          !pagePath.startsWith('/noticias/') &&
+          !pagePath.startsWith('/materiais/')
         ) {
-          pushItem({
-            title: data.title || data.frontmatter?.title,
-            description: data.frontmatter?.description,
-            image: data.frontmatter?.cover,
-            badge: data.frontmatter?.badge,
-            date: data.frontmatter?.date,
-            path: data.path,
-          })
+          continue
         }
+
+        // Skip listing pages (the README.md that renders PostsList)
+        if (pagePath === '/videos/' || pagePath === '/noticias/' || pagePath === '/materiais/') {
+          continue
+        }
+
+        const fm = data.frontmatter || {}
+        if (fm.layout && fm.layout !== 'DetailContent') continue
+
+        const type = normalizeType(fm.type)
+        const { sortKey, date } = getSortKeyAndDate(fm, data)
+        const { category, categoryColor } = getCategoryAndColor(type)
+
+        entries.push({
+          image: fm.cover || '',
+          category,
+          categoryColor,
+          title: data.title || fm.title || '',
+          description: fm.description || '',
+          date: formatDate(date),
+          to: data.path || '',
+          sortKey,
+        })
       } catch (e) {
         // ignore broken loader
       }
     }
 
     entries.sort((a, b) => b.sortKey - a.sortKey)
-    newsList.value = entries.slice(0, 10)
+    newsList.value = entries.slice(0, 9)
   }
 
   // ==== lógica de scroll do carrossel ====
@@ -358,12 +451,28 @@
   }
 
   onMounted(async () => {
-    loadNewsFromPages() // carrega conteúdos em ordem decrescente de data
-
     // espera layout e imagens para medir o overflow corretamente
     await nextTick()
     requestAnimationFrame(updateState)
     window.addEventListener('resize', updateState)
+  })
+
+  watch(
+    pagesData,
+    () => {
+      loadNewsFromPages() // carrega conteúdos em ordem decrescente de data
+    },
+    { immediate: true }
+  )
+
+  // Re-check scroll state whenever newsList changes (after async data loads)
+  watch(newsList, async () => {
+    await nextTick()
+    requestAnimationFrame(() => {
+      updateState()
+      // Double-check after images may have loaded
+      setTimeout(updateState, 500)
+    })
   })
 
   onBeforeUnmount(() => {
@@ -386,7 +495,7 @@
 
   .background-decor {
     position: absolute;
-    bottom: 48%;
+    top: 5%;
     left: 60%;
     width: 50%;
     pointer-events: none;
@@ -428,6 +537,12 @@
     box-shadow: 0 6px 16px rgba(246, 135, 0, 0.25);
     display: inline-flex;
     align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(246, 135, 0, 0.35);
   }
 
   .cta .v-btn__content {
@@ -511,10 +626,17 @@
     }
   }
 
-  /* ============================= CARDS (CONTEÚDOS / PROJETOS / PUBLICAÇÕES) ============================= */
-  /* ============================= CARDS (CONTEÚDOS / PROJETOS / PUBLICAÇÕES) ============================= */
-  .cards-row {
+  /* ============================= CARDS (PROJETOS / PUBLICACOES / VIDEOS / NOTICIAS / MATERIAIS) ============================= */
+  .cards-block {
     padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3.5rem, 7vw, 6rem);
+  }
+
+  .cards-row {
+    row-gap: 1.5rem;
+  }
+
+  .cards-row-primary {
+    margin-bottom: 1.5rem;
   }
 
   .card-col {
@@ -524,10 +646,10 @@
 
   .custom-card {
     width: 100%;
-    max-width: 360px;
-    min-height: 420px;
+    max-width: 310px;
+    min-height: 370px;
     background: #fff;
-    border-radius: 24px;
+    border-radius: 22px;
     box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     transition: transform 0.2s ease;
@@ -549,15 +671,15 @@
     text-align: center;
   }
 
-  /* Ícones circulares */
+  /* Icones circulares */
   .card-icon-wrapper {
-    width: 72px;
-    height: 72px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0.75rem auto 1rem;
+    margin: 0.6rem auto 0.75rem;
   }
 
   .icon-blue {
@@ -572,29 +694,35 @@
     background: #56b057;
   }
 
-  /* Títulos */
+  .icon-gold {
+    background: #ca8a04;
+  }
+
+  .icon-cyan {
+    background: #0891b2;
+  }
+
+  /* Titulos */
   .card-title {
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     font-weight: 800;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     line-height: 1.2;
     color: #0a0e1c;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .card-description {
-    max-width: 34ch;
+    max-width: 32ch;
     margin: 0 auto;
     font-weight: 400;
-    font-size: 0.97rem;
-    line-height: 1.55;
+    font-size: 0.9rem;
+    line-height: 1.5;
     color: #003b52;
-
-    /* garante altura parecida entre os três textos */
-    min-height: 96px;
+    min-height: 84px;
   }
 
-  /* Ações (Saiba mais) */
+  /* Acoes (Saiba mais) */
   .card-actions {
     padding: 0 20px 22px;
     display: flex;
@@ -602,50 +730,51 @@
     align-items: center;
   }
 
-  /* BOTÃO TRANSPARENTE — apenas texto colorido */
-  .card-link {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-
+  /* BOTAO PILL */
+  .card-link.pill {
+    border-radius: 999px;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     text-transform: none;
-    padding: 0;
-    cursor: pointer;
+    text-decoration: none !important;
+    padding: 0.45rem 1.4rem;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
     transition:
-      color 0.2s ease,
-      transform 0.2s ease;
-
-    /* sobe o texto */
-    margin-bottom: 4px;
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      filter 0.2s ease;
   }
 
-  /* CORES DO TEXTO */
-  .card-link.blue {
-    color: #2563eb !important;
-  }
-  .card-link.orange {
-    color: #f68700 !important;
-  }
-  .card-link.green {
-    color: #56b057 !important;
-  }
-
-  /* ===== HOVER (texto mais escuro, leve lift) ===== */
-  .card-link.blue:hover {
-    color: #1d4fc4 !important;
+  .card-link.pill:hover {
     transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+    text-decoration: none !important;
   }
 
-  .card-link.orange:hover {
-    color: #d96f00 !important;
-    transform: translateY(-2px);
+  .card-link.pill * {
+    text-decoration: none !important;
   }
 
-  .card-link.green:hover {
-    color: #449b45 !important;
-    transform: translateY(-2px);
+  /* CORES DOS BOTOES */
+  .card-link.pill.blue {
+    background: #2563eb !important;
+    color: #ffffff !important;
+  }
+  .card-link.pill.orange {
+    background: #f68700 !important;
+    color: #ffffff !important;
+  }
+  .card-link.pill.green {
+    background: #56b057 !important;
+    color: #ffffff !important;
+  }
+  .card-link.pill.gold {
+    background: #ca8a04 !important;
+    color: #ffffff !important;
+  }
+  .card-link.pill.cyan {
+    background: #0891b2 !important;
+    color: #ffffff !important;
   }
 
   /* Barrinha inferior colorida */
@@ -662,6 +791,12 @@
   }
   .bar-green {
     background: #56b057;
+  }
+  .bar-gold {
+    background: #ca8a04;
+  }
+  .bar-cyan {
+    background: #0891b2;
   }
 
   @media (max-width: 960px) {
@@ -714,10 +849,11 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   }
 
-  /* ============================= CARROSSEL DE CONTEÚDOS ============================= */
+  /* ============================= CARROSSEL DE CONTEUDOS ============================= */
   .news-strip {
     position: relative;
-    margin: 4rem 0;
+    margin: 4rem 0 6rem;
+    background: #f6f6f6;
   }
 
   .strip-header {
@@ -782,13 +918,50 @@
     background: linear-gradient(to left, rgba(246, 246, 246, 1), rgba(246, 246, 246, 0));
   }
 
+  .strip-subtitle {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #003b52;
+    margin-bottom: 2rem;
+  }
+
   .strip-footer {
     display: flex;
     justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
 
   .strip-footer .cta {
+    height: 2.75rem;
+  }
+
+  .cta-blue {
     background-color: #2563eb !important;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+  }
+
+  .cta-blue:hover {
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+  }
+
+  .cta-gold {
+    background-color: #ca8a04 !important;
+    box-shadow: 0 6px 16px rgba(202, 138, 4, 0.25);
+  }
+
+  .cta-gold:hover {
+    box-shadow: 0 10px 24px rgba(202, 138, 4, 0.35);
+  }
+
+  .cta-cyan {
+    background-color: #0891b2 !important;
+    box-shadow: 0 6px 16px rgba(8, 145, 178, 0.25);
+  }
+
+  .cta-cyan:hover {
+    box-shadow: 0 10px 24px rgba(8, 145, 178, 0.35);
   }
 
   .float-nav {

@@ -94,7 +94,9 @@
     { label: 'Pesquisadores', to: '/pesquisadores/' },
     { label: 'Projetos', to: '/projetos/' },
     { label: 'Publicações', to: '/publicacoes/' },
-    { label: 'Vídeos e Notícias', to: '/conteudos/' },
+    { label: 'Vídeos', to: '/videos/' },
+    { label: 'Notícias', to: '/noticias/' },
+    { label: 'Materiais', to: '/materiais/' },
   ]
 
   const scrolled = ref(false)
@@ -104,18 +106,29 @@
   const forceSolid = computed(() => {
     const p = route.path
     const isProjectDetail = p.startsWith('/projetos/') && p !== '/projetos/'
-    const isContentDetail = p.startsWith('/conteudos/') && p !== '/conteudos/'
+    const isVideoDetail = p.startsWith('/videos/') && p !== '/videos/'
+    const isNewsDetail = p.startsWith('/noticias/') && p !== '/noticias/'
+    const isMaterialDetail = p.startsWith('/materiais/') && p !== '/materiais/'
     const isPublicationDetail = p.startsWith('/publicacoes/') && p !== '/publicacoes/'
     const isAbout = p.startsWith('/about/')
-    return isProjectDetail || isContentDetail || isPublicationDetail || isAbout
+    return (
+      isProjectDetail ||
+      isVideoDetail ||
+      isNewsDetail ||
+      isMaterialDetail ||
+      isPublicationDetail ||
+      isAbout
+    )
   })
 
   // cor da barrinha embaixo do link ativo
   const activeBarColor = computed(() => {
     const p = route.path
-    if (p.startsWith('/conteudos/')) return '#2563eb' // azul
-    if (p.startsWith('/publicacoes/')) return '#6EC62E' // verde
-    return '#f68700' // padrão (laranja)
+    if (p.startsWith('/videos/')) return '#2563eb' // azul
+    if (p.startsWith('/noticias/')) return '#ca8a04' // dourado
+    if (p.startsWith('/materiais/')) return '#0891b2' // ciano
+    if (p.startsWith('/publicacoes/')) return '#56b057' // verde
+    return '#f68700' // padrao (laranja)
   })
 
   function isActive(item: { to: string }) {
@@ -160,6 +173,7 @@
       background-color 0.4s ease,
       box-shadow 0.3s ease;
     backdrop-filter: blur(6px);
+    z-index: 1000 !important;
   }
 
   .logo-header {

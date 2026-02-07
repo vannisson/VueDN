@@ -23,22 +23,26 @@
     <!-- ============ LISTA DE PROJETOS ============ -->
     <section class="section-projects">
       <v-container class="site-container">
-        <div class="projects-grid">
+        <div class="projects-grid" :class="{ 'list-empty': !filteredProjects.length }">
           <RouterLink
             v-for="project in visibleProjects"
             :key="project.title"
-            :to="`/projetos/${slugify(project.title)}/`"
+            :to="project.link"
             class="project-card-link"
           >
             <article class="project-card">
               <div class="project-media">
                 <v-img
+                  v-if="project.image"
                   :src="project.image"
                   :alt="project.title"
                   cover
                   class="project-img"
                   :draggable="false"
                 />
+                <div v-else class="project-placeholder">
+                  <v-icon size="52" color="#ffffff99">mdi-book-open-page-variant-outline</v-icon>
+                </div>
               </div>
 
               <div class="project-body">
@@ -53,13 +57,15 @@
               </div>
             </article>
           </RouterLink>
+
+          <div v-if="!filteredProjects.length" class="empty-state">
+            <v-icon size="48" color="#b0bec5" class="empty-icon">mdi-folder-search-outline</v-icon>
+            <p class="empty-title">Nenhum projeto encontrado</p>
+            <p class="empty-subtitle">Não encontramos resultados para "{{ searchQuery }}".</p>
+          </div>
         </div>
 
-        <div v-if="!filteredProjects.length" class="empty-state">
-          Nenhum projeto encontrado para “{{ searchQuery }}”.
-        </div>
-
-        <div v-else class="pagination-wrapper">
+        <div v-if="filteredProjects.length" class="pagination-wrapper">
           <v-btn
             class="page-btn"
             variant="outlined"
@@ -116,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, watch, onMounted } from 'vue'
+  import { ref, computed, watch } from 'vue'
   import { usePagesData } from '@vuepress/client'
 
   type ProjectCard = {
@@ -124,7 +130,7 @@
     description: string
     year: string
     image: string
-    link?: string
+    link: string
   }
 
   const searchQuery = ref('')
@@ -172,34 +178,27 @@
     return filteredProjects.value.slice(start, start + PAGE_SIZE)
   })
 
-  function slugify(title: string): string {
-    return title
-      .normalize('NFD')
-      .replace(/\p{Diacritic}/gu, '')
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]/g, '')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-  }
+  const pagesData = usePagesData()
 
   async function buildProjects() {
-    const pagesData = usePagesData()
-    const loaders = Object.values(pagesData)
+    const loaders = Object.values(pagesData.value || {})
     const list: ProjectCard[] = []
     for (const load of loaders) {
+      if (typeof load !== 'function') continue
       try {
         const data: any = await load()
         if (
           typeof data?.path === 'string' &&
           data.path.startsWith('/projetos/') &&
+          data.path !== '/projetos/' &&
           (data.frontmatter?.layout === 'DetailProject' || data.frontmatter?.type === 'projeto')
         ) {
           list.push({
             title: data.title || data.frontmatter?.title || 'Sem título',
             description: data.frontmatter?.description || '',
             year: data.frontmatter?.year || '',
-            image: data.frontmatter?.cover || '/imgs/projects/default.png',
+            image: data.frontmatter?.cover || '',
+            link: data.path,
           })
         }
       } catch (e) {
@@ -208,25 +207,16 @@
     }
     // sort by title for stable order
     list.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
-    
-    // Mock data if no projects found
-    if (list.length === 0) {
-      list.push(
-        {
-          title: 'PROJETO PRODUÇÃO TEXTUAL E ATIVIDADES METALINGUÍSTICAS (METAWRITING II)',
-          description: 'Estudo de atividades metalinguísticas em produção textual nos anos iniciais, articulando práticas docentes e comentários de alunos com dados coletados no Brasil, França e Portugal.',
-          year: '2024-2028',
-          image: '/imgs/projects/default.png',
-        }
-      )
-    }
-    
     projects.value = list
   }
 
-  onMounted(() => {
-    buildProjects()
-  })
+  watch(
+    pagesData,
+    () => {
+      buildProjects()
+    },
+    { immediate: true }
+  )
 
   function goToPage(page: number) {
     const clamped = Math.min(Math.max(1, page), totalPages.value)
@@ -282,7 +272,7 @@
   }
 
   .hero-highlight {
-    color: #f29226;
+    color: #f68700;
     font-weight: 600;
   }
 
@@ -339,8 +329,8 @@
 
   .section-projects {
     background: #f3f4f6;
-    padding-bottom: 4rem; /* espaço antes do footer */
-    min-height: calc(100vh - 320px);
+    padding-bottom: 4rem;
+    min-height: calc(100vh - 200px);
     display: flex;
     flex-direction: column;
   }
@@ -348,12 +338,35 @@
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, auto);
     gap: 1.75rem;
+    min-height: 900px;
+    align-content: start;
+  }
+
+  .projects-grid.list-empty {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
   }
 
   .project-card-link {
-    text-decoration: none;
+    text-decoration: none !important;
     color: inherit;
+    display: flex;
+    cursor: pointer;
+  }
+
+  .project-card-link:hover,
+  .project-card-link:focus,
+  .project-card-link:active {
+    text-decoration: none !important;
+  }
+
+  .project-card-link * {
+    text-decoration: none !important;
   }
 
   .project-card {
@@ -363,30 +376,48 @@
     background: #ffffff;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
     overflow: hidden;
-    transition:
-      transform 0.15s ease,
-      box-shadow 0.15s ease;
+    height: 100%;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
 
   .project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
   }
 
   .project-media {
     position: relative;
     height: 190px;
+    flex-shrink: 0;
   }
 
   .project-img {
     height: 100%;
     width: 100%;
-    pointer-events: none; /* não recebe clique/hover */
-    user-select: none; /* impede seleção/drag */
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .project-placeholder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f68700;
+  }
+
+  .project-placeholder .v-icon {
+    text-decoration: none !important;
   }
 
   .project-body {
     padding: 1.1rem 1.25rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
   }
 
   .project-title {
@@ -394,6 +425,11 @@
     font-size: 1rem;
     color: #111827;
     margin-bottom: 0.35rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .project-desc {
@@ -401,6 +437,11 @@
     line-height: 1.6;
     color: #4b5563;
     margin-bottom: 0.85rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .project-meta {
@@ -408,6 +449,7 @@
     align-items: center;
     justify-content: space-between;
     font-size: 0.8rem;
+    margin-top: auto;
   }
 
   .project-year {
@@ -450,13 +492,13 @@
   }
 
   .page-number:hover {
-    border-color: #f29226;
+    border-color: #f68700;
     color: #c46e12;
   }
 
   .page-number.active {
-    background: #f29226;
-    border-color: #f29226;
+    background: #f68700;
+    border-color: #f68700;
     color: #ffffff;
   }
 
@@ -477,10 +519,33 @@
   }
 
   .empty-state {
-    margin-top: 1.5rem;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    gap: 0.5rem;
+    padding: 3rem 1rem;
+    grid-column: 1 / -1;
+  }
+
+  .empty-icon {
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
+
+  .empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 0;
+  }
+
+  .empty-subtitle {
     font-size: 0.95rem;
-    color: #7b8a99;
+    color: #9ca3af;
+    margin: 0;
   }
 
   /* RESPONSIVO */
@@ -488,6 +553,7 @@
   @media (max-width: 1024px) {
     .projects-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      min-height: 1020px;
     }
   }
 
@@ -507,6 +573,7 @@
 
     .projects-grid {
       grid-template-columns: minmax(0, 1fr);
+      min-height: auto;
     }
   }
 </style>

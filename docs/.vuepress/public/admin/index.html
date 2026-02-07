@@ -5,13 +5,81 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <title>Content Manager</title>
+    <title>LAME — Gerenciador de Conteúdo</title>
+    <link rel="icon" href="/imgs/header/icon_lame.svg" type="image/svg+xml" />
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        /* ── LAME Brand Overrides ── */
+
+        /* Login screen background */
+        [class*="LoginPage"] {
+            background: linear-gradient(135deg, #0a0e1c 0%, #141a2e 100%) !important;
+        }
+
+        /* Logo on login page */
+        [class*="LoginPage"] [class*="CustomLogoImage"] {
+            max-height: 90px !important;
+        }
+
+        /* Primary buttons → LAME orange */
+        [class*="AppHeader"],
+        header[class*="Header"] {
+            background: #0a0e1c !important;
+        }
+
+        /* Top bar controls */
+        [class*="AppHeader"] a,
+        [class*="AppHeader"] span {
+            color: #ffffff !important;
+        }
+
+        /* Publish / Save button */
+        button[class*="PublishButton"],
+        button[class*="ToolbarButton"][class*="published"],
+        [class*="AppHeader"] button:not([class*="logoutButton"]) {
+            background-color: #f68700 !important;
+            border-color: #f68700 !important;
+            color: #fff !important;
+        }
+
+        /* Sidebar accent */
+        [class*="SidebarNavLink"][class*="active"]::before,
+        [class*="SidebarNavLink"]:hover::before {
+            background-color: #f68700 !important;
+        }
+
+        /* Collection label active color */
+        [class*="SidebarNavLink"][class*="active"] {
+            color: #f68700 !important;
+        }
+
+        /* Entry listing hover */
+        [class*="ListCard"]:hover {
+            border-left-color: #f68700 !important;
+        }
+
+        /* Workflow board column headers */
+        [class*="ColumnHeader"] {
+            background: #0a0e1c !important;
+            color: #fff !important;
+            border-radius: 8px 8px 0 0 !important;
+        }
+
+        /* Links inside editor */
+        a[class*="EditorLink"] {
+            color: #f68700 !important;
+        }
+
+        /* Smooth global transition */
+        * {
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Include the script that builds the page and powers Decap CMS -->
-    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    <!-- Decap CMS (formerly Netlify CMS) -->
+    <script src="https://unpkg.com/decap-cms@^3.3.0/dist/decap-cms.js"></script>
 </body>
 
 </html>

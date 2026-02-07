@@ -1,14 +1,23 @@
 <template>
   <v-card class="news-card" elevation="4">
-    <v-img :src="image" height="220" class="news-image" cover>
-      <div class="news-chip">
+    <v-img v-if="image" :src="image" height="220" class="news-image" cover>
+      <div class="news-chip" :style="chipStyle">
         <v-icon class="chip-icon">{{ chipIcon }}</v-icon>
         <span class="chip-text">{{ category }}</span>
       </div>
     </v-img>
 
+    <div v-else class="news-image news-placeholder" :style="placeholderStyle">
+      <v-icon size="52" color="#ffffff99">{{ placeholderIcon }}</v-icon>
+      <div class="news-chip" :style="chipStyle">
+        <v-icon class="chip-icon">{{ chipIcon }}</v-icon>
+        <span class="chip-text">{{ category }}</span>
+      </div>
+    </div>
+
     <div class="news-content">
       <h3 class="news-title" :title="title">{{ title }}</h3>
+      <hr class="news-divider" :style="dividerStyle" />
       <p class="news-text">{{ description }}</p>
 
       <div class="news-footer">
@@ -24,6 +33,7 @@
     props: {
       image: String,
       category: String,
+      categoryColor: { type: String, default: 'default' },
       title: String,
       description: String,
       date: String,
@@ -36,12 +46,54 @@
           .normalize('NFD')
           .replace(/\p{Diacritic}/gu, '')
 
-        if (norm.includes('material')) return 'mdi-book-open-variant'
+        if (norm.includes('material')) return 'mdi-file-document-multiple-outline'
         if (norm.includes('video') || norm.includes('vídeo')) return 'mdi-play-circle'
         if (norm.includes('noticia') || norm.includes('notícia'))
           return 'mdi-newspaper-variant-outline'
 
         return 'mdi-file-document-outline'
+      },
+
+      chipStyle() {
+        const colorMap = {
+          video: '#2563eb',
+          notice: '#ca8a04',
+          material: '#0891b2',
+          default: '#2563eb',
+        }
+        return { background: colorMap[this.categoryColor] || colorMap.default }
+      },
+
+      placeholderIcon() {
+        const norm = this.category
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}/gu, '')
+
+        if (norm.includes('material')) return 'mdi-folder-open-outline'
+        if (norm.includes('video')) return 'mdi-filmstrip'
+        if (norm.includes('noticia')) return 'mdi-newspaper-variant-outline'
+        return 'mdi-file-document-outline'
+      },
+
+      placeholderStyle() {
+        const colorMap = {
+          video: '#2563eb',
+          notice: '#ca8a04',
+          material: '#0891b2',
+          default: '#9ca3af',
+        }
+        return { background: colorMap[this.categoryColor] || colorMap.default }
+      },
+
+      dividerStyle() {
+        const colorMap = {
+          video: '#2563eb',
+          notice: '#ca8a04',
+          material: '#0891b2',
+          default: '#2563eb',
+        }
+        return { borderColor: colorMap[this.categoryColor] || colorMap.default }
       },
     },
   }
@@ -54,7 +106,7 @@
     top: 12px;
     left: 12px;
 
-    background: #2563eb; /* azul forte */
+    background: #2563eb; /* default — overridden by :style */
     color: #ffffff; /* texto branco */
 
     display: inline-flex;
@@ -93,6 +145,11 @@
     display: flex;
     flex-direction: column;
     transition: 0.25s ease;
+    text-decoration: none !important;
+  }
+
+  .news-card * {
+    text-decoration: none !important;
   }
 
   .news-card:hover {
@@ -126,6 +183,18 @@
     height: 100% !important;
   }
 
+  /* ---------------- PLACEHOLDER (sem imagem) ---------------- */
+  .news-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .news-placeholder .v-icon {
+    text-decoration: none !important;
+  }
+
   /* ---------------- CONTENT ---------------- */
   .news-content {
     padding: 1rem 1.25rem 1.25rem;
@@ -137,7 +206,7 @@
     font-size: 1.05rem;
     line-height: 1.35;
     color: #0a0e1c;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
 
     /* corte para 2 linhas */
     display: -webkit-box;
@@ -150,6 +219,14 @@
 
     /* garante altura consistente em todos os cards */
     min-height: calc(1.35rem * 2.2);
+  }
+
+  .news-divider {
+    border: none;
+    border-top: 2.5px solid #2563eb;
+    opacity: 0.4;
+    margin: 0.4rem 0 0.5rem;
+    width: 100%;
   }
 
   .news-text {

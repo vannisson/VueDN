@@ -11,6 +11,7 @@ import * as directives from 'vuetify/directives'
 import DetailProject from './layouts/DetailProject.vue'
 import DetailContent from './layouts/DetailContent.vue'
 import DetailPublication from './layouts/DetailPublication.vue'
+import NotFound from './layouts/NotFound.vue'
 
 export default defineClientConfig({
   enhance({ app }) {
@@ -32,5 +33,5 @@ export default defineClientConfig({
     })
     app.use(vuetify)
   },
-  layouts: { Layout, DetailProject, DetailContent, DetailPublication },
+  layouts: { Layout, DetailProject, DetailContent, DetailPublication, NotFound },
 })

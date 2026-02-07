@@ -26,7 +26,7 @@
           <v-btn
             v-if="hasDownload"
             class="detail-btn"
-            color="green"
+            color="#56b057"
             variant="flat"
             rounded
             size="small"
@@ -39,7 +39,7 @@
 
           <v-btn
             class="detail-btn"
-            color="green"
+            color="#56b057"
             variant="outlined"
             rounded
             size="small"
@@ -78,8 +78,9 @@
 
 <style scoped>
   .publication-detail {
-    padding-top: 96px;
+    padding-top: 0;
     padding-bottom: 48px;
+    margin-top: 100px;
     background: #f3f4f6;
   }
 
@@ -107,14 +108,14 @@
     width: 54px;
     height: 54px;
     border-radius: 999px;
-    background: #e3f8e9;
+    background: #eaf5ea;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .detail-icon {
-    color: #21a946;
+    color: #56b057;
   }
 
   .detail-title {
