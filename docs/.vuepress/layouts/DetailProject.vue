@@ -148,15 +148,23 @@
 </script>
 
 <template>
-  <v-app>
-    <NavBar />
+  <ClientOnly>
+    <template #fallback>
+      <div class="ssr-loading">
+        <img src="/imgs/header/icon_lame.svg" alt="LAME" class="ssr-loading-logo" />
+        <div class="ssr-loading-spinner"></div>
+      </div>
+    </template>
 
-    <v-main class="detail-main-root">
-      <ParentLayout>
-        <template #navbar></template>
+    <v-app>
+      <NavBar />
 
-        <template #page>
-          <div class="detail-wrapper">
+      <v-main class="detail-main-root">
+        <ParentLayout>
+          <template #navbar></template>
+
+          <template #page>
+            <div class="detail-wrapper">
             <!-- FAIXA SUPERIOR -->
             <section class="detail-banner">
               <v-container class="site-container">
@@ -289,6 +297,7 @@
 
     <CustomFooter />
   </v-app>
+  </ClientOnly>
 </template>
 
 <style scoped>

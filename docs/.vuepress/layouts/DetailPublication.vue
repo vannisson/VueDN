@@ -1,5 +1,13 @@
 <template>
-  <section class="publication-detail">
+  <ClientOnly>
+    <template #fallback>
+      <div class="ssr-loading">
+        <img src="/imgs/header/icon_lame.svg" alt="LAME" class="ssr-loading-logo" />
+        <div class="ssr-loading-spinner"></div>
+      </div>
+    </template>
+
+    <section class="publication-detail">
     <v-container class="site-container">
       <article class="detail-card">
         <div class="detail-header">
@@ -55,6 +63,7 @@
       </article>
     </v-container>
   </section>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">

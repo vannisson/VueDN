@@ -217,18 +217,26 @@
 </script>
 
 <template>
-  <v-app>
-    <NavBar />
+  <ClientOnly>
+    <template #fallback>
+      <div class="ssr-loading">
+        <img src="/imgs/header/icon_lame.svg" alt="LAME" class="ssr-loading-logo" />
+        <div class="ssr-loading-spinner"></div>
+      </div>
+    </template>
 
-    <!-- sem padding-top: o banner azul ocupa o fundo atrás da navbar -->
-    <v-main class="detail-main-root">
-      <ParentLayout>
-        <!-- esconde a navbar padrão do tema -->
-        <template #navbar></template>
+    <v-app>
+      <NavBar />
 
-        <!-- CONTEÚDO DA PÁGINA DE CONTEÚDO -->
-        <template #page>
-          <div class="detail-wrapper">
+      <!-- sem padding-top: o banner azul ocupa o fundo atrás da navbar -->
+      <v-main class="detail-main-root">
+        <ParentLayout>
+          <!-- esconde a navbar padrão do tema -->
+          <template #navbar></template>
+
+          <!-- CONTEÚDO DA PÁGINA DE CONTEÚDO -->
+          <template #page>
+            <div class="detail-wrapper">
             <!-- FAIXA SUPERIOR -->
             <section class="detail-banner" :style="{ background: bannerGradient }">
               <v-container class="site-container">
@@ -361,6 +369,7 @@
     <!-- footer sempre visível -->
     <CustomFooter />
   </v-app>
+  </ClientOnly>
 </template>
 
 <style scoped>
