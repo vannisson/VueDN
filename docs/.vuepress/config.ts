@@ -63,16 +63,9 @@ export default defineUserConfig({
         include: ['vuetify'],
       },
       build: {
-        // Dividir chunks para melhor cache no navegador
-        rollupOptions: {
-          output: {
-            manualChunks(id: string) {
-              if (id.includes('vuetify')) return 'vuetify'
-              if (id.includes('@mdi/font')) return 'mdi-icons'
-              if (id.includes('node_modules')) return 'vendor'
-            },
-          },
-        },
+        // Deixar Vite decidir a divisão de chunks automaticamente
+        // manualChunks removido — causava "Cannot access 'fe' before initialization"
+        // devido a dependências circulares entre vuetify e vue internals
       },
     },
   }),
