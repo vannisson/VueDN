@@ -487,7 +487,7 @@
 
   @media (max-width: 959px) {
     .hero {
-      padding-top: 96px;
+      padding-top: 130px;
       padding-bottom: 48px;
     }
 
@@ -511,10 +511,12 @@
     .hero-text-col {
       justify-content: center;
       padding-right: 16px !important;
+      border-radius: 0 0 48px 48px;
     }
 
     .hero-card {
       max-width: 640px;
+      border-radius: 0;
     }
 
     .where-row {

@@ -509,7 +509,7 @@
   /* ============ HERO / DESTAQUES ============ */
 
   .hero {
-    padding-top: clamp(60px, 8vw, 96px);
+    padding-top: clamp(130px, 10vw + 60px, 140px);
     padding-bottom: clamp(40px, 6vw, 60px);
   }
 
@@ -753,18 +753,18 @@
 
   @media (max-width: 960px) {
     .hero {
-      padding-top: clamp(50px, 6vw, 80px);
+      padding-top: 140px;
       padding-bottom: clamp(35px, 5vw, 50px);
     }
 
     .lead-card {
       grid-template-columns: minmax(0, 1fr);
-      text-align: left;
+      text-align: center;
       padding: clamp(1.25rem, 3vw, 2rem);
     }
 
     .lead-avatar-shell {
-      justify-content: flex-start;
+      justify-content: center;
       margin-bottom: clamp(1rem, 2vw, 1.25rem);
     }
 
@@ -773,25 +773,25 @@
     }
 
     .lead-name {
-      text-align: left;
+      text-align: center;
     }
 
     .lead-role {
-      text-align: left;
+      text-align: center;
     }
 
     .lead-description {
-      text-align: left;
+      text-align: justify;
     }
 
     .lead-links {
-      justify-content: flex-start;
+      justify-content: center;
     }
   }
 
   @media (max-width: 600px) {
     .hero-title {
-      text-align: left;
+      text-align: center;
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
     }
 
@@ -813,12 +813,12 @@
     }
 
     .researcher-bio {
-      text-align: left;
+      text-align: justify;
       font-size: clamp(0.8rem, 0.9vw, 0.9rem);
     }
 
     .researcher-links {
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     .link-chip {

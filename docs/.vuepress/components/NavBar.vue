@@ -11,7 +11,9 @@
         <v-col lg="2" class="d-none d-lg-block"></v-col>
 
         <v-col cols="6" md="2" class="d-flex justify-center">
-          <v-img src="/imgs/header/icon_lame.svg" class="logo-header" />
+          <a class="logo-link" href="/" @click.prevent="router.push('/')" aria-label="Ir para a página inicial">
+            <v-img src="/imgs/header/icon_lame.svg" class="logo-header" />
+          </a>
         </v-col>
 
         <v-col cols="12" md="7" lg="7" class="d-none d-md-flex justify-center">
@@ -85,9 +87,10 @@
 
 <script setup lang="ts">
   import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
 
   const route = useRoute()
+  const router = useRouter()
   const items = [
     { label: 'Início', to: '/' },
     { label: 'Quem somos', to: '/about/' },
@@ -177,8 +180,17 @@
     z-index: 1000 !important;
   }
 
+  .logo-link {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    height: 100%;
+  }
+
   .logo-header {
     max-height: 130px;
+    min-width: 140px;
     width: auto;
   }
 

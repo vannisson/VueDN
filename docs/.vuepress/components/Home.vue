@@ -536,6 +536,12 @@
     pointer-events: none;
     user-select: none;
     opacity: 0.9;
+    z-index: 0;
+  }
+
+  .general-container {
+    position: relative;
+    z-index: 1;
   }
 
   /* ============================= HERO ============================= */
@@ -892,6 +898,7 @@
     margin: 0;
     background: #ffffff;
     padding: 3.5rem 0 4.5rem;
+    overflow: hidden;
 
     /* full-bleed background to reach footer */
     left: 50%;
@@ -1014,13 +1021,13 @@
 
     .float-nav {
       position: absolute;
-      top: 4.5rem;
+      top: 50%;
       left: 0;
       right: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-inline: 0.25rem;
+      padding-inline: 0;
       pointer-events: none;
       z-index: 3;
     }

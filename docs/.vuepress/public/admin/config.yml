@@ -1,6 +1,6 @@
 locale: 'pt'
 
-# local_backend: true
+local_backend: true
 
 backend:
   name: git-gateway
@@ -25,6 +25,7 @@ collections:
     folder: 'docs/pesquisas'
     create: true
     path: '{{slug}}/index'
+    filter: { field: 'type', value: 'pesquisa' }
     media_folder: ''
     public_folder: ''
     preview_path: 'pesquisas/{{slug}}/'
@@ -60,6 +61,7 @@ collections:
     folder: 'docs/videos'
     create: true
     path: '{{slug}}/index'
+    filter: { field: 'type', value: 'video' }
     media_folder: ''
     public_folder: ''
     preview_path: 'videos/{{slug}}/'
@@ -94,6 +96,7 @@ collections:
     folder: 'docs/publicacoes'
     create: true
     path: '{{slug}}/index'
+    filter: { field: 'type', value: 'publicacao' }
     media_folder: ''
     public_folder: ''
     preview_path: 'publicacoes/{{slug}}/'
@@ -133,6 +136,7 @@ collections:
     folder: 'docs/noticias'
     create: true
     path: '{{slug}}/index'
+    filter: { field: 'type', value: 'noticia' }
     media_folder: ''
     public_folder: ''
     preview_path: 'noticias/{{slug}}/'
@@ -167,6 +171,7 @@ collections:
     folder: 'docs/materiais'
     create: true
     path: '{{slug}}/index'
+    filter: { field: 'type', value: 'material' }
     media_folder: ''
     public_folder: ''
     preview_path: 'materiais/{{slug}}/'
