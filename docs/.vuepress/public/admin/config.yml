@@ -1,6 +1,6 @@
 locale: 'pt'
 
-local_backend: false
+# local_backend: true
 
 backend:
   name: git-gateway

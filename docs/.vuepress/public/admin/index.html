@@ -8,117 +8,77 @@
     <link rel="icon" href="/imgs/header/icon_lame.svg" type="image/svg+xml" />
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
-      /* ── LAME Brand Overrides ── */
+      /* ── LAME Brand — Decap CMS Overrides ── */
 
-      /* Login screen background */
+      /* Login */
       [class*='LoginPage'] {
         background: linear-gradient(135deg, #0a0e1c 0%, #141a2e 100%) !important;
       }
-
-      /* Logo on login page */
       [class*='LoginPage'] [class*='CustomLogoImage'] {
         max-height: 90px !important;
       }
 
-      /* Primary buttons → LAME orange */
-      [class*='AppHeader'],
-      header[class*='Header'] {
+      /* Header escuro */
+      [class*='AppHeader'] {
         background: #0a0e1c !important;
       }
-
-      /* Top bar controls */
-      [class*='AppHeader'] a,
-      [class*='AppHeader'] span {
+      [class*='AppHeader'] nav a,
+      [class*='AppHeader'] nav span {
         color: #ffffff !important;
       }
 
-      /* Publish / Save button */
-      button[class*='PublishButton'],
-      button[class*='ToolbarButton'][class*='published'],
-      [class*='AppHeader'] button:not([class*='logoutButton']) {
+      /* Esconder Quick Add e link do site */
+      [class*='QuickAdd'],
+      [class*='AppHeaderSiteLink'] {
+        display: none !important;
+      }
+
+      /* Settings dropdown: trocar avatar por texto "Sair" */
+      [class*='SettingsDropdown'] > button {
+        all: unset !important;
+        cursor: pointer !important;
+        padding: 6px 16px !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border-radius: 6px !important;
+        color: #ffffff !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        line-height: 1.4 !important;
+        display: flex !important;
+        align-items: center !important;
+        white-space: nowrap !important;
+      }
+      [class*='SettingsDropdown'] > button > * {
+        display: none !important;
+      }
+      [class*='SettingsDropdown'] > button::after {
+        content: 'Sair' !important;
+        font-size: 13px !important;
+        color: #ffffff !important;
+      }
+      /* Dropdown do settings */
+      [class*='SettingsDropdown'] ul,
+      [class*='SettingsDropdown'] [class*='DropdownList'] {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      }
+      [class*='SettingsDropdown'] ul li,
+      [class*='SettingsDropdown'] ul button,
+      [class*='SettingsDropdown'] ul a {
+        color: #111827 !important;
+        font-size: 14px !important;
+      }
+
+      /* Publicar / Salvar */
+      button[class*='PublishButton'] {
         background-color: #f68700 !important;
         border-color: #f68700 !important;
         color: #fff !important;
       }
 
-      /* Sidebar accent */
-      [class*='SidebarNavLink'][class*='active']::before,
-      [class*='SidebarNavLink']:hover::before {
-        background-color: #f68700 !important;
-      }
-
-      /* Collection label active color */
-      [class*='SidebarNavLink'][class*='active'] {
-        color: #f68700 !important;
-      }
-
-      /* Entry listing hover */
-      [class*='ListCard']:hover {
-        border-left-color: #f68700 !important;
-      }
-
-      /* Workflow board column headers */
-      [class*='ColumnHeader'] {
-        background: #0a0e1c !important;
-        color: #fff !important;
-        border-radius: 8px 8px 0 0 !important;
-      }
-
-      /* Links inside editor */
-      a[class*='EditorLink'] {
-        color: #f68700 !important;
-      }
-
-      /* ── Esconder avatar / foto de perfil (mas manter botão logout) ── */
-      [class*='AppHeader'] [class*='Avatar'],
-      [class*='AppHeader'] [class*='avatar'],
-      img[class*='AppHeaderAvatar'] {
-        display: none !important;
-      }
-
-      /* ── Esconder "Adicionar" (Quick Add) ── */
-      [class*='QuickAdd'],
-      [class*='quickAdd'],
-      [class*='AppHeaderQuickNewButton'] {
-        display: none !important;
-      }
-
-      /* ── Esconder display_url (link do site no header) ── */
-      [class*='AppHeaderSiteLink'],
-      [class*='AppHeader'] a[href*='netlify'] {
-        display: none !important;
-      }
-
-      /* ── Botão de logout sempre visível e claro ── */
-      [class*='DropdownButton'] img,
-      [class*='DropdownButton'] [class*='Avatar'] {
-        display: none !important;
-      }
-      [class*='DropdownButton'],
-      [class*='logoutButton'],
-      [class*='SettingsDropdown'] button {
-        color: #ffffff !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-      /* Texto do dropdown de logout */
-      [class*='SettingsDropdown'] [class*='DropdownList'],
-      [class*='SettingsDropdown'] li,
-      [class*='SettingsDropdown'] button {
-        color: #111827 !important;
-      }
-
-      /* ── Fix texto branco / contraste ── */
-
-      /* Títulos das entries na listagem */
-      [class*='ListCard'] h2,
-      [class*='ListCard'] span,
-      [class*='ListCardTitle'],
-      [class*='CardBody'] {
-        color: #111827 !important;
-      }
-
-      /* Sidebar links */
+      /* Sidebar */
       [class*='SidebarNavLink'] {
         color: #374151 !important;
       }
@@ -126,55 +86,72 @@
         color: #f68700 !important;
         font-weight: 600 !important;
       }
+      [class*='SidebarNavLink'][class*='active']::before,
+      [class*='SidebarNavLink']:hover::before {
+        background-color: #f68700 !important;
+      }
 
-      /* Collection header title */
+      /* Listagem de entries */
+      [class*='ListCard']:hover {
+        border-left-color: #f68700 !important;
+      }
+      [class*='ListCard'] h2,
+      [class*='ListCardTitle'] {
+        color: #111827 !important;
+      }
+      [class*='ListCard'] p,
+      [class*='CardSummary'] {
+        color: #4b5563 !important;
+      }
+
+      /* Títulos */
       [class*='CollectionTop'] h2,
       [class*='ViewHeader'] h1 {
         color: #111827 !important;
       }
 
-      /* Search bar */
+      /* Busca */
       [class*='SearchInput'] {
         color: #111827 !important;
         background: #ffffff !important;
         border: 1px solid #d1d5db !important;
       }
 
-      /* Sort dropdown e outros textos secundários */
+      /* Ordenar por / controles */
+      [class*='CollectionTop'] button,
+      [class*='CollectionControls'] button,
+      [class*='ViewControls'] button,
       [class*='SortControl'],
       [class*='SortButton'],
       [class*='ControlLabel'] {
-        color: #6b7280 !important;
+        color: #374151 !important;
       }
 
-      /* Dropdown menu items */
+      /* Dropdowns em geral */
+      [class*='DropdownList'] {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+      }
       [class*='DropdownList'] li,
-      [class*='DropdownList'] a,
-      [class*='DropdownItem'] {
+      [class*='DropdownList'] a {
         color: #111827 !important;
       }
 
-      /* Quick add dropdown */
-      [class*='QuickAdd'] [class*='DropdownList'] li {
-        color: #111827 !important;
+      /* Workflow */
+      [class*='ColumnHeader'] {
+        background: #0a0e1c !important;
+        color: #fff !important;
+        border-radius: 8px 8px 0 0 !important;
       }
-
-      /* Entry card summary / description */
-      [class*='ListCard'] p,
-      [class*='CardSummary'] {
-        color: #4b5563 !important;
-      }
-
-      /* Workflow items */
       [class*='WorkflowCard'] {
         color: #111827 !important;
       }
 
-      /* Smooth global transition */
-      * {
-        transition:
-          border-color 0.15s ease,
-          background-color 0.15s ease;
+      /* Editor links */
+      a[class*='EditorLink'] {
+        color: #f68700 !important;
       }
     </style>
   </head>
@@ -259,12 +236,15 @@
           },
           editor: {
             onLeavePage: 'Tem certeza que deseja sair desta página?',
-            onUpdatingWithUnsavedChangesBody: 'Você tem alterações não salvas. Salve antes de atualizar o status.',
+            onUpdatingWithUnsavedChangesBody:
+              'Você tem alterações não salvas. Salve antes de atualizar o status.',
             onPublishingNotReadyBody: 'Atualize o status para "Pronto" antes de publicar.',
-            onPublishingWithUnsavedChangesBody: 'Você tem alterações não salvas. Salve antes de publicar.',
+            onPublishingWithUnsavedChangesBody:
+              'Você tem alterações não salvas. Salve antes de publicar.',
             onPublishingBody: 'Deseja publicar este item?',
             onUnpublishing: 'Deseja despublicar este item?',
-            onDeleteWithUnsavedChangesBody: 'Deseja excluir este item publicado e suas alterações não salvas?',
+            onDeleteWithUnsavedChangesBody:
+              'Deseja excluir este item publicado e suas alterações não salvas?',
             onDeletePublishedEntryBody: 'Deseja excluir este item publicado?',
             loadingEntry: 'Carregando item...',
           },
@@ -393,7 +373,8 @@
             details: 'Ocorreu um erro — por favor ',
             reportIt: 'reporte aqui.',
             detailsHeading: 'Detalhes',
-            privacyWarning: 'Ao reportar, o formulário é preenchido com a mensagem de erro e dados de debug.\nVerifique se as informações estão corretas e remova dados sensíveis, se houver.',
+            privacyWarning:
+              'Ao reportar, o formulário é preenchido com a mensagem de erro e dados de debug.\nVerifique se as informações estão corretas e remova dados sensíveis, se houver.',
             recoveredEntry: {
               heading: 'Documento recuperado',
               warning: 'Copie/cole isso em algum lugar antes de sair desta página!',
@@ -409,7 +390,8 @@
             onFailToPersist: 'Falha ao salvar item: %{details}',
             onFailToDelete: 'Falha ao excluir item: %{details}',
             onFailToUpdateStatus: 'Falha ao atualizar status: %{details}',
-            missingRequiredField: 'Ops, você esqueceu um campo obrigatório. Preencha antes de salvar.',
+            missingRequiredField:
+              'Ops, você esqueceu um campo obrigatório. Preencha antes de salvar.',
             entrySaved: 'Item salvo',
             entryPublished: 'Item publicado',
             onFailToPublishEntry: 'Falha ao publicar: %{details}',
@@ -425,7 +407,8 @@
             loading: 'Carregando itens do fluxo editorial',
             workflowHeading: 'Fluxo Editorial',
             newPost: 'Novo item',
-            description: '%{smart_count} item aguardando revisão, %{readyCount} pronto(s) para publicar. |||| %{smart_count} itens aguardando revisão, %{readyCount} pronto(s) para publicar.',
+            description:
+              '%{smart_count} item aguardando revisão, %{readyCount} pronto(s) para publicar. |||| %{smart_count} itens aguardando revisão, %{readyCount} pronto(s) para publicar.',
             dateFormat: 'DD/MM/YYYY',
           },
           workflowCard: {
@@ -439,7 +422,8 @@
           },
           workflowList: {
             onDeleteEntry: 'Tem certeza que deseja excluir este item?',
-            onPublishingNotReadyEntry: 'Somente itens com status "Pronto" podem ser publicados. Arraste o card para a coluna "Pronto" para habilitar a publicação.',
+            onPublishingNotReadyEntry:
+              'Somente itens com status "Pronto" podem ser publicados. Arraste o card para a coluna "Pronto" para habilitar a publicação.',
             onPublishEntry: 'Deseja publicar este item?',
             draftHeader: 'Rascunhos',
             inReviewHeader: 'Em Revisão',
@@ -447,7 +431,7 @@
             currentEntries: '%{smart_count} item |||| %{smart_count} itens',
           },
         },
-      });
+      })
     </script>
   </body>
 </html>
