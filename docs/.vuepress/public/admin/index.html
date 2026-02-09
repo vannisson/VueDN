@@ -69,11 +69,17 @@
         color: #f68700 !important;
       }
 
-      /* ── Esconder avatar / foto de perfil ── */
-      [class*='Avatar'],
-      [class*='avatar'],
-      img[class*='AppHeaderAvatar'],
-      [class*='AppHeader'] img {
+      /* ── Esconder avatar / foto de perfil (mas manter botão logout) ── */
+      [class*='AppHeader'] [class*='Avatar'],
+      [class*='AppHeader'] [class*='avatar'],
+      img[class*='AppHeaderAvatar'] {
+        display: none !important;
+      }
+
+      /* ── Esconder "Adicionar" (Quick Add) ── */
+      [class*='QuickAdd'],
+      [class*='quickAdd'],
+      [class*='AppHeaderQuickNewButton'] {
         display: none !important;
       }
 
@@ -83,10 +89,23 @@
         display: none !important;
       }
 
-      /* ── Menu dropdown: só botão "Sair" visível ── */
+      /* ── Botão de logout sempre visível e claro ── */
       [class*='DropdownButton'] img,
       [class*='DropdownButton'] [class*='Avatar'] {
         display: none !important;
+      }
+      [class*='DropdownButton'],
+      [class*='logoutButton'],
+      [class*='SettingsDropdown'] button {
+        color: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      /* Texto do dropdown de logout */
+      [class*='SettingsDropdown'] [class*='DropdownList'],
+      [class*='SettingsDropdown'] li,
+      [class*='SettingsDropdown'] button {
+        color: #111827 !important;
       }
 
       /* ── Fix texto branco / contraste ── */
