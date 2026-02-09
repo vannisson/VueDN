@@ -69,6 +69,88 @@
         color: #f68700 !important;
       }
 
+      /* ── Esconder avatar / foto de perfil ── */
+      [class*='Avatar'],
+      [class*='avatar'],
+      img[class*='AppHeaderAvatar'],
+      [class*='AppHeader'] img {
+        display: none !important;
+      }
+
+      /* ── Esconder display_url (link do site no header) ── */
+      [class*='AppHeaderSiteLink'],
+      [class*='AppHeader'] a[href*='netlify'] {
+        display: none !important;
+      }
+
+      /* ── Menu dropdown: só botão "Sair" visível ── */
+      [class*='DropdownButton'] img,
+      [class*='DropdownButton'] [class*='Avatar'] {
+        display: none !important;
+      }
+
+      /* ── Fix texto branco / contraste ── */
+
+      /* Títulos das entries na listagem */
+      [class*='ListCard'] h2,
+      [class*='ListCard'] span,
+      [class*='ListCardTitle'],
+      [class*='CardBody'] {
+        color: #111827 !important;
+      }
+
+      /* Sidebar links */
+      [class*='SidebarNavLink'] {
+        color: #374151 !important;
+      }
+      [class*='SidebarNavLink'][class*='active'] {
+        color: #f68700 !important;
+        font-weight: 600 !important;
+      }
+
+      /* Collection header title */
+      [class*='CollectionTop'] h2,
+      [class*='ViewHeader'] h1 {
+        color: #111827 !important;
+      }
+
+      /* Search bar */
+      [class*='SearchInput'] {
+        color: #111827 !important;
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+      }
+
+      /* Sort dropdown e outros textos secundários */
+      [class*='SortControl'],
+      [class*='SortButton'],
+      [class*='ControlLabel'] {
+        color: #6b7280 !important;
+      }
+
+      /* Dropdown menu items */
+      [class*='DropdownList'] li,
+      [class*='DropdownList'] a,
+      [class*='DropdownItem'] {
+        color: #111827 !important;
+      }
+
+      /* Quick add dropdown */
+      [class*='QuickAdd'] [class*='DropdownList'] li {
+        color: #111827 !important;
+      }
+
+      /* Entry card summary / description */
+      [class*='ListCard'] p,
+      [class*='CardSummary'] {
+        color: #4b5563 !important;
+      }
+
+      /* Workflow items */
+      [class*='WorkflowCard'] {
+        color: #111827 !important;
+      }
+
       /* Smooth global transition */
       * {
         transition:
@@ -79,7 +161,274 @@
   </head>
 
   <body>
-    <!-- Decap CMS (formerly Netlify CMS) -->
+    <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.3.0/dist/decap-cms.js"></script>
+    <script>
+      CMS.registerLocale('pt', {
+        app: {
+          header: {
+            content: 'Conteúdo',
+            workflow: 'Fluxo Editorial',
+            media: 'Mídia',
+            quickAdd: 'Adicionar',
+          },
+          app: {
+            errorHeader: 'Erro ao carregar a configuração do CMS',
+            configErrors: 'Erros de configuração',
+            checkConfigYml: 'Verifique o arquivo config.yml.',
+            loadingConfig: 'Carregando configuração...',
+            waitingBackend: 'Aguardando o servidor...',
+          },
+          notFoundPage: {
+            header: 'Não encontrado',
+          },
+        },
+        collection: {
+          sidebar: {
+            collections: 'Coleções',
+            allCollections: 'Todas as Coleções',
+            searchAll: 'Pesquisar em tudo',
+            searchIn: 'Pesquisar em',
+          },
+          collectionTop: {
+            sortBy: 'Ordenar por',
+            viewAs: 'Visualizar como',
+            newButton: 'Novo(a) %{collectionLabel}',
+            ascending: 'Crescente',
+            descending: 'Decrescente',
+            searchResults: 'Resultados para "%{searchTerm}"',
+            searchResultsInCollection: 'Resultados para "%{searchTerm}" em %{collection}',
+            filterBy: 'Filtrar por',
+            groupBy: 'Agrupar por',
+          },
+          entries: {
+            loadingEntries: 'Carregando itens...',
+            cachingEntries: 'Armazenando itens em cache...',
+            longerLoading: 'Isso pode levar alguns minutos',
+            noEntries: 'Nenhum item',
+          },
+          groups: {
+            other: 'Outros',
+            negateLabel: 'Não %{label}',
+          },
+          defaultFields: {
+            author: { label: 'Autor' },
+            updatedOn: { label: 'Atualizado em' },
+          },
+        },
+        editor: {
+          editorControl: {
+            field: {
+              optional: 'opcional',
+            },
+          },
+          editorControlPane: {
+            widget: {
+              required: '%{fieldLabel} é obrigatório.',
+              regexPattern: '%{fieldLabel} não corresponde ao padrão: %{pattern}.',
+              processing: '%{fieldLabel} está sendo processado.',
+              range: '%{fieldLabel} deve estar entre %{minValue} e %{maxValue}.',
+              min: '%{fieldLabel} deve ser no mínimo %{minValue}.',
+              max: '%{fieldLabel} deve ser no máximo %{maxValue}.',
+              rangeCount: '%{fieldLabel} deve ter entre %{minCount} e %{maxCount} item(ns).',
+              rangeCountExact: '%{fieldLabel} deve ter exatamente %{count} item(ns).',
+              rangeMin: '%{fieldLabel} deve ter pelo menos %{minCount} item(ns).',
+              rangeMax: '%{fieldLabel} deve ter no máximo %{maxCount} item(ns).',
+              invalidPath: "'%{path}' não é um caminho válido",
+              pathExists: "O caminho '%{path}' já existe",
+            },
+          },
+          editor: {
+            onLeavePage: 'Tem certeza que deseja sair desta página?',
+            onUpdatingWithUnsavedChangesBody: 'Você tem alterações não salvas. Salve antes de atualizar o status.',
+            onPublishingNotReadyBody: 'Atualize o status para "Pronto" antes de publicar.',
+            onPublishingWithUnsavedChangesBody: 'Você tem alterações não salvas. Salve antes de publicar.',
+            onPublishingBody: 'Deseja publicar este item?',
+            onUnpublishing: 'Deseja despublicar este item?',
+            onDeleteWithUnsavedChangesBody: 'Deseja excluir este item publicado e suas alterações não salvas?',
+            onDeletePublishedEntryBody: 'Deseja excluir este item publicado?',
+            loadingEntry: 'Carregando item...',
+          },
+          editorInterface: {
+            toggleI18n: 'Alternar idioma',
+            togglePreview: 'Alternar pré-visualização',
+            toggleScrollSync: 'Sincronizar rolagem',
+          },
+          editorToolbar: {
+            publishing: 'Publicando...',
+            publish: 'Publicar',
+            published: 'Publicado',
+            unpublish: 'Despublicar',
+            duplicate: 'Duplicar',
+            unpublishing: 'Despublicando...',
+            publishAndCreateNew: 'Publicar e criar novo',
+            publishAndDuplicate: 'Publicar e duplicar',
+            deleteUnpublishedChanges: 'Excluir alterações não publicadas',
+            deleteUnpublishedEntry: 'Excluir item não publicado',
+            deletePublishedEntry: 'Excluir item publicado',
+            deleteEntry: 'Excluir item',
+            saving: 'Salvando...',
+            save: 'Salvar',
+            statusInfoTooltipDraft: 'Status: Rascunho. Clique para mudar.',
+            statusInfoTooltipInReview: 'Status: Em revisão. Clique para mudar.',
+            deleting: 'Excluindo...',
+            updating: 'Atualizando...',
+            status: 'Status: %{status}',
+            backCollection: 'Voltar para %{collectionLabel}',
+            unsavedChanges: 'Alterações não salvas',
+            changesSaved: 'Alterações salvas',
+            draft: 'Rascunho',
+            inReview: 'Em revisão',
+            ready: 'Pronto',
+            publishNow: 'Publicar agora',
+            deployPreviewPendingButtonLabel: 'Verificar pré-visualização',
+            deployPreviewButtonLabel: 'Ver pré-visualização',
+            deployButtonLabel: 'Ver publicação',
+          },
+          editorWidgets: {
+            markdown: {
+              bold: 'Negrito',
+              italic: 'Itálico',
+              code: 'Código',
+              link: 'Link',
+              linkPrompt: 'Insira a URL do link',
+              headings: 'Títulos',
+              quote: 'Citação',
+              bulletedList: 'Lista com marcadores',
+              numberedList: 'Lista numerada',
+              addComponent: 'Adicionar componente',
+              richText: 'Texto formatado',
+              markdown: 'Markdown',
+            },
+            image: {
+              choose: 'Escolher imagem',
+              chooseUrl: 'Inserir via URL',
+              replaceUrl: 'Substituir via URL',
+              promptUrl: 'Insira a URL da imagem',
+              chooseDifferent: 'Escolher outra imagem',
+              remove: 'Remover imagem',
+            },
+            file: {
+              choose: 'Escolher arquivo',
+              chooseUrl: 'Inserir via URL',
+              replaceUrl: 'Substituir via URL',
+              promptUrl: 'Insira a URL do arquivo',
+              chooseDifferent: 'Escolher outro arquivo',
+              remove: 'Remover arquivo',
+            },
+            unknownControl: {
+              noControl: "Sem controle para o widget '%{widget}'.",
+            },
+            unknownPreview: {
+              noPreview: "Sem pré-visualização para o widget '%{widget}'.",
+            },
+            headingOptions: {
+              headingOne: 'Título 1',
+              headingTwo: 'Título 2',
+              headingThree: 'Título 3',
+              headingFour: 'Título 4',
+              headingFive: 'Título 5',
+              headingSix: 'Título 6',
+            },
+            datetime: {
+              now: 'Agora',
+            },
+          },
+        },
+        mediaLibrary: {
+          mediaLibraryCard: {
+            draft: 'Rascunho',
+            copy: 'Copiar',
+            copyUrl: 'Copiar URL',
+            copyPath: 'Copiar caminho',
+            copyName: 'Copiar nome',
+            copied: 'Copiado',
+          },
+          mediaLibrary: {
+            onDeleteBody: 'Tem certeza que deseja excluir esta mídia?',
+            fileTooLargeBody: 'Arquivo muito grande.\nO tamanho máximo é %{size} kB.',
+            alreadyExistsBody: 'Já existe um arquivo com esse nome.',
+          },
+          mediaLibraryModal: {
+            loading: 'Carregando...',
+            noResults: 'Nenhum resultado.',
+            noAssetsFound: 'Nenhum arquivo encontrado.',
+            noImagesFound: 'Nenhuma imagem encontrada.',
+            images: 'Imagens',
+            mediaAssets: 'Arquivos de mídia',
+            search: 'Pesquisar...',
+            uploading: 'Enviando...',
+            upload: 'Enviar',
+            download: 'Baixar',
+            deleting: 'Excluindo...',
+            deleteSelected: 'Excluir selecionado',
+            chooseSelected: 'Usar selecionado',
+          },
+        },
+        ui: {
+          default: {
+            goBackToSite: 'Voltar ao site',
+          },
+          errorBoundary: {
+            title: 'Erro',
+            details: 'Ocorreu um erro — por favor ',
+            reportIt: 'reporte aqui.',
+            detailsHeading: 'Detalhes',
+            privacyWarning: 'Ao reportar, o formulário é preenchido com a mensagem de erro e dados de debug.\nVerifique se as informações estão corretas e remova dados sensíveis, se houver.',
+            recoveredEntry: {
+              heading: 'Documento recuperado',
+              warning: 'Copie/cole isso em algum lugar antes de sair desta página!',
+              copyButtonLabel: 'Copiar para área de transferência',
+            },
+          },
+          settingsDropdown: {
+            logOut: 'Sair',
+          },
+          toast: {
+            onFailToLoadEntries: 'Falha ao carregar item: %{details}',
+            onFailToLoadDeployPreview: 'Falha ao carregar pré-visualização: %{details}',
+            onFailToPersist: 'Falha ao salvar item: %{details}',
+            onFailToDelete: 'Falha ao excluir item: %{details}',
+            onFailToUpdateStatus: 'Falha ao atualizar status: %{details}',
+            missingRequiredField: 'Ops, você esqueceu um campo obrigatório. Preencha antes de salvar.',
+            entrySaved: 'Item salvo',
+            entryPublished: 'Item publicado',
+            onFailToPublishEntry: 'Falha ao publicar: %{details}',
+            entryUpdated: 'Status do item atualizado',
+            onDeleteUnpublishedChanges: 'Alterações não publicadas excluídas',
+            onFailToAuth: '%{details}',
+            onLoggedOut: 'Você foi desconectado. Salve seus dados e faça login novamente.',
+            onBackendDown: 'O servidor está com problemas. Veja %{details} para mais informações.',
+          },
+        },
+        workflow: {
+          workflow: {
+            loading: 'Carregando itens do fluxo editorial',
+            workflowHeading: 'Fluxo Editorial',
+            newPost: 'Novo item',
+            description: '%{smart_count} item aguardando revisão, %{readyCount} pronto(s) para publicar. |||| %{smart_count} itens aguardando revisão, %{readyCount} pronto(s) para publicar.',
+            dateFormat: 'DD/MM/YYYY',
+          },
+          workflowCard: {
+            lastChange: '%{date} por %{author}',
+            lastChangeNoAuthor: '%{date}',
+            lastChangeNoDate: 'por %{author}',
+            deleteChanges: 'Excluir alterações',
+            deleteNewEntry: 'Excluir novo item',
+            publishChanges: 'Publicar alterações',
+            publishNewEntry: 'Publicar novo item',
+          },
+          workflowList: {
+            onDeleteEntry: 'Tem certeza que deseja excluir este item?',
+            onPublishingNotReadyEntry: 'Somente itens com status "Pronto" podem ser publicados. Arraste o card para a coluna "Pronto" para habilitar a publicação.',
+            onPublishEntry: 'Deseja publicar este item?',
+            draftHeader: 'Rascunhos',
+            inReviewHeader: 'Em Revisão',
+            readyHeader: 'Prontos',
+            currentEntries: '%{smart_count} item |||| %{smart_count} itens',
+          },
+        },
+      });
+    </script>
   </body>
 </html>

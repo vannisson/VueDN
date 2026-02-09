@@ -1,11 +1,13 @@
+locale: 'pt'
+
+local_backend: false
+
 backend:
   name: git-gateway
   branch: main
   cms_label_prefix: decap-cms
 
 publish_mode: editorial_workflow
-
-display_url: https://vuedn.netlify.app/
 
 logo_url: /imgs/header/icon_lame.svg
 
@@ -22,7 +24,9 @@ collections:
     label_singular: 'Pesquisa'
     folder: 'docs/pesquisas'
     create: true
-    slug: '{{slug}}/index'
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
     preview_path: 'pesquisas/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailProject' }
@@ -55,7 +59,9 @@ collections:
     label_singular: 'Vídeo'
     folder: 'docs/videos'
     create: true
-    slug: '{{slug}}/index'
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
     preview_path: 'videos/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailContent' }
@@ -87,7 +93,9 @@ collections:
     label_singular: 'Publicação'
     folder: 'docs/publicacoes'
     create: true
-    slug: '{{slug}}/index'
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
     preview_path: 'publicacoes/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailPublication' }
@@ -124,7 +132,9 @@ collections:
     label_singular: 'Notícia'
     folder: 'docs/noticias'
     create: true
-    slug: '{{slug}}/index'
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
     preview_path: 'noticias/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailContent' }
@@ -156,7 +166,9 @@ collections:
     label_singular: 'Material'
     folder: 'docs/materiais'
     create: true
-    slug: '{{slug}}/index'
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
     preview_path: 'materiais/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailContent' }
