@@ -1,5 +1,7 @@
 ---
-title: 'Processo de alfabetização em uma abordagem construtivista: análise de práticas didáticas de produção textual e atividades metalinguísticas verbalizadas por professor e alunos'
+title:
+  'Processo de alfabetização em uma abordagem construtivista: análise de práticas didáticas de
+  produção textual e atividades metalinguísticas verbalizadas por professor e alunos'
 layout: DetailPublication
 type: publicacao
 

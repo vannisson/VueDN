@@ -1,5 +1,7 @@
 ---
-title: 'A gênese do discurso indireto em um processo de escrita colaborativa de alunas brasileiras recém-alfabetizadas'
+title:
+  'A gênese do discurso indireto em um processo de escrita colaborativa de alunas brasileiras
+  recém-alfabetizadas'
 layout: DetailPublication
 type: publicacao
 

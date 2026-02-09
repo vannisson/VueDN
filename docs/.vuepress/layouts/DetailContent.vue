@@ -237,138 +237,144 @@
           <!-- CONTEÚDO DA PÁGINA DE CONTEÚDO -->
           <template #page>
             <div class="detail-wrapper">
-            <!-- FAIXA SUPERIOR -->
-            <section class="detail-banner" :style="{ background: bannerGradient }">
-              <v-container class="site-container">
-                <h1 class="banner-title">{{ sectionTitle }}</h1>
-              </v-container>
-            </section>
+              <!-- FAIXA SUPERIOR -->
+              <section class="detail-banner" :style="{ background: bannerGradient }">
+                <v-container class="site-container">
+                  <h1 class="banner-title">{{ sectionTitle }}</h1>
+                </v-container>
+              </section>
 
-            <!-- TÍTULO, TIPO, DATA, IMAGEM E TEXTO -->
-            <section class="detail-main">
-              <v-container class="site-container">
-                <article class="detail-article">
-                  <header class="detail-header">
-                    <div class="header-left">
-                      <h2 class="detail-title">{{ title }}</h2>
+              <!-- TÍTULO, TIPO, DATA, IMAGEM E TEXTO -->
+              <section class="detail-main">
+                <v-container class="site-container">
+                  <article class="detail-article">
+                    <header class="detail-header">
+                      <div class="header-left">
+                        <h2 class="detail-title">{{ title }}</h2>
+                      </div>
+
+                      <div v-if="formattedDate" class="detail-date-wrapper">
+                        <v-icon size="16" class="detail-date-icon">
+                          mdi-calendar-blank-outline
+                        </v-icon>
+                        <span class="detail-date-text">{{ formattedDate }}</span>
+                      </div>
+                    </header>
+
+                    <div class="detail-text-block">
+                      <div v-if="cover" class="detail-cover">
+                        <v-img :src="cover" :alt="title" cover class="detail-cover-img" />
+                      </div>
+
+                      <article class="detail-content markdown-body">
+                        <Content />
+                      </article>
                     </div>
 
-                    <div v-if="formattedDate" class="detail-date-wrapper">
-                      <v-icon size="16" class="detail-date-icon">
-                        mdi-calendar-blank-outline
-                      </v-icon>
-                      <span class="detail-date-text">{{ formattedDate }}</span>
+                    <!-- AUTOR + REDES SOCIAIS -->
+                    <div class="detail-social">
+                      <div class="social-left"></div>
+
+                      <div class="social-right">
+                        <span class="social-label">Compartilhe:</span>
+
+                        <a
+                          class="social-btn whatsapp"
+                          :href="whatsappShareUrl"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Compartilhar via WhatsApp"
+                        >
+                          <v-icon size="18">mdi-whatsapp</v-icon>
+                        </a>
+
+                        <a
+                          class="social-btn linkedin"
+                          :href="linkedinShareUrl"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Compartilhar no LinkedIn"
+                        >
+                          <v-icon size="18">mdi-linkedin</v-icon>
+                        </a>
+
+                        <a
+                          class="social-btn facebook"
+                          :href="facebookShareUrl"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Compartilhar no Facebook"
+                        >
+                          <v-icon size="18">mdi-facebook</v-icon>
+                        </a>
+                      </div>
                     </div>
-                  </header>
+                  </article>
 
-                  <div class="detail-text-block">
-                    <div v-if="cover" class="detail-cover">
-                      <v-img :src="cover" :alt="title" cover class="detail-cover-img" />
+                  <!-- CONTEÚDO RELACIONADO - CARROSSEL -->
+                  <section class="detail-related" v-if="relatedContents.length">
+                    <div class="related-header">
+                      <div class="related-title-wrapper">
+                        <h3 class="related-title">{{ relatedHeading }}</h3>
+                        <span class="related-line"></span>
+                      </div>
+
+                      <div class="related-nav" v-if="relatedContents.length > VISIBLE_PER_PAGE">
+                        <button
+                          type="button"
+                          class="related-nav-btn"
+                          @click="prevSlide"
+                          aria-label="Conteúdos anteriores"
+                        >
+                          <v-icon size="18">mdi-chevron-left</v-icon>
+                        </button>
+                        <button
+                          type="button"
+                          class="related-nav-btn"
+                          @click="nextSlide"
+                          aria-label="Próximos conteúdos"
+                        >
+                          <v-icon size="18">mdi-chevron-right</v-icon>
+                        </button>
+                      </div>
                     </div>
 
-                    <article class="detail-content markdown-body">
-                      <Content />
-                    </article>
-                  </div>
-
-                  <!-- AUTOR + REDES SOCIAIS -->
-                  <div class="detail-social">
-                    <div class="social-left"></div>
-
-                    <div class="social-right">
-                      <span class="social-label">Compartilhe:</span>
-
-                      <a
-                        class="social-btn whatsapp"
-                        :href="whatsappShareUrl"
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="Compartilhar via WhatsApp"
+                    <div class="related-grid">
+                      <RouterLink
+                        v-for="item in visibleContents"
+                        :key="item.path"
+                        :to="item.path"
+                        class="related-card"
                       >
-                        <v-icon size="18">mdi-whatsapp</v-icon>
-                      </a>
-
-                      <a
-                        class="social-btn linkedin"
-                        :href="linkedinShareUrl"
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="Compartilhar no LinkedIn"
-                      >
-                        <v-icon size="18">mdi-linkedin</v-icon>
-                      </a>
-
-                      <a
-                        class="social-btn facebook"
-                        :href="facebookShareUrl"
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="Compartilhar no Facebook"
-                      >
-                        <v-icon size="18">mdi-facebook</v-icon>
-                      </a>
-                    </div>
-                  </div>
-                </article>
-
-                <!-- CONTEÚDO RELACIONADO - CARROSSEL -->
-                <section class="detail-related" v-if="relatedContents.length">
-                  <div class="related-header">
-                    <div class="related-title-wrapper">
-                      <h3 class="related-title">{{ relatedHeading }}</h3>
-                      <span class="related-line"></span>
-                    </div>
-
-                    <div class="related-nav" v-if="relatedContents.length > VISIBLE_PER_PAGE">
-                      <button
-                        type="button"
-                        class="related-nav-btn"
-                        @click="prevSlide"
-                        aria-label="Conteúdos anteriores"
-                      >
-                        <v-icon size="18">mdi-chevron-left</v-icon>
-                      </button>
-                      <button
-                        type="button"
-                        class="related-nav-btn"
-                        @click="nextSlide"
-                        aria-label="Próximos conteúdos"
-                      >
-                        <v-icon size="18">mdi-chevron-right</v-icon>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="related-grid">
-                    <RouterLink
-                      v-for="item in visibleContents"
-                      :key="item.path"
-                      :to="item.path"
-                      class="related-card"
-                    >
-                      <div class="related-media">
-                        <v-img v-if="item.image" :src="item.image" :alt="item.title" cover class="related-img" />
-                        <div v-else class="related-placeholder">
-                          <v-icon size="40" color="#ffffff">{{ placeholderIcon }}</v-icon>
+                        <div class="related-media">
+                          <v-img
+                            v-if="item.image"
+                            :src="item.image"
+                            :alt="item.title"
+                            cover
+                            class="related-img"
+                          />
+                          <div v-else class="related-placeholder">
+                            <v-icon size="40" color="#ffffff">{{ placeholderIcon }}</v-icon>
+                          </div>
                         </div>
-                      </div>
 
-                      <div class="related-body">
-                        <p class="related-text">{{ item.title }}</p>
-                      </div>
-                    </RouterLink>
-                  </div>
-                </section>
-              </v-container>
-            </section>
-          </div>
-        </template>
-      </ParentLayout>
-    </v-main>
+                        <div class="related-body">
+                          <p class="related-text">{{ item.title }}</p>
+                        </div>
+                      </RouterLink>
+                    </div>
+                  </section>
+                </v-container>
+              </section>
+            </div>
+          </template>
+        </ParentLayout>
+      </v-main>
 
-    <!-- footer sempre visível -->
-    <CustomFooter />
-  </v-app>
+      <!-- footer sempre visível -->
+      <CustomFooter />
+    </v-app>
   </ClientOnly>
 </template>
 

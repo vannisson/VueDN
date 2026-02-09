@@ -53,7 +53,7 @@
         <RouterLink to="/" class="footer-link">Início</RouterLink>
         <RouterLink to="/about/" class="footer-link">Quem somos</RouterLink>
         <RouterLink to="/pesquisadores/" class="footer-link">Pesquisadores</RouterLink>
-        <RouterLink to="/projetos/" class="footer-link">Projetos</RouterLink>
+        <RouterLink to="/pesquisas/" class="footer-link">Pesquisas</RouterLink>
         <RouterLink to="/publicacoes/" class="footer-link">Publicações</RouterLink>
         <RouterLink to="/videos/" class="footer-link">Vídeos</RouterLink>
         <RouterLink to="/noticias/" class="footer-link">Notícias</RouterLink>

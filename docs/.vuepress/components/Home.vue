@@ -62,6 +62,7 @@
                 width="100%"
                 max-width="640"
                 cover
+                loading="lazy"
               />
             </v-col>
 
@@ -90,24 +91,24 @@
 
       <div class="cards-block">
         <v-row class="cards-row cards-row-primary" align="stretch" justify="center">
-          <!-- PROJETOS (LARANJA) -->
+          <!-- PESQUISAS (LARANJA) -->
           <v-col cols="12" sm="6" md="4" class="card-col d-flex">
-            <v-card class="custom-card card-projetos" elevation="3">
+            <v-card class="custom-card card-pesquisas" elevation="3">
               <div class="card-inner">
                 <div class="card-content">
                   <div class="card-icon-wrapper icon-orange">
                     <v-icon size="32" color="white">mdi-file-tree-outline</v-icon>
                   </div>
 
-                  <p class="card-title">Projetos</p>
+                  <p class="card-title">Pesquisas</p>
                   <p class="card-description">
-                    Projetos de pesquisa e extensão coordenados pelo LAME, em parceria com escolas e
-                    instituições no Brasil e no exterior.
+                    Pesquisas e projetos de extensão coordenados pelo LAME, em parceria com escolas
+                    e instituições no Brasil e no exterior.
                   </p>
                 </div>
 
                 <div class="card-actions">
-                  <v-btn variant="flat" class="card-link pill orange" to="/projetos/">
+                  <v-btn variant="flat" class="card-link pill orange" to="/pesquisas/">
                     Saiba mais
                   </v-btn>
                 </div>
@@ -226,66 +227,83 @@
 
       <!-- NOTÍCIAS -->
       <section class="news-strip">
-        <div class="strip-header">
-          <h2 class="section-title">Novidades do LAME</h2>
+        <div class="strip-inner">
+          <div class="strip-header">
+            <h2 class="section-title">Novidades do LAME</h2>
 
-          <div class="strip-ctrls">
-            <v-btn
-              icon
-              class="ctrl-btn"
-              :disabled="atStart"
-              @click="scroll(-1)"
-              aria-label="Anterior"
-            >
+            <div class="strip-ctrls">
+              <v-btn
+                icon
+                class="ctrl-btn"
+                :disabled="atStart"
+                @click="scroll(-1)"
+                aria-label="Anterior"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                class="ctrl-btn"
+                :disabled="atEnd"
+                @click="scroll(1)"
+                aria-label="Próximo"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-btn>
+            </div>
+          </div>
+
+          <div class="float-nav">
+            <v-btn icon class="ctrl-btn" :disabled="!hasOverflow || atStart" @click="scroll(-1)">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
-            <v-btn icon class="ctrl-btn" :disabled="atEnd" @click="scroll(1)" aria-label="Próximo">
+            <v-btn icon class="ctrl-btn" :disabled="!hasOverflow || atEnd" @click="scroll(1)">
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </div>
-        </div>
 
-        <div class="float-nav">
-          <v-btn icon class="ctrl-btn" :disabled="!hasOverflow || atStart" @click="scroll(-1)">
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-btn icon class="ctrl-btn" :disabled="!hasOverflow || atEnd" @click="scroll(1)">
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-        </div>
+          <div class="strip-viewport" ref="strip" @scroll="onScroll">
+            <!-- Skeleton enquanto carrega -->
+            <div
+              v-if="newsLoading"
+              class="strip-track"
+              :style="{ '--cards-per-page': cardsPerPage }"
+            >
+              <SkeletonNewsCard v-for="i in cardsPerPage" :key="'skel-' + i" class="strip-card" />
+            </div>
 
-        <div class="strip-viewport" ref="strip" @scroll="onScroll">
-          <div class="strip-track">
-            <NewsCard v-for="(item, i) in newsList" :key="i" v-bind="item" class="strip-card" />
+            <div v-else class="strip-track" :style="{ '--cards-per-page': cardsPerPage }">
+              <template v-for="item in carouselItems" :key="item.key">
+                <NewsCard v-if="item.type === 'item'" v-bind="item.data" class="strip-card" />
+                <div v-else class="strip-filler" aria-hidden="true"></div>
+              </template>
+            </div>
           </div>
-        </div>
 
-        <div class="strip-fade left" :class="{ show: !atStart }"></div>
-        <div class="strip-fade right" :class="{ show: !atEnd }"></div>
-
-        <p class="strip-subtitle">Veja mais em:</p>
-        <div class="strip-footer">
-          <v-btn
-            class="cta cta-blue"
-            prepend-icon="mdi-play-circle"
-            @click="router.push('/videos/')"
-          >
-            Vídeos
-          </v-btn>
-          <v-btn
-            class="cta cta-gold"
-            prepend-icon="mdi-newspaper-variant-outline"
-            @click="router.push('/noticias/')"
-          >
-            Notícias
-          </v-btn>
-          <v-btn
-            class="cta cta-cyan"
-            prepend-icon="mdi-file-document-multiple-outline"
-            @click="router.push('/materiais/')"
-          >
-            Materiais
-          </v-btn>
+          <p class="strip-subtitle">Veja mais em:</p>
+          <div class="strip-footer">
+            <v-btn
+              class="cta cta-blue"
+              prepend-icon="mdi-play-circle"
+              @click="router.push('/videos/')"
+            >
+              Vídeos
+            </v-btn>
+            <v-btn
+              class="cta cta-gold"
+              prepend-icon="mdi-newspaper-variant-outline"
+              @click="router.push('/noticias/')"
+            >
+              Notícias
+            </v-btn>
+            <v-btn
+              class="cta cta-cyan"
+              prepend-icon="mdi-file-document-multiple-outline"
+              @click="router.push('/materiais/')"
+            >
+              Materiais
+            </v-btn>
+          </div>
         </div>
       </section>
     </v-container>
@@ -294,11 +312,20 @@
 
 <script setup lang="ts">
   import NewsCard from '../components/NewsCard.vue'
-  import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
+  import SkeletonNewsCard from '../components/SkeletonNewsCard.vue'
+  import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
   import { useRouter } from 'vue-router'
-  import { usePagesData } from '@vuepress/client'
+  import { usePageCache } from '../composables/usePageCache'
 
   const router = useRouter()
+  const {
+    cache,
+    loading: cacheLoading,
+    loaded: cacheLoaded,
+    getByPrefix,
+    whenReady,
+  } = usePageCache()
+  const newsLoading = ref(true)
 
   // ==== TIPAGEM DOS CARDS DO CARROSSEL ====
   type NewsItem = {
@@ -360,11 +387,7 @@
     return { sortKey: now.getTime(), date: now }
   }
 
-  const pagesData = usePagesData()
-
-  async function loadNewsFromPages() {
-    const entries: (NewsItem & { sortKey: number })[] = []
-
+  function loadNewsFromCache() {
     const formatDate = (d: Date) =>
       d.toLocaleDateString('pt-BR', {
         day: '2-digit',
@@ -372,63 +395,77 @@
         year: 'numeric',
       })
 
-    // pagesData keys are internal VuePress keys (e.g. "v-5d45ffb4"),
-    // NOT page paths. We must load each page and check data.path.
-    const allLoaders = Object.values(pagesData.value || {})
-    for (const load of allLoaders) {
-      if (typeof load !== 'function') continue
+    const entries: (NewsItem & { sortKey: number })[] = []
+    const prefixes = ['/videos/', '/noticias/', '/materiais/']
 
-      try {
-        const data: any = await load()
-        if (!data || typeof data.path !== 'string') continue
-
-        const pagePath = data.path
-
-        // Only include posts from videos, noticias, materiais
-        if (
-          !pagePath.startsWith('/videos/') &&
-          !pagePath.startsWith('/noticias/') &&
-          !pagePath.startsWith('/materiais/')
-        ) {
-          continue
-        }
-
-        // Skip listing pages (the README.md that renders PostsList)
-        if (pagePath === '/videos/' || pagePath === '/noticias/' || pagePath === '/materiais/') {
-          continue
-        }
-
-        const fm = data.frontmatter || {}
+    for (const prefix of prefixes) {
+      const pages = getByPrefix(prefix)
+      for (const page of pages) {
+        const fm = page.frontmatter || {}
         if (fm.layout && fm.layout !== 'DetailContent') continue
 
         const type = normalizeType(fm.type)
-        const { sortKey, date } = getSortKeyAndDate(fm, data)
+        const { sortKey, date } = getSortKeyAndDate(fm, page)
         const { category, categoryColor } = getCategoryAndColor(type)
 
         entries.push({
           image: fm.cover || '',
           category,
           categoryColor,
-          title: data.title || fm.title || '',
+          title: page.title || fm.title || '',
           description: fm.description || '',
           date: formatDate(date),
-          to: data.path || '',
+          to: page.path || '',
           sortKey,
         })
-      } catch (e) {
-        // ignore broken loader
       }
     }
 
     entries.sort((a, b) => b.sortKey - a.sortKey)
     newsList.value = entries.slice(0, 9)
+    newsLoading.value = false
   }
 
-  // ==== lógica de scroll do carrossel ====
+  // ==== carrossel (3 por vez com rolagem suave) ====
+  const cardsPerPage = ref(3)
   const strip = ref<HTMLElement | null>(null)
   const atStart = ref(true)
   const atEnd = ref(false)
   const hasOverflow = ref(false)
+
+  function resolveCardsPerPage(width: number) {
+    if (width <= 600) return 1
+    if (width <= 960) return 2
+    return 3
+  }
+
+  function updateCardsPerPage() {
+    const next = resolveCardsPerPage(window.innerWidth)
+    if (cardsPerPage.value !== next) {
+      cardsPerPage.value = next
+      if (strip.value) strip.value.scrollLeft = 0
+    }
+    requestAnimationFrame(updateState)
+  }
+
+  const carouselItems = computed(() => {
+    const total = newsList.value.length
+    if (!total) return []
+    const remainder = total % cardsPerPage.value
+    const fillers = remainder === 0 ? 0 : cardsPerPage.value - remainder
+
+    return [
+      ...newsList.value.map((data, idx) => ({
+        type: 'item',
+        data,
+        key: `item-${idx}`,
+      })),
+      ...Array.from({ length: fillers }, (_, idx) => ({
+        type: 'filler',
+        key: `filler-${idx}`,
+      })),
+    ]
+  })
 
   function updateState() {
     const el = strip.value
@@ -446,38 +483,35 @@
   function scroll(dir: -1 | 1) {
     const el = strip.value
     if (!el) return
-    const amount = Math.round(el.clientWidth * 0.85)
+    const amount = Math.round(el.clientWidth)
     el.scrollBy({ left: dir * amount, behavior: 'smooth' })
     setTimeout(updateState, 400)
   }
 
   onMounted(async () => {
-    // espera layout e imagens para medir o overflow corretamente
     await nextTick()
-    requestAnimationFrame(updateState)
-    window.addEventListener('resize', updateState)
+    updateCardsPerPage()
+    window.addEventListener('resize', updateCardsPerPage)
+
+    // Espera o cache ficar pronto e carrega as notícias
+    await whenReady()
+    loadNewsFromCache()
   })
 
-  watch(
-    pagesData,
-    () => {
-      loadNewsFromPages() // carrega conteúdos em ordem decrescente de data
-    },
-    { immediate: true }
-  )
+  // Recarrega quando o cache atualiza (ex: hot-reload)
+  watch(cache, () => {
+    if (cacheLoaded.value) loadNewsFromCache()
+  })
 
   // Re-check scroll state whenever newsList changes (after async data loads)
   watch(newsList, async () => {
     await nextTick()
-    requestAnimationFrame(() => {
-      updateState()
-      // Double-check after images may have loaded
-      setTimeout(updateState, 500)
-    })
+    if (strip.value) strip.value.scrollLeft = 0
+    requestAnimationFrame(updateState)
   })
 
   onBeforeUnmount(() => {
-    window.removeEventListener('resize', updateState)
+    window.removeEventListener('resize', updateCardsPerPage)
   })
 </script>
 
@@ -629,9 +663,9 @@
     }
   }
 
-  /* ============================= CARDS (PROJETOS / PUBLICACOES / VIDEOS / NOTICIAS / MATERIAIS) ============================= */
+  /* ============================= CARDS (PESQUISAS / PUBLICACOES / VIDEOS / NOTICIAS / MATERIAIS) ============================= */
   .cards-block {
-    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3.5rem, 7vw, 6rem);
+    padding: clamp(3.5rem, 6vw, 5.5rem) 0;
   }
 
   .cards-row {
@@ -855,15 +889,29 @@
   /* ============================= CARROSSEL DE CONTEUDOS ============================= */
   .news-strip {
     position: relative;
-    margin: 4rem 0 6rem;
-    background: #f6f6f6;
+    margin: 0;
+    background: #ffffff;
+    padding: 3.5rem 0 4.5rem;
+
+    /* full-bleed background to reach footer */
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+  }
+
+  .strip-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
   }
 
   .strip-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-inline: 1rem;
+    padding-inline: 0;
     margin-bottom: 0.5rem;
   }
 
@@ -880,8 +928,8 @@
     padding-block: 0.25rem 1rem;
     scrollbar-width: none;
     margin: 2rem 0 3rem 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   .strip-viewport::-webkit-scrollbar {
     display: none;
@@ -890,35 +938,23 @@
   .strip-track {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: clamp(280px, 32vw, 360px);
-    gap: 16px;
-    padding-inline: 1rem;
+    --strip-gap: 16px;
+    gap: var(--strip-gap);
+    grid-auto-columns: calc(
+      (100% - (var(--strip-gap) * (var(--cards-per-page, 3) - 1))) / var(--cards-per-page, 3)
+    );
+    padding-inline: 0;
   }
 
   .strip-card {
     width: 100%;
   }
 
-  .strip-fade {
+  .strip-filler {
+    width: 100%;
+    min-height: 1px;
+    visibility: hidden;
     pointer-events: none;
-    position: absolute;
-    top: 64px;
-    bottom: 56px;
-    width: 48px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-  .strip-fade.show {
-    opacity: 1;
-  }
-
-  .strip-fade.left {
-    left: 0;
-    background: linear-gradient(to right, rgba(246, 246, 246, 1), rgba(246, 246, 246, 0));
-  }
-  .strip-fade.right {
-    right: 0;
-    background: linear-gradient(to left, rgba(246, 246, 246, 1), rgba(246, 246, 246, 0));
   }
 
   .strip-subtitle {
@@ -999,24 +1035,15 @@
     }
 
     .strip-track {
-      grid-auto-columns: clamp(260px, 88vw, 340px);
-      gap: 10px;
-    }
-
-    .strip-fade {
-      width: 32px;
-      top: 4.25rem;
-      bottom: 64px;
+      --strip-gap: 10px;
+      gap: var(--strip-gap);
     }
   }
 
   @media (min-width: 601px) and (max-width: 960px) {
     .strip-track {
-      grid-auto-columns: clamp(300px, 45vw, 360px);
-      gap: 14px;
-    }
-    .strip-fade {
-      width: 44px;
+      --strip-gap: 14px;
+      gap: var(--strip-gap);
     }
   }
 

@@ -23,7 +23,14 @@
     <!-- ============ LISTA DE PROJETOS ============ -->
     <section class="section-projects">
       <v-container class="site-container">
-        <div class="projects-grid" :class="{ 'list-empty': !filteredProjects.length }">
+        <!-- Skeleton enquanto carrega -->
+        <div v-if="isLoading" class="projects-grid">
+          <div v-for="i in 6" :key="'skel-' + i" class="project-card-link">
+            <SkeletonCard variant="card" />
+          </div>
+        </div>
+
+        <div v-else class="projects-grid" :class="{ 'list-empty': !filteredProjects.length }">
           <RouterLink
             v-for="project in visibleProjects"
             :key="project.title"
@@ -39,6 +46,7 @@
                   cover
                   class="project-img"
                   :draggable="false"
+                  loading="lazy"
                 />
                 <div v-else class="project-placeholder">
                   <v-icon size="52" color="#ffffff99">mdi-book-open-page-variant-outline</v-icon>
@@ -122,8 +130,9 @@
 </template>
 
 <script setup lang="ts">
+  import SkeletonCard from '../components/SkeletonCard.vue'
   import { ref, computed, watch } from 'vue'
-  import { usePagesData } from '@vuepress/client'
+  import { usePageCache } from '../composables/usePageCache'
 
   type ProjectCard = {
     title: string
@@ -135,6 +144,7 @@
 
   const searchQuery = ref('')
   const projects = ref<ProjectCard[]>([])
+  const isLoading = ref(true)
 
   const PAGE_SIZE = 6
   const currentPage = ref(1)
@@ -178,45 +188,34 @@
     return filteredProjects.value.slice(start, start + PAGE_SIZE)
   })
 
-  const pagesData = usePagesData()
+  const { cache, loaded: cacheLoaded, getByPrefix, whenReady } = usePageCache()
 
-  async function buildProjects() {
-    const loaders = Object.values(pagesData.value || {})
+  function buildProjects() {
+    const pages = getByPrefix('/projetos/')
     const list: ProjectCard[] = []
-    for (const load of loaders) {
-      if (typeof load !== 'function') continue
-      try {
-        const data: any = await load()
-        if (
-          typeof data?.path === 'string' &&
-          data.path.startsWith('/projetos/') &&
-          data.path !== '/projetos/' &&
-          (data.frontmatter?.layout === 'DetailProject' || data.frontmatter?.type === 'projeto')
-        ) {
-          list.push({
-            title: data.title || data.frontmatter?.title || 'Sem título',
-            description: data.frontmatter?.description || '',
-            year: data.frontmatter?.year || '',
-            image: data.frontmatter?.cover || '',
-            link: data.path,
-          })
-        }
-      } catch (e) {
-        // ignore broken loader
+    for (const page of pages) {
+      const fm = page.frontmatter || {}
+      if (fm.layout === 'DetailProject' || fm.type === 'projeto') {
+        list.push({
+          title: page.title || fm.title || 'Sem título',
+          description: fm.description || '',
+          year: fm.year || '',
+          image: fm.cover || '',
+          link: page.path,
+        })
       }
     }
-    // sort by title for stable order
     list.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'))
     projects.value = list
+    isLoading.value = false
   }
 
-  watch(
-    pagesData,
-    () => {
-      buildProjects()
-    },
-    { immediate: true }
-  )
+  // Carrega quando o cache estiver pronto
+  whenReady().then(() => buildProjects())
+
+  watch(cache, () => {
+    if (cacheLoaded.value) buildProjects()
+  })
 
   function goToPage(page: number) {
     const clamped = Math.min(Math.max(1, page), totalPages.value)

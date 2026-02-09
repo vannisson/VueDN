@@ -13,6 +13,7 @@ download: ''
 sourceUrl: ''
 ---
 
-Livro publicado pela Pontes Editores (2024), organizado por Eduardo Calil, Cristina Felipeto e Catherine Boré.
+Livro publicado pela Pontes Editores (2024), organizado por Eduardo Calil, Cristina Felipeto e
+Catherine Boré.
 
 <PublicationDetail />

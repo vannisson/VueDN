@@ -8,61 +8,61 @@
     </template>
 
     <section class="publication-detail">
-    <v-container class="site-container">
-      <article class="detail-card">
-        <div class="detail-header">
-          <div class="detail-icon-circle">
-            <v-icon size="30" class="detail-icon">mdi-file-document-outline</v-icon>
+      <v-container class="site-container">
+        <article class="detail-card">
+          <div class="detail-header">
+            <div class="detail-icon-circle">
+              <v-icon size="30" class="detail-icon">mdi-file-document-outline</v-icon>
+            </div>
+
+            <div>
+              <h1 class="detail-title">{{ title }}</h1>
+
+              <p v-if="authors" class="detail-authors">
+                {{ authors }}
+              </p>
+
+              <p v-if="conference || year" class="detail-meta">
+                <span v-if="conference">{{ conference }}</span>
+                <span v-if="conference && year" class="dot">•</span>
+                <span v-if="year">{{ year }}</span>
+              </p>
+            </div>
           </div>
 
-          <div>
-            <h1 class="detail-title">{{ title }}</h1>
+          <div class="detail-actions">
+            <v-btn
+              v-if="hasDownload"
+              class="detail-btn"
+              color="#56b057"
+              variant="flat"
+              rounded
+              size="small"
+              :href="download"
+              download
+            >
+              <v-icon size="16" class="mr-1">mdi-download</v-icon>
+              Baixar PDF
+            </v-btn>
 
-            <p v-if="authors" class="detail-authors">
-              {{ authors }}
-            </p>
-
-            <p v-if="conference || year" class="detail-meta">
-              <span v-if="conference">{{ conference }}</span>
-              <span v-if="conference && year" class="dot">•</span>
-              <span v-if="year">{{ year }}</span>
-            </p>
+            <v-btn
+              class="detail-btn"
+              color="#56b057"
+              variant="outlined"
+              rounded
+              size="small"
+              :href="hasSource ? sourceUrl : undefined"
+              target="_blank"
+              rel="noopener"
+              :disabled="!hasSource"
+            >
+              <v-icon size="16" class="mr-1">mdi-open-in-new</v-icon>
+              Fonte original
+            </v-btn>
           </div>
-        </div>
-
-        <div class="detail-actions">
-          <v-btn
-            v-if="hasDownload"
-            class="detail-btn"
-            color="#56b057"
-            variant="flat"
-            rounded
-            size="small"
-            :href="download"
-            download
-          >
-            <v-icon size="16" class="mr-1">mdi-download</v-icon>
-            Baixar PDF
-          </v-btn>
-
-          <v-btn
-            class="detail-btn"
-            color="#56b057"
-            variant="outlined"
-            rounded
-            size="small"
-            :href="hasSource ? sourceUrl : undefined"
-            target="_blank"
-            rel="noopener"
-            :disabled="!hasSource"
-          >
-            <v-icon size="16" class="mr-1">mdi-open-in-new</v-icon>
-            Fonte original
-          </v-btn>
-        </div>
-      </article>
-    </v-container>
-  </section>
+        </article>
+      </v-container>
+    </section>
   </ClientOnly>
 </template>
 

@@ -1,5 +1,7 @@
 ---
-title: 'Trocas enunciativas e formulação do discurso reportado: representação de fala de personagens em contos etiológicos inventados por alunos recém-alfabetizados'
+title:
+  'Trocas enunciativas e formulação do discurso reportado: representação de fala de personagens em
+  contos etiológicos inventados por alunos recém-alfabetizados'
 layout: DetailPublication
 type: publicacao
 

@@ -1,6 +1,6 @@
 <template>
   <v-card class="news-card" elevation="4">
-    <v-img v-if="image" :src="image" height="220" class="news-image" cover>
+    <v-img v-if="image" :src="image" height="220" class="news-image" cover loading="lazy">
       <div class="news-chip" :style="chipStyle">
         <v-icon class="chip-icon">{{ chipIcon }}</v-icon>
         <span class="chip-text">{{ category }}</span>

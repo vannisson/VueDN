@@ -13,6 +13,7 @@ download: ''
 sourceUrl: ''
 ---
 
-Capítulo publicado no livro "Escrita Colaborativa na sala de aula" (Pontes Editores, 2024). Tradução de Rosiene Omena Bispo, Maria Silma Lima de Brito e Eduardo Calil.
+Capítulo publicado no livro "Escrita Colaborativa na sala de aula" (Pontes Editores, 2024). Tradução
+de Rosiene Omena Bispo, Maria Silma Lima de Brito e Eduardo Calil.
 
 <PublicationDetail />

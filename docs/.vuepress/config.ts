@@ -14,6 +14,9 @@ export default defineUserConfig({
   description: description,
 
   head: [
+    // ─ Preconnect: Google Fonts (evita DNS + TLS em cascata) ─
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
     [
       'link',
       {
@@ -21,10 +24,12 @@ export default defineUserConfig({
         href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap',
       },
     ],
+    // ─ Netlify Identity: defer para não bloquear render ─
     [
       'script',
       {
         src: 'https://identity.netlify.com/v1/netlify-identity-widget.js',
+        defer: true,
       },
     ],
   ],
@@ -56,6 +61,18 @@ export default defineUserConfig({
       },
       optimizeDeps: {
         include: ['vuetify'],
+      },
+      build: {
+        // Dividir chunks para melhor cache no navegador
+        rollupOptions: {
+          output: {
+            manualChunks(id: string) {
+              if (id.includes('vuetify')) return 'vuetify'
+              if (id.includes('@mdi/font')) return 'mdi-icons'
+              if (id.includes('node_modules')) return 'vendor'
+            },
+          },
+        },
       },
     },
   }),

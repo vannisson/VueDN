@@ -1,7 +1,7 @@
 ---
 title: 'A Rasura em Segmentação Não Convencional no Processo de Escritos dos 6º Anos'
 layout: DetailProject
-type: projeto
+type: pesquisa
 description:
   'Essa dissertação investiga rasuras e comentários metalinguísticos em segmentações não
   convencionais durante processos de escritura em ato no ensino fundamental.'

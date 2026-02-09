@@ -167,8 +167,16 @@
     position: relative;
     min-height: 100vh;
     z-index: 0;
-    background: url('/imgs/about/background.png') center center / cover no-repeat fixed;
     background-color: #f6f6f6;
+  }
+
+  .about-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: url('/imgs/about/background.webp') center center / cover no-repeat;
+    filter: blur(2px);
   }
 
   /* ========== HERO / NOSSA HISTÓRIA ========== */

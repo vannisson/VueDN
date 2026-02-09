@@ -1,5 +1,7 @@
 ---
-title: 'Comentários sobre o uso de parágrafo por duplas de alunos que escrevem juntos um manuscrito escolar'
+title:
+  'Comentários sobre o uso de parágrafo por duplas de alunos que escrevem juntos um manuscrito
+  escolar'
 layout: DetailPublication
 type: publicacao
 

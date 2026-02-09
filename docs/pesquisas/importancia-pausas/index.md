@@ -3,7 +3,7 @@ title:
   'A Importância das Pausas nos Processos de Escrita: Uma Análise à Luz da Base Nacional Comum
   Curricular'
 layout: DetailProject
-type: projeto
+type: pesquisa
 description:
   'Esta tese investiga o papel das pausas nos processos de escrita, compreendendo-as não como
   interrupções motoras, mas como operadores cognitivos, enunciativos e metacognitivos constitutivos

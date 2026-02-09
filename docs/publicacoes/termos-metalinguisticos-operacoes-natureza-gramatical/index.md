@@ -1,5 +1,7 @@
 ---
-title: 'Termos metalinguísticos e operações de natureza gramatical na escrita colaborativa dos alunos do ensino básico'
+title:
+  'Termos metalinguísticos e operações de natureza gramatical na escrita colaborativa dos alunos do
+  ensino básico'
 layout: DetailPublication
 type: publicacao
 

@@ -1,5 +1,7 @@
 ---
-title: 'Atividades metalinguísticas acerca de um mesmo termo: estudo comparativo no processo de tradução colaborativa'
+title:
+  'Atividades metalinguísticas acerca de um mesmo termo: estudo comparativo no processo de tradução
+  colaborativa'
 layout: DetailPublication
 type: publicacao
 

@@ -3,7 +3,7 @@ title:
   'Mediações docentes e atividade metalinguística na escrita colaborativa infantil: uma análise
   comparativa Brasil–Portugal em propostas de produção textual'
 layout: DetailProject
-type: projeto
+type: pesquisa
 year: '2025-2029'
 description:
   'Este projeto investiga comparativamente as mediações docentes na escrita colaborativa infantil,

@@ -28,7 +28,16 @@
     <!-- ============ LISTA DE PUBLICAÇÕES ============ -->
     <section class="section-publications">
       <v-container class="site-container">
-        <div class="publications-list" :class="{ 'list-empty': !filteredPublications.length }">
+        <!-- Skeleton enquanto carrega -->
+        <div v-if="isLoading" class="publications-list">
+          <SkeletonCard v-for="i in 4" :key="'skel-' + i" variant="publication" />
+        </div>
+
+        <div
+          v-else
+          class="publications-list"
+          :class="{ 'list-empty': !filteredPublications.length }"
+        >
           <article v-for="pub in visiblePublications" :key="pub.title" class="publication-card">
             <!-- ÍCONE / STATUS -->
             <div class="publication-icon-wrapper">
@@ -169,8 +178,9 @@
 </template>
 
 <script setup lang="ts">
+  import SkeletonCard from '../components/SkeletonCard.vue'
   import { ref, computed, watch, onMounted } from 'vue'
-  import { usePagesData } from '@vuepress/client'
+  import { usePageCache } from '../composables/usePageCache'
 
   type PublicationCard = {
     title: string
@@ -183,45 +193,40 @@
 
   const searchQuery = ref('')
   const publications = ref<PublicationCard[]>([])
-  async function buildPublications() {
-    const pagesData = usePagesData()
-    const loaders = Object.values(pagesData.value || {})
+  const isLoading = ref(true)
+
+  const { cache, loaded: cacheLoaded, getByPrefix, whenReady } = usePageCache()
+
+  function buildPublications() {
+    const pages = getByPrefix('/publicacoes/')
     const list: PublicationCard[] = []
-    for (const load of loaders) {
-      try {
-        const data: any = await load()
-        if (
-          typeof data?.path === 'string' &&
-          data.path.startsWith('/publicacoes/') &&
-          (data.frontmatter?.layout === 'DetailPublication' ||
-            data.frontmatter?.type === 'publicacao')
-        ) {
-          list.push({
-            title: data.title || data.frontmatter?.title || 'Sem título',
-            authors: data.frontmatter?.authors || '',
-            conference: data.frontmatter?.conference || '',
-            year: data.frontmatter?.year || '',
-            download: data.frontmatter?.download || '',
-            sourceUrl: data.frontmatter?.sourceUrl || '',
-          })
-        }
-      } catch (e) {
-        // ignore broken loader
+    for (const page of pages) {
+      const fm = page.frontmatter || {}
+      if (fm.layout === 'DetailPublication' || fm.type === 'publicacao') {
+        list.push({
+          title: page.title || fm.title || 'Sem título',
+          authors: fm.authors || '',
+          conference: fm.conference || '',
+          year: fm.year || '',
+          download: fm.download || '',
+          sourceUrl: fm.sourceUrl || '',
+        })
       }
     }
-    // sort by year desc then title
     list.sort((a, b) => {
       const ay = Number(a.year) || 0
       const by = Number(b.year) || 0
       if (by !== ay) return by - ay
       return (a.title || '').localeCompare(b.title || '', 'pt-BR')
     })
-
     publications.value = list
+    isLoading.value = false
   }
 
-  onMounted(() => {
-    buildPublications()
+  whenReady().then(() => buildPublications())
+
+  watch(cache, () => {
+    if (cacheLoaded.value) buildPublications()
   })
 
   // ✅ Agora 6 artigos por página com paginação
@@ -401,7 +406,9 @@
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
     padding: 1.4rem 1.6rem;
     gap: 1.2rem;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
   }
 
   .publication-card:hover {

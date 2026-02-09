@@ -1,5 +1,7 @@
 ---
-title: 'Parágrafos, reconhecimentos e comentários: atividade metalinguística durante a gênese textual de narrativas ficcionais'
+title:
+  'Parágrafos, reconhecimentos e comentários: atividade metalinguística durante a gênese textual de
+  narrativas ficcionais'
 layout: DetailPublication
 type: publicacao
 

@@ -4,7 +4,7 @@ title:
   Ortográficos e Processos de Escritura Colaborativa em Díades de Alunos do 2º Ano no Brasil e em
   Portugal'
 layout: DetailProject
-type: projeto
+type: pesquisa
 year: '2026-2030'
 description:
   'O projeto investiga comentários ortográficos produzidos por alunos do 2º ano do Ensino

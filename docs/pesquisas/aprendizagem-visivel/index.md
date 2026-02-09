@@ -3,7 +3,7 @@ title:
   'Aprendizagem Visível e Desempenho em Leitura: um estudo com crianças do 1º ano em escolas
   públicas de Maceió'
 layout: DetailProject
-type: projeto
+type: pesquisa
 year: '2026-2028'
 description:
   'Este estudo investiga os efeitos de práticas de alfabetização fônicas e não fônicas no

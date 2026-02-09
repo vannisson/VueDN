@@ -1,5 +1,7 @@
 ---
-title: 'A gênese de vírgulas em histórias inventadas por alunas recém-alfabetizadas: identificação de atividades metalinguísticas a partir de inscrições gráficas e comentários espontâneos'
+title:
+  'A gênese de vírgulas em histórias inventadas por alunas recém-alfabetizadas: identificação de
+  atividades metalinguísticas a partir de inscrições gráficas e comentários espontâneos'
 layout: DetailPublication
 type: publicacao
 

@@ -1,5 +1,7 @@
 ---
-title: 'Diálogos, rasuras e comentários espontâneos de alunos recém-alfabetizados: o que as atividades metalinguísticas revelam sobre a revisão textual durante o manuscrito escolar em curso'
+title:
+  'Diálogos, rasuras e comentários espontâneos de alunos recém-alfabetizados: o que as atividades
+  metalinguísticas revelam sobre a revisão textual durante o manuscrito escolar em curso'
 layout: DetailPublication
 type: publicacao
 

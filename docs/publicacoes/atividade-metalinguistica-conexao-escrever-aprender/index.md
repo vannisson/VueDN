@@ -13,6 +13,7 @@ download: ''
 sourceUrl: ''
 ---
 
-Tradução publicada no dossiê temático "Produção Textual Colaborativa e Atividades Metalinguísticas" da Revista Leitura (2025). Tradução de Dayane Rocha de Oliveira e Eduardo Calil.
+Tradução publicada no dossiê temático "Produção Textual Colaborativa e Atividades Metalinguísticas"
+da Revista Leitura (2025). Tradução de Dayane Rocha de Oliveira e Eduardo Calil.
 
 <PublicationDetail />

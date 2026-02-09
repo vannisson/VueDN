@@ -13,6 +13,7 @@ download: ''
 sourceUrl: ''
 ---
 
-Capítulo publicado no livro "Escrita Colaborativa na sala de aula" (Pontes Editores, 2024). Tradução de Eduardo Calil e Mayara Cordeiro.
+Capítulo publicado no livro "Escrita Colaborativa na sala de aula" (Pontes Editores, 2024). Tradução
+de Eduardo Calil e Mayara Cordeiro.
 
 <PublicationDetail />

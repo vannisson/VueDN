@@ -1,5 +1,7 @@
 ---
-title: 'Processo de geração de ideias para elaboração de títulos e personagens de histórias inventadas por alunos recém-alfabetizados'
+title:
+  'Processo de geração de ideias para elaboração de títulos e personagens de histórias inventadas
+  por alunos recém-alfabetizados'
 layout: DetailPublication
 type: publicacao
 

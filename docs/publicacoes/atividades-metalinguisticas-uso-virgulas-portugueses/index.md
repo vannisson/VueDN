@@ -1,5 +1,7 @@
 ---
-title: 'Atividades metalinguísticas verbalizadas acerca do uso de vírgulas em manuscritos escolares de alunos portugueses recém-alfabetizados'
+title:
+  'Atividades metalinguísticas verbalizadas acerca do uso de vírgulas em manuscritos escolares de
+  alunos portugueses recém-alfabetizados'
 layout: DetailPublication
 type: publicacao
 

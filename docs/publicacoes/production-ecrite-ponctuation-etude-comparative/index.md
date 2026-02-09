@@ -1,5 +1,7 @@
 ---
-title: 'Production écrite et ponctuation : étude comparative entre des élèves de début de primaire brésiliens et français'
+title:
+  'Production écrite et ponctuation : étude comparative entre des élèves de début de primaire
+  brésiliens et français'
 layout: DetailPublication
 type: publicacao
 

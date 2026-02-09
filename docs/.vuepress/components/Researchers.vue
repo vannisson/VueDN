@@ -310,6 +310,134 @@
         </v-row>
       </v-container>
     </section>
+
+    <!-- ============ DOUTORANDOS BRASILEIROS ============ -->
+    <section class="section section-list alt">
+      <v-container class="site-container">
+        <p class="section-title center">Doutorandos brasileiros</p>
+
+        <v-row class="researcher-grid" justify="center" align="stretch">
+          <v-col
+            v-for="r in brDoutorandos"
+            :key="r.name"
+            cols="12"
+            sm="6"
+            md="6"
+            lg="4"
+            xl="3"
+            class="d-flex"
+          >
+            <article class="researcher-card card-full">
+              <div class="card-avatar-wrapper">
+                <v-avatar size="120" class="researcher-avatar">
+                  <v-img :src="r.avatar" :alt="'Foto de ' + r.name" cover />
+                </v-avatar>
+              </div>
+
+              <div class="card-content">
+                <h3 class="researcher-name">{{ r.name }}</h3>
+                <p v-if="r.bio" class="researcher-bio">{{ r.bio }}</p>
+
+                <div class="researcher-links">
+                  <template v-if="r.lattes">
+                    <a
+                      :href="r.lattes"
+                      class="link-chip small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <v-icon size="16" class="mr-1">mdi-file-document-outline</v-icon>
+                      Lattes
+                    </a>
+                  </template>
+                  <template v-if="r.orcid">
+                    <a
+                      :href="r.orcid"
+                      class="link-chip small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <v-icon size="16" class="mr-1">mdi-identifier</v-icon>
+                      ORCID
+                    </a>
+                  </template>
+                  <template v-if="r.email">
+                    <a :href="'mailto:' + r.email" class="link-chip small">
+                      <v-icon size="16" class="mr-1">mdi-email-outline</v-icon>
+                      E-mail
+                    </a>
+                  </template>
+                </div>
+              </div>
+            </article>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
+
+    <!-- ============ MESTRANDOS BRASILEIROS ============ -->
+    <section class="section section-list">
+      <v-container class="site-container">
+        <p class="section-title center">Mestrandos brasileiros</p>
+
+        <v-row class="researcher-grid" justify="center" align="stretch">
+          <v-col
+            v-for="r in brMestrandos"
+            :key="r.name"
+            cols="12"
+            sm="6"
+            md="6"
+            lg="4"
+            xl="3"
+            class="d-flex"
+          >
+            <article class="researcher-card card-full">
+              <div class="card-avatar-wrapper">
+                <v-avatar size="120" class="researcher-avatar">
+                  <v-img :src="r.avatar" :alt="'Foto de ' + r.name" cover />
+                </v-avatar>
+              </div>
+
+              <div class="card-content">
+                <h3 class="researcher-name">{{ r.name }}</h3>
+                <p v-if="r.bio" class="researcher-bio">{{ r.bio }}</p>
+
+                <div class="researcher-links">
+                  <template v-if="r.lattes">
+                    <a
+                      :href="r.lattes"
+                      class="link-chip small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <v-icon size="16" class="mr-1">mdi-file-document-outline</v-icon>
+                      Lattes
+                    </a>
+                  </template>
+                  <template v-if="r.orcid">
+                    <a
+                      :href="r.orcid"
+                      class="link-chip small"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <v-icon size="16" class="mr-1">mdi-identifier</v-icon>
+                      ORCID
+                    </a>
+                  </template>
+                  <template v-if="r.email">
+                    <a :href="'mailto:' + r.email" class="link-chip small">
+                      <v-icon size="16" class="mr-1">mdi-email-outline</v-icon>
+                      E-mail
+                    </a>
+                  </template>
+                </div>
+              </div>
+            </article>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
   </div>
 </template>
 
@@ -330,12 +458,35 @@
 
   const leads = ref<Researcher[]>(researchersData.leads)
   const brResearchers = ref<Researcher[]>(researchersData.brResearchers)
+  const brStudents = ref<Researcher[]>(researchersData.brStudents)
   const ptResearchers = ref<Researcher[]>(researchersData.ptResearchers)
   const frResearchers = ref<Researcher[]>(researchersData.frResearchers)
 
   const sortedBrResearchers = computed(() =>
     brResearchers.value
       .filter(r => r.bio && r.bio.trim().length > 0)
+      .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
+  )
+
+  const sortedBrStudents = computed(() =>
+    brStudents.value.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
+  )
+
+  const brDoutorandos = computed(() =>
+    brStudents.value
+      .filter(r => {
+        const role = (r.role || '').toLowerCase()
+        return role.includes('doutoranda') || role.includes('doutorando')
+      })
+      .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
+  )
+
+  const brMestrandos = computed(() =>
+    brStudents.value
+      .filter(r => {
+        const role = (r.role || '').toLowerCase()
+        return role.includes('mestranda') || role.includes('mestrando')
+      })
       .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
   )
 </script>

@@ -1,5 +1,7 @@
 ---
-title: 'Metalinguagem em processo: a influência das verbalizações de termos metalinguísticos pelo professor na construção de narrativas ficcionais de alunos recém-alfabetizados'
+title:
+  'Metalinguagem em processo: a influência das verbalizações de termos metalinguísticos pelo
+  professor na construção de narrativas ficcionais de alunos recém-alfabetizados'
 layout: DetailPublication
 type: publicacao
 

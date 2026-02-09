@@ -23,7 +23,14 @@
     <!-- ============ LISTA DE POSTS ============ -->
     <section class="section-posts">
       <v-container class="site-container">
-        <div class="posts-list" :class="{ 'list-empty': !filteredPosts.length }">
+        <!-- Skeleton enquanto carrega -->
+        <div v-if="isLoading" class="posts-list">
+          <div v-for="i in 4" :key="'skel-' + i" class="post-card-link">
+            <SkeletonCard variant="post" />
+          </div>
+        </div>
+
+        <div v-else class="posts-list" :class="{ 'list-empty': !filteredPosts.length }">
           <RouterLink
             v-for="item in visiblePosts"
             :key="item.title"
@@ -52,6 +59,7 @@
                   cover
                   class="post-img"
                   :draggable="false"
+                  loading="lazy"
                 />
                 <div v-else class="post-placeholder">
                   <v-icon size="48" color="#ffffff">{{ placeholderIcon }}</v-icon>
@@ -59,7 +67,6 @@
               </div>
             </article>
           </RouterLink>
-
         </div>
 
         <div v-if="!filteredPosts.length" class="empty-state">
@@ -125,8 +132,9 @@
 </template>
 
 <script setup lang="ts">
+  import SkeletonCard from '../components/SkeletonCard.vue'
   import { ref, computed, watch, onMounted } from 'vue'
-  import { usePagesData } from '@vuepress/client'
+  import { usePageCache } from '../composables/usePageCache'
 
   type PostCard = {
     title: string
@@ -155,6 +163,7 @@
 
   const searchQuery = ref('')
   const posts = ref<PostCard[]>([])
+  const isLoading = ref(true)
   const PAGE_SIZE = 6
   const currentPage = ref(1)
 
@@ -201,59 +210,41 @@
     return pathDate ? pathDate.getTime() : 0
   }
 
-  const pagesData = usePagesData()
+  const { cache, loaded: cacheLoaded, getByPrefix, whenReady } = usePageCache()
 
-  async function buildPosts() {
-    // pagesData keys are internal VuePress keys (e.g. "v-5d45ffb4"),
-    // NOT page paths. We must load each page and check data.path.
-    const allLoaders = Object.values(pagesData.value || {})
+  function buildPosts() {
+    const pages = getByPrefix(props.basePath)
     const list: PostCard[] = []
     const normalizedType = normalizeType(props.type)
-    const basePath = props.basePath
 
-    for (const load of allLoaders) {
-      if (typeof load !== 'function') continue
+    for (const page of pages) {
+      const fm = page.frontmatter || {}
+      const type = normalizeType(fm.type)
+      if (type !== normalizedType) continue
+      if (fm.layout && fm.layout !== 'DetailContent') continue
 
-      try {
-        const data: any = await load()
-        if (!data || typeof data.path !== 'string') continue
+      const sortKey = getSortKey(fm, page)
 
-        // Filter by base path
-        if (!data.path.startsWith(basePath)) continue
-        // Skip the listing page itself (README.md)
-        if (data.path === basePath) continue
-
-        const fm = data.frontmatter || {}
-        const type = normalizeType(fm.type)
-        if (type !== normalizedType) continue
-        if (fm.layout && fm.layout !== 'DetailContent') continue
-
-        const sortKey = getSortKey(fm, data)
-
-        list.push({
-          title: data.title || fm.title || '',
-          description: fm.description || '',
-          image: fm.cover || '',
-          path: data.path,
-          sortKey,
-          date: formatDate(sortKey),
-        })
-      } catch (e) {
-        // ignore broken loader
-      }
+      list.push({
+        title: page.title || fm.title || '',
+        description: fm.description || '',
+        image: fm.cover || '',
+        path: page.path,
+        sortKey,
+        date: formatDate(sortKey),
+      })
     }
 
     list.sort((a, b) => b.sortKey - a.sortKey)
     posts.value = list
+    isLoading.value = false
   }
 
-  watch(
-    pagesData,
-    () => {
-      buildPosts()
-    },
-    { immediate: true }
-  )
+  whenReady().then(() => buildPosts())
+
+  watch(cache, () => {
+    if (cacheLoaded.value) buildPosts()
+  })
 
   const filteredPosts = computed(() => {
     const q = searchQuery.value.trim().toLowerCase()

@@ -1,5 +1,7 @@
 ---
-title: 'Como os alunos do ensino fundamental planejam e revisam? Um estudo de caso de uma tarefa de escrita colaborativa'
+title:
+  'Como os alunos do ensino fundamental planejam e revisam? Um estudo de caso de uma tarefa de
+  escrita colaborativa'
 layout: DetailPublication
 type: publicacao
 
@@ -13,6 +15,7 @@ download: ''
 sourceUrl: ''
 ---
 
-Tradução publicada no dossiê temático "Produção Textual Colaborativa e Atividades Metalinguísticas" da Revista Leitura (2025). Tradução de Islan Lisboa da Silva.
+Tradução publicada no dossiê temático "Produção Textual Colaborativa e Atividades Metalinguísticas"
+da Revista Leitura (2025). Tradução de Islan Lisboa da Silva.
 
 <PublicationDetail />

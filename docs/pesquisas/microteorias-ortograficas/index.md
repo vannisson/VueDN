@@ -2,7 +2,7 @@
 title:
   'Microteorias Ortográficas Emergentes: Entre a Enunciação e a Língua como Sistema Combinatório'
 layout: DetailProject
-type: projeto
+type: pesquisa
 description:
   'Esta dissertação investiga os erros ortográficos produzidos por alunos recém-alfabetizados nos
   anos iniciais do Ensino Fundamental, compreendendo-os como manifestações de microteorias

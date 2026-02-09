@@ -16,23 +16,23 @@ editor:
   preview: false
 
 collections:
-  # ============== PROJETOS ==============
-  - name: 'projetos'
-    label: 'Projetos'
-    label_singular: 'Projeto'
-    folder: 'docs/projetos'
+  # ============== PESQUISAS ==============
+  - name: 'pesquisas'
+    label: 'Pesquisas'
+    label_singular: 'Pesquisa'
+    folder: 'docs/pesquisas'
     create: true
     slug: '{{slug}}/index'
-    preview_path: 'projetos/{{slug}}/'
+    preview_path: 'pesquisas/{{slug}}/'
     fields:
       - { label: 'Layout', name: 'layout', widget: 'hidden', default: 'DetailProject' }
-      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'projeto' }
+      - { label: 'Tipo interno', name: 'type', widget: 'hidden', default: 'pesquisa' }
       - { label: 'Título', name: 'title', widget: 'string', required: true }
-      - label: 'Descrição (lista de projetos)'
+      - label: 'Descrição (lista de pesquisas)'
         name: 'description'
         widget: 'text'
         required: false
-        hint: 'Resumo curto que aparece no card da lista de projetos.'
+        hint: 'Resumo curto que aparece no card da lista de pesquisas.'
       - label: 'Data'
         name: 'date'
         widget: 'datetime'

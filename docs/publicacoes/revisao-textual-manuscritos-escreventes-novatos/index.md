@@ -1,5 +1,6 @@
 ---
-title: 'Revisão textual em manuscritos de escreventes novatos: uma análise sob as lentes do processo'
+title:
+  'Revisão textual em manuscritos de escreventes novatos: uma análise sob as lentes do processo'
 layout: DetailPublication
 type: publicacao
 

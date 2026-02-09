@@ -10,29 +10,29 @@
     <v-app>
       <NavBar />
 
-    <v-main>
-      <div class="not-found-content">
-        <h1 class="not-found-oops">Oops!</h1>
-        <h2 class="not-found-title">404 - PÁGINA NÃO ENCONTRADA</h2>
-        <p class="not-found-message">
-          A página que você procura pode ter sido removida,<br />
-          teve seu nome alterado ou está temporariamente indisponível.
-        </p>
-        <v-btn
-          class="not-found-btn"
-          color="#f68700"
-          variant="flat"
-          rounded
-          size="large"
-          @click="goHome"
-        >
-          <span style="color: #fff">IR PARA O INÍCIO</span>
-        </v-btn>
-      </div>
-    </v-main>
+      <v-main>
+        <div class="not-found-content">
+          <h1 class="not-found-oops">Oops!</h1>
+          <h2 class="not-found-title">404 - PÁGINA NÃO ENCONTRADA</h2>
+          <p class="not-found-message">
+            A página que você procura pode ter sido removida,<br />
+            teve seu nome alterado ou está temporariamente indisponível.
+          </p>
+          <v-btn
+            class="not-found-btn"
+            color="#f68700"
+            variant="flat"
+            rounded
+            size="large"
+            @click="goHome"
+          >
+            <span style="color: #fff">IR PARA O INÍCIO</span>
+          </v-btn>
+        </div>
+      </v-main>
 
-    <CustomFooter />
-  </v-app>
+      <CustomFooter />
+    </v-app>
   </ClientOnly>
 </template>
 

@@ -1,5 +1,7 @@
 ---
-title: 'Análise de problemas ortográficos em manuscritos escolares de uma díade de alunas portuguesas recém-alfabetizadas'
+title:
+  'Análise de problemas ortográficos em manuscritos escolares de uma díade de alunas portuguesas
+  recém-alfabetizadas'
 layout: DetailPublication
 type: publicacao
 

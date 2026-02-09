@@ -58,12 +58,14 @@
   )
 
   /**
-   * OUTROS PROJETOS - CARROSSEL
+   * OUTRAS PESQUISAS - CARROSSEL
    */
   const MAX_RELATED = 6
   const VISIBLE_PER_PAGE = 3
 
-  const relatedProjects = ref<{ path: string; title: string; image: string; sortKey: number }[]>([])
+  const relatedPesquisas = ref<{ path: string; title: string; image: string; sortKey: number }[]>(
+    []
+  )
 
   const currentSlide = ref(0)
 
@@ -87,10 +89,10 @@
         if (!p || typeof p !== 'object') return
         const fm: any = p.frontmatter ?? {}
 
-        // só páginas de projeto, excluindo a atual
-        const isProjectPath = (p.path || '').startsWith('/projetos/')
-        const isProjectType = fm.type === 'projeto'
-        if (!(isProjectPath || isProjectType)) return
+        // só páginas de pesquisa, excluindo a atual
+        const isPesquisaPath = (p.path || '').startsWith('/pesquisas/')
+        const isPesquisaType = fm.type === 'pesquisa'
+        if (!(isPesquisaPath || isPesquisaType)) return
         if (p.path === currentPath) return
 
         // data só pra ordenar (não vamos mostrar aqui)
@@ -102,7 +104,7 @@
         }
 
         // skip listing pages (README.md)
-        if (p.path === '/projetos/') return
+        if (p.path === '/pesquisas/') return
 
         loaded.push({
           path: p.path,
@@ -114,22 +116,22 @@
     )
 
     loaded.sort((a, b) => b.sortKey - a.sortKey)
-    relatedProjects.value = loaded.slice(0, MAX_RELATED)
+    relatedPesquisas.value = loaded.slice(0, MAX_RELATED)
     currentSlide.value = 0
   })
 
   const maxSlide = computed(() => {
-    if (!relatedProjects.value.length) return 0
-    return Math.max(0, Math.ceil(relatedProjects.value.length / VISIBLE_PER_PAGE) - 1)
+    if (!relatedPesquisas.value.length) return 0
+    return Math.max(0, Math.ceil(relatedPesquisas.value.length / VISIBLE_PER_PAGE) - 1)
   })
 
-  const visibleProjects = computed(() => {
+  const visiblePesquisas = computed(() => {
     const start = currentSlide.value * VISIBLE_PER_PAGE
-    return relatedProjects.value.slice(start, start + VISIBLE_PER_PAGE)
+    return relatedPesquisas.value.slice(start, start + VISIBLE_PER_PAGE)
   })
 
   function nextSlide() {
-    if (!relatedProjects.value.length) return
+    if (!relatedPesquisas.value.length) return
     if (currentSlide.value >= maxSlide.value) {
       currentSlide.value = 0
     } else {
@@ -138,7 +140,7 @@
   }
 
   function prevSlide() {
-    if (!relatedProjects.value.length) return
+    if (!relatedPesquisas.value.length) return
     if (currentSlide.value <= 0) {
       currentSlide.value = maxSlide.value
     } else {
@@ -165,138 +167,146 @@
 
           <template #page>
             <div class="detail-wrapper">
-            <!-- FAIXA SUPERIOR -->
-            <section class="detail-banner">
-              <v-container class="site-container">
-                <h1 class="banner-title">Projetos</h1>
-              </v-container>
-            </section>
+              <!-- FAIXA SUPERIOR -->
+              <section class="detail-banner">
+                <v-container class="site-container">
+                  <h1 class="banner-title">Pesquisas</h1>
+                </v-container>
+              </section>
 
-            <!-- TÍTULO, DATA, IMAGEM E TEXTO -->
-            <section class="detail-main">
-              <v-container class="site-container">
-                <article class="detail-article">
-                  <header class="detail-header">
-                    <h2 class="detail-title">{{ title }}</h2>
+              <!-- TÍTULO, DATA, IMAGEM E TEXTO -->
+              <section class="detail-main">
+                <v-container class="site-container">
+                  <article class="detail-article">
+                    <header class="detail-header">
+                      <h2 class="detail-title">{{ title }}</h2>
 
-                    <div v-if="formattedDate" class="detail-date-wrapper">
-                      <v-icon size="16" class="detail-date-icon">
-                        mdi-calendar-blank-outline
-                      </v-icon>
-                      <span class="detail-date-text">{{ formattedDate }}</span>
-                    </div>
-                  </header>
+                      <div v-if="formattedDate" class="detail-date-wrapper">
+                        <v-icon size="16" class="detail-date-icon">
+                          mdi-calendar-blank-outline
+                        </v-icon>
+                        <span class="detail-date-text">{{ formattedDate }}</span>
+                      </div>
+                    </header>
 
-                  <div class="detail-text-block">
-                    <div v-if="cover" class="detail-cover">
-                      <v-img :src="cover" :alt="title" cover class="detail-cover-img" />
-                    </div>
+                    <div class="detail-text-block">
+                      <div v-if="cover" class="detail-cover">
+                        <v-img :src="cover" :alt="title" cover class="detail-cover-img" />
+                      </div>
 
-                    <article class="detail-content markdown-body">
-                      <Content />
-                    </article>
-                  </div>
-
-                  <!-- AUTOR + REDES SOCIAIS -->
-                  <div class="detail-social">
-                    <div class="social-left">
-                      <!-- Se quiser nome/cargo, dá pra adicionar aqui -->
+                      <article class="detail-content markdown-body">
+                        <Content />
+                      </article>
                     </div>
 
-                    <div class="social-right">
-                      <strong class="social-label">Compartilhe:</strong>
+                    <!-- AUTOR + REDES SOCIAIS -->
+                    <div class="detail-social">
+                      <div class="social-left">
+                        <!-- Se quiser nome/cargo, dá pra adicionar aqui -->
+                      </div>
 
-                      <a
-                        class="social-btn whatsapp"
-                        :href="whatsappShareUrl"
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="Compartilhar via WhatsApp"
+                      <div class="social-right">
+                        <strong class="social-label">Compartilhe:</strong>
+
+                        <a
+                          class="social-btn whatsapp"
+                          :href="whatsappShareUrl"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Compartilhar via WhatsApp"
+                        >
+                          <v-icon size="18">mdi-whatsapp</v-icon>
+                        </a>
+
+                        <a
+                          class="social-btn linkedin"
+                          :href="linkedinShareUrl"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Compartilhar no LinkedIn"
+                        >
+                          <v-icon size="18">mdi-linkedin</v-icon>
+                        </a>
+
+                        <a
+                          class="social-btn facebook"
+                          :href="facebookShareUrl"
+                          target="_blank"
+                          rel="noopener"
+                          aria-label="Compartilhar no Facebook"
+                        >
+                          <v-icon size="18">mdi-facebook</v-icon>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+
+                  <!-- OUTRAS PESQUISAS - CARROSSEL -->
+                  <section class="detail-related" v-if="relatedPesquisas.length">
+                    <div class="related-header">
+                      <div class="related-title-wrapper">
+                        <h3 class="related-title">Outras pesquisas</h3>
+                        <span class="related-line"></span>
+                      </div>
+
+                      <div class="related-nav" v-if="relatedPesquisas.length > VISIBLE_PER_PAGE">
+                        <button
+                          type="button"
+                          class="related-nav-btn"
+                          @click="prevSlide"
+                          aria-label="Pesquisas anteriores"
+                        >
+                          <v-icon size="18">mdi-chevron-left</v-icon>
+                        </button>
+                        <button
+                          type="button"
+                          class="related-nav-btn"
+                          @click="nextSlide"
+                          aria-label="Próximas pesquisas"
+                        >
+                          <v-icon size="18">mdi-chevron-right</v-icon>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="related-grid">
+                      <RouterLink
+                        v-for="item in visiblePesquisas"
+                        :key="item.path"
+                        :to="item.path"
+                        class="related-card"
                       >
-                        <v-icon size="18">mdi-whatsapp</v-icon>
-                      </a>
-
-                      <a
-                        class="social-btn linkedin"
-                        :href="linkedinShareUrl"
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="Compartilhar no LinkedIn"
-                      >
-                        <v-icon size="18">mdi-linkedin</v-icon>
-                      </a>
-
-                      <a
-                        class="social-btn facebook"
-                        :href="facebookShareUrl"
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="Compartilhar no Facebook"
-                      >
-                        <v-icon size="18">mdi-facebook</v-icon>
-                      </a>
-                    </div>
-                  </div>
-                </article>
-
-                <!-- OUTROS PROJETOS - CARROSSEL -->
-                <section class="detail-related" v-if="relatedProjects.length">
-                  <div class="related-header">
-                    <div class="related-title-wrapper">
-                      <h3 class="related-title">Outros projetos</h3>
-                      <span class="related-line"></span>
-                    </div>
-
-                    <div class="related-nav" v-if="relatedProjects.length > VISIBLE_PER_PAGE">
-                      <button
-                        type="button"
-                        class="related-nav-btn"
-                        @click="prevSlide"
-                        aria-label="Projetos anteriores"
-                      >
-                        <v-icon size="18">mdi-chevron-left</v-icon>
-                      </button>
-                      <button
-                        type="button"
-                        class="related-nav-btn"
-                        @click="nextSlide"
-                        aria-label="Próximos projetos"
-                      >
-                        <v-icon size="18">mdi-chevron-right</v-icon>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="related-grid">
-                    <RouterLink
-                      v-for="item in visibleProjects"
-                      :key="item.path"
-                      :to="item.path"
-                      class="related-card"
-                    >
-                      <div class="related-media">
-                        <v-img v-if="item.image" :src="item.image" :alt="item.title" cover class="related-img" />
-                        <div v-else class="related-placeholder">
-                          <v-icon size="40" color="#ffffff">mdi-book-open-page-variant-outline</v-icon>
+                        <div class="related-media">
+                          <v-img
+                            v-if="item.image"
+                            :src="item.image"
+                            :alt="item.title"
+                            cover
+                            class="related-img"
+                          />
+                          <div v-else class="related-placeholder">
+                            <v-icon size="40" color="#ffffff"
+                              >mdi-book-open-page-variant-outline</v-icon
+                            >
+                          </div>
                         </div>
-                      </div>
 
-                      <div class="related-body">
-                        <p class="related-type">Projeto</p>
-                        <p class="related-text">{{ item.title }}</p>
-                      </div>
-                    </RouterLink>
-                  </div>
-                </section>
-              </v-container>
-            </section>
-          </div>
-        </template>
-      </ParentLayout>
-    </v-main>
+                        <div class="related-body">
+                          <p class="related-type">Pesquisa</p>
+                          <p class="related-text">{{ item.title }}</p>
+                        </div>
+                      </RouterLink>
+                    </div>
+                  </section>
+                </v-container>
+              </section>
+            </div>
+          </template>
+        </ParentLayout>
+      </v-main>
 
-    <CustomFooter />
-  </v-app>
+      <CustomFooter />
+    </v-app>
   </ClientOnly>
 </template>
 
@@ -471,7 +481,7 @@
     background: #1877f2;
   }
 
-  /* ===== OUTROS PROJETOS / CARROSSEL ===== */
+  /* ===== OUTRAS PESQUISAS / CARROSSEL ===== */
 
   .detail-related {
     margin-top: 2.5rem;

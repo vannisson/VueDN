@@ -3,7 +3,7 @@ title:
   'Reconhecimentos semântico-lexicais e comentários desdobrados na escrita colaborativa infantil: um
   estudo microgenético em contexto lusófono'
 layout: DetailProject
-type: projeto
+type: pesquisa
 year: '2025-2027'
 description:
   'Este estudo investiga a escrita colaborativa infantil a partir da Genética Textual, com foco nos

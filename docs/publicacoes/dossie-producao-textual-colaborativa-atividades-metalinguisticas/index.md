@@ -13,6 +13,7 @@ download: ''
 sourceUrl: ''
 ---
 
-Dossiê temático publicado na Revista Leitura (2025), organizado por Eduardo Calil, Cristina Felipeto e Luís Filipe Barbeiro.
+Dossiê temático publicado na Revista Leitura (2025), organizado por Eduardo Calil, Cristina Felipeto
+e Luís Filipe Barbeiro.
 
 <PublicationDetail />

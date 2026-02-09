@@ -116,6 +116,58 @@
       "email": "saleziamagnacosta@gmail.com"
     }
   ],
+  "brStudents": [
+    {
+      "name": "Roseane Santana Navarro",
+      "role": "Doutoranda",
+      "avatar": "/imgs/researchers/roseane_santana.png",
+      "bio": "Doutoranda em Linguística pelo Programa de Pós-Graduação em Linguística e Literatura (PPGLL/FALE/Ufal). Mestra em Linguística pela Universidade Federal de Alagoas (2023). Especialista em Filosofia e Educação (2017) - CEDU - UFAL e Gestão Escolar e Coordenação Pedagógica - CESMAC (2016). Graduada em Letras (Ufal, 2011). Atualmente, leciona a disciplina de Língua Portuguesa pela Secretaria Estadual de Educação de Alagoas. Seus estudos têm se concentrado nas pausas em processos de escrita colaborativa produzidas por uma díade recém-alfabetizada nos primeiros anos do Ensino Fundamental.",
+      "lattes": "http://lattes.cnpq.br/2353252490195831",
+      "orcid": "https://orcid.org/0000-0002-7935-6725"
+    },
+    {
+      "name": "Corina de Sá Leitão Amorim",
+      "role": "Doutoranda",
+      "avatar": "/imgs/researchers/corina_de_sa.png",
+      "bio": "Doutoranda Programa de Pós-graduação em Estudos da Linguagem da Universidade Federal do Rio Grande do Norte (PPgEL/UFRN). Mestra pelo Programa de pós-graduação em Estudos da Linguagem, área de concentração Linguística Aplicada (UFRN, 2012). Especialista em Gestão Escolar (2023). Possui graduação em Letras-Língua Portuguesa e Literaturas pela Universidade Federal do Rio Grande do Norte (2008). Atuou como vice-diretora e Diretora do CEI Mirassol e CEI Zona Sul de 2010 a 2022. Desde 2017, é professora efetiva do Ensino Médio da rede estadual de ensino no Rio Grande do Norte. Tem estudado sobre a escrita colaborativa em sala de aula: processos e produtos.",
+      "lattes": "http://lattes.cnpq.br/6521023846747922"
+    },
+    {
+      "name": "Alessandra Santa Rosa da Silva",
+      "role": "Doutoranda",
+      "avatar": "/imgs/researchers/alessandra_santa.png",
+      "bio": "Doutoranda pelo Programa de Pós-graduação em Estudos da Linguagem da Universidade Federal do Rio Grande do Norte (PPgEL/UFRN). Mestra em Linguística Aplicada, pelo PPgEL (UFRN/2015). Especialista em Educação de Jovens e Adultos (UFRN/2007) e graduada em Letras pela UFRN (1998). Atua como professora de Língua Portuguesa e revisora linguística e, atualmente, está vinculada à Liga de Ensino do Rio Grande do Norte, ministrando aulas de Português no Complexo de Ensino Noilde Ramalho EDHC, além de colaborar com a revisão linguística de textos produzidos na instituição. Tem investigado sobre a escrita colaborativa e a negociação dos sentidos na produção do texto escolar.",
+      "lattes": "http://lattes.cnpq.br/3426534714515215"
+    },
+    {
+      "name": "Larissa Alves",
+      "role": "Mestranda",
+      "avatar": "/imgs/researchers/no_img.png",
+      "bio": ""
+    },
+    {
+      "name": "João Artur Fernandes Rodrigues",
+      "role": "Mestrando",
+      "avatar": "/imgs/researchers/joao_arthur.png",
+      "bio": "Mestrando em Estudos da Linguagem e licenciado em Letras – Língua Portuguesa e Literaturas pela Universidade Federal do Rio Grande do Norte (UFRN). Pós-graduando em Educação e Trabalho Docente pelo Instituto Federal de Educação, Ciência e Tecnologia Goiano (IFGoiano). Membro do grupo de pesquisa Ensino, Texto e Criação (ETC/CNPq), vinculado ao Laboratório do Manuscrito Escolar (LAME/UFAL). Os interesses de pesquisa envolvem processos de produção textual em sala de aula, gestualidade, aquisição da escrita, culturas e musicalidades indígenas.",
+      "lattes": "http://lattes.cnpq.br/6049527790545210",
+      "orcid": "https://orcid.org/0009-0002-3543-7221"
+    },
+    {
+      "name": "Leidjane Alves de Azevedo Eloi",
+      "role": "Mestranda",
+      "avatar": "/imgs/researchers/leidjane_alves.png",
+      "bio": "Mestranda em Letras pelo Programa de Mestrado Profissional em Letras, Universidade Federal do Agreste de Pernambuco (PROFLETRAS, UFAPE). Graduada em Letras, habilitação Português-Inglês pela Universidade de Pernambuco (2004). Atualmente é professora da secretaria de educação de bom conselho. Estuda a argumentação como estratégia para o desenvolvimento da produção textual de alunos do ensino médio.",
+      "lattes": "http://lattes.cnpq.br/7723349247747747"
+    },
+    {
+      "name": "Lucélio Cordeiro dos Santos",
+      "role": "Mestrando",
+      "avatar": "/imgs/researchers/lucelio_cordeiro.png",
+      "bio": "Mestrando em Letras pelo Programa de Mestrado Profissional em Letras, Universidade Federal do Agreste de Pernambuco (PROFLETRAS, UFAPE). Graduado em Letras, habilitação Português/Inglês, pela Universidade Federal Rural de Pernambuco (2014). Especialista em Ensino de Língua Portuguesa e suas Literaturas, pela Universidade de Pernambuco (2016). Realizou Curso de Aperfeiçoamento em Língua Inglesa, pela Universidade Estadual do Missouri (EUA, 2024) e Quest Language Studies, Toronto-Canadá (2025). Professor efetivo de Língua Inglesa da Rede Municipal de Ensino de Garanhuns desde fevereiro de 2017. Professor efetivo de Língua Portuguesa da Rede Estadual de Ensino de Pernambuco desde agosto de 2018. Tem estudado sobre a Produção textual em ambiente escolar: uma abordagem pedagógica através de sequência didática para o desenvolvimento da criatividade.",
+      "lattes": "http://lattes.cnpq.br/3732669233929484"
+    }
+  ],
   "ptResearchers": [
     {
       "name": "Ana Luísa Costa",

@@ -92,7 +92,7 @@
     { label: 'Início', to: '/' },
     { label: 'Quem somos', to: '/about/' },
     { label: 'Pesquisadores', to: '/pesquisadores/' },
-    { label: 'Pesquisas', to: '/projetos/' },
+    { label: 'Pesquisas', to: '/pesquisas/' },
     { label: 'Publicações', to: '/publicacoes/' },
     { label: 'Vídeos', to: '/videos/' },
     { label: 'Notícias', to: '/noticias/' },
@@ -106,14 +106,14 @@
   // força navbar sólida em páginas de detalhe
   const forceSolid = computed(() => {
     const p = route.path
-    const isProjectDetail = p.startsWith('/projetos/') && p !== '/projetos/'
+    const isPesquisaDetail = p.startsWith('/pesquisas/') && p !== '/pesquisas/'
     const isVideoDetail = p.startsWith('/videos/') && p !== '/videos/'
     const isNewsDetail = p.startsWith('/noticias/') && p !== '/noticias/'
     const isMaterialDetail = p.startsWith('/materiais/') && p !== '/materiais/'
     const isPublicationDetail = p.startsWith('/publicacoes/') && p !== '/publicacoes/'
     const isAbout = p.startsWith('/about/')
     return (
-      isProjectDetail ||
+      isPesquisaDetail ||
       isVideoDetail ||
       isNewsDetail ||
       isMaterialDetail ||

@@ -1,5 +1,7 @@
 ---
-title: 'Referenciação: a repetição e a substituição lexical de personagem em contos etiológicos produzidos por recém-alfabetizados'
+title:
+  'Referenciação: a repetição e a substituição lexical de personagem em contos etiológicos
+  produzidos por recém-alfabetizados'
 layout: DetailPublication
 type: publicacao
 

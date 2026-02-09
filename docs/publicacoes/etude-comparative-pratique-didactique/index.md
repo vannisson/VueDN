@@ -1,5 +1,7 @@
 ---
-title: 'Étude comparative de la pratique didactique et de la production textuelle chez les élèves de CP et les enseignantes en France et au Brésil'
+title:
+  'Étude comparative de la pratique didactique et de la production textuelle chez les élèves de CP
+  et les enseignantes en France et au Brésil'
 layout: DetailPublication
 type: publicacao
 

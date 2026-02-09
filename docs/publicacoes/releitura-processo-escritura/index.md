@@ -1,5 +1,7 @@
 ---
-title: 'A (re)leitura durante processo de escritura em tempo real de alunos portugueses recém alfabetizados'
+title:
+  'A (re)leitura durante processo de escritura em tempo real de alunos portugueses recém
+  alfabetizados'
 layout: DetailPublication
 type: publicacao
 

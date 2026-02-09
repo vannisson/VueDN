@@ -13,6 +13,7 @@ download: ''
 sourceUrl: ''
 ---
 
-Artigo publicado no dossiê temático "Produção Textual Colaborativa e Atividades Metalinguísticas" da Revista Leitura (2025).
+Artigo publicado no dossiê temático "Produção Textual Colaborativa e Atividades Metalinguísticas" da
+Revista Leitura (2025).
 
 <PublicationDetail />
