@@ -58,7 +58,16 @@
         <RouterLink to="/videos/" class="footer-link">Vídeos</RouterLink>
         <RouterLink to="/noticias/" class="footer-link">Notícias</RouterLink>
         <RouterLink to="/materiais/" class="footer-link">Materiais</RouterLink>
+        <a href="/admin/" class="footer-link">Admin</a>
       </nav>
+
+      <p class="footer-credits">
+        Designed &amp; developed by
+        <a href="https://glcf.dev" target="_blank" rel="noopener noreferrer" class="credits-link"
+          >Geovane Filho</a
+        >
+        &amp; Eduardo Bezerra
+      </p>
     </div>
   </v-footer>
 </template>
@@ -195,6 +204,25 @@
   }
 
   .footer-link:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .footer-credits {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.75rem;
+    margin: 1.25rem 0 0;
+    letter-spacing: 0.02em;
+  }
+
+  .credits-link {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .credits-link:hover {
     color: #fff;
     text-decoration: underline;
   }
