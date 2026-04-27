@@ -17,7 +17,7 @@ description:
 - **Nível:** Doutorado
 - **Período:** 2026–2030
 - **Orientador:** Eduardo Calil de Oliveira
-- **Orientanda:** Geny Kelly Galvão Idalino
+- **Orientanda:** Geni Kelly Idalino Falcão
 
 ## Resumo
 
